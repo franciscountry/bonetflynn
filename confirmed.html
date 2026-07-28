@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>You're on the list — Deni Bonet &amp; Chris Flynn</title>
+<meta name="description" content="Subscription confirmed. You'll hear from Deni Bonet and Chris Flynn when they're playing near you." />
+<meta name="theme-color" content="#FAF6EE" />
+<!-- Nothing here should be indexed — it's a one-off landing spot for people
+     arriving from a confirmation email, not a page anyone should find in search. -->
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500;1,9..144,600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#FAF6EE;
+    --ink:#17130F;
+    --ink-soft:#3B322A;
+    --muted:#6F6157;
+    --red:#E23A2E;
+    --red-deep:#B12318;
+    --red-darker:#8E1A12;
+    --line-strong:rgba(23,19,15,.30);
+    --step--1: clamp(0.9372rem, 0.8913rem + 0.2295vw, 1.167rem);
+    --step-0:  clamp(1rem, 0.9375rem + 0.3125vw, 1.312rem);
+    --step-1:  clamp(1.067rem, 0.9851rem + 0.4096vw, 1.477rem);
+    --brand:   clamp(1.35rem, 1.28rem + 0.35vw, 1.7rem);
+    --display: clamp(2.4rem, 1.7rem + 3.4vw, 4.6rem);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;min-height:100vh;background:var(--paper);color:var(--ink);
+    font-family:"Archivo",system-ui,sans-serif;font-size:var(--step-0);line-height:1.6;
+    display:flex;flex-direction:column;
+  }
+  main{
+    flex:1;display:flex;flex-direction:column;justify-content:center;
+    max-width:44rem;margin:0 auto;padding:12vh 24px 8vh;
+  }
+  .wordmark{
+    font-family:"Anton",sans-serif;font-size:var(--brand);letter-spacing:.04em;
+    text-transform:uppercase;color:var(--ink);text-decoration:none;display:inline-block;
+    margin-bottom:52px;
+  }
+  .amp{font-family:"Fraunces",serif;font-style:italic;font-weight:500;color:var(--red);text-transform:none;}
+  .eyebrow{
+    font-family:"Archivo",sans-serif;font-weight:600;text-transform:uppercase;
+    letter-spacing:.18em;font-size:var(--step--1);color:var(--muted);margin:0 0 14px;
+  }
+  h1{
+    margin:0;font-family:"Anton",sans-serif;font-weight:400;text-transform:uppercase;
+    font-size:var(--display);line-height:.95;letter-spacing:.01em;text-wrap:balance;
+  }
+  .rule{display:block;width:64px;height:3px;background:var(--red);margin:30px 0;}
+  p{color:var(--ink-soft);max-width:44ch;margin:0 0 18px;}
+  .fine{color:var(--muted);font-size:var(--step--1);max-width:48ch;}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;font-family:"Archivo";font-weight:600;
+    font-size:var(--step-0);padding:14px 26px;border-radius:999px;cursor:pointer;
+    border:1px solid var(--red-deep);background:var(--red-deep);color:#fff;
+    text-decoration:none;transition:background .2s,transform .2s;margin-top:14px;
+  }
+  .btn:hover{background:var(--red-darker);border-color:var(--red-darker);transform:translateY(-1px);}
+  footer{
+    padding:26px 24px;text-align:center;color:var(--muted);font-size:var(--step--1);
+    border-top:1px solid rgba(23,19,15,.13);
+  }
+  footer a{color:var(--red-deep);}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+</head>
+<body>
+  <main>
+    <a class="wordmark" href="/">Deni Bonet <span class="amp">&amp;</span> Chris Flynn</a>
+    <p class="eyebrow">Subscription confirmed</p>
+    <h1>You're on the list.</h1>
+    <span class="rule"></span>
+    <p>That's it — nothing else to do. We'll email you when we're playing near you, plus the occasional bit of news. Not often, and never anything we wouldn't want to get ourselves.</p>
+    <p class="fine">Every email has an unsubscribe link at the bottom, and it works immediately. No hard feelings.</p>
+    <a class="btn" href="/">Back to the site</a>
+  </main>
+  <footer>
+    Questions? <a href="mailto:mgmt@bonetflynn.com">mgmt@bonetflynn.com</a>
+  </footer>
+</body>
+</html>
