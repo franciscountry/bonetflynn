@@ -411,8 +411,20 @@
 
   /* ---------- FOOTER ---------- */
   footer{padding:40px 0;border-top:1px solid var(--line);}
+  /* Brand colours, drawn to match each platform's official mark. The header keeps
+     the mono set so the icons stay quiet up there and pay off down here. */
+  .foot-social{display:flex;align-items:center;gap:16px;}
+  .foot-social a{display:flex;transition:transform .2s,opacity .2s;opacity:.92;}
+  .foot-social a:hover{transform:translateY(-2px);opacity:1;}
+  .foot-social svg{width:30px;height:30px;display:block;}
   .foot-inner{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;}
-  .foot-inner .brand{font-size:var(--step-0);}
+  .foot-inner .brand-text{
+    display:block;font-family:"Anton",sans-serif;text-transform:uppercase;
+    letter-spacing:.04em;font-size:var(--step-1);line-height:var(--lh-body);
+  }
+  .foot-inner .brand-text .amp{
+    font-family:"Anton",sans-serif;font-style:normal;color:var(--red);margin:0 .1em;
+  }
   .foot-inner small{color:var(--muted);font-size:var(--step--2);line-height:var(--lh-small);}
 
   /* ---------- RESPONSIVE ---------- */
@@ -676,7 +688,35 @@
   <!-- FOOTER -->
   <footer>
     <div class="wrap foot-inner">
-      <span class="brand">Bonet <span class="amp">&amp;</span> Flynn</span>
+      <span class="brand-text">Bonet <span class="amp">&amp;</span> Flynn</span>
+      <span class="foot-social">
+        <a href="https://www.facebook.com/bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect width="24" height="24" rx="5.6" fill="#1877F2"/>
+            <path d="M16.05 15.35l.44-2.88h-2.76v-1.87c0-.79.39-1.56 1.63-1.56h1.26V6.6s-1.14-.2-2.23-.2c-2.28 0-3.76 1.38-3.76 3.87v2.19H7.99v2.88h2.64V22h3.1v-6.65z" fill="#fff"/>
+          </svg>
+        </a>
+        <a href="https://www.instagram.com/bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <defs>
+              <linearGradient id="igGrad" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#FEDA75"/><stop offset=".25" stop-color="#FA7E1E"/>
+                <stop offset=".55" stop-color="#D62976"/><stop offset=".8" stop-color="#962FBF"/>
+                <stop offset="1" stop-color="#4F5BD5"/>
+              </linearGradient>
+            </defs>
+            <rect width="24" height="24" rx="5.6" fill="url(#igGrad)"/>
+            <circle cx="12" cy="12" r="4.1" fill="none" stroke="#fff" stroke-width="1.9"/>
+            <circle cx="17.1" cy="6.9" r="1.15" fill="#fff"/>
+          </svg>
+        </a>
+        <a href="https://www.youtube.com/@bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on YouTube">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="1" y="4.6" width="22" height="14.8" rx="4.6" fill="#FF0000"/>
+            <path d="M10.1 8.7l6 3.3-6 3.3z" fill="#fff"/>
+          </svg>
+        </a>
+      </span>
       <small>© <span id="yr"></span> Deni Bonet &amp; Chris Flynn. Also performing as Shut Up &amp; Play.</small>
     </div>
   </footer>
