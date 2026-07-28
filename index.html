@@ -410,22 +410,15 @@
   }
 
   /* ---------- FOOTER ---------- */
-  footer{padding:40px 0;border-top:1px solid var(--line);}
+  footer{padding:46px 0 40px;background:var(--ink);color:#CFC3B4;}
   /* Brand colours, drawn to match each platform's official mark. The header keeps
      the mono set so the icons stay quiet up there and pay off down here. */
-  .foot-social{display:flex;align-items:center;gap:16px;}
+  .foot-social{display:flex;align-items:center;gap:20px;}
   .foot-social a{display:flex;transition:transform .2s,opacity .2s;opacity:.92;}
   .foot-social a:hover{transform:translateY(-2px);opacity:1;}
-  .foot-social svg{width:30px;height:30px;display:block;}
-  .foot-inner{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;}
-  .foot-inner .brand-text{
-    display:block;font-family:"Anton",sans-serif;text-transform:uppercase;
-    letter-spacing:.04em;font-size:var(--step-1);line-height:var(--lh-body);
-  }
-  .foot-inner .brand-text .amp{
-    font-family:"Anton",sans-serif;font-style:normal;color:var(--red);margin:0 .1em;
-  }
-  .foot-inner small{color:var(--muted);font-size:var(--step--2);line-height:var(--lh-small);}
+  .foot-social svg{width:34px;height:34px;display:block;}
+  .foot-inner{display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;}
+  .foot-inner small{color:#9C8B76;font-size:var(--step--2);line-height:var(--lh-small);}
 
   /* ---------- RESPONSIVE ---------- */
   @media(max-width:1120px){
@@ -688,7 +681,6 @@
   <!-- FOOTER -->
   <footer>
     <div class="wrap foot-inner">
-      <span class="brand-text">Bonet <span class="amp">&amp;</span> Flynn</span>
       <span class="foot-social">
         <a href="https://www.facebook.com/bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on Facebook">
           <svg viewBox="0 0 24 24" aria-hidden="true">
