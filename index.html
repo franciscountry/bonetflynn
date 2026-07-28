@@ -353,6 +353,10 @@
     border-bottom:1px solid var(--line);margin:0;line-height:var(--lh-body);}
   .shows-msg a{color:var(--red-deep);text-decoration:underline;text-underline-offset:3px;}
   .shows-follow{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:28px;}
+  .past-wrap{margin-top:34px;}
+  .past-wrap .label{margin-bottom:14px;}
+  /* Past rows carry no action link, so they collapse to two columns. */
+  .past-wrap .show{grid-template-columns:150px 1fr;}
   .shows-follow .shows-note{margin:0;max-width:34ch;}
 
   /* ---------- SHUT UP & PLAY (the one dark panel) ---------- */
@@ -646,7 +650,13 @@
              a Follow button at the top of that page. -->
         <a class="btn solid" href="https://www.bandsintown.com/track/id_176225"
            target="_blank" rel="noopener">Follow on Bandsintown</a>
+        <button class="btn" type="button" id="pastBtn"
+                aria-expanded="false" aria-controls="pastShows">Past shows</button>
         <p class="shows-note" id="showsNote">One tap and they'll tell you when we're playing near you.</p>
+      </div>
+      <div class="past-wrap" id="pastShows" hidden>
+        <p class="label">Recently played</p>
+        <div class="shows" id="pastList" aria-live="polite"></div>
       </div>
     </div>
   </section>
@@ -713,7 +723,7 @@
         list.setAttribute('aria-busy', 'false');
       };
 
-      const row = (ev) => {
+      const row = (ev, past) => {
         const el = document.createElement('div');
         el.className = 'show';
         const d = new Date(ev.datetime);
@@ -741,7 +751,7 @@
         // replaces the ticket offer rather than sitting alongside it. With no offer at
         // all we hand off to the event's Bandsintown page — labelled as information
         // rather than as a commitment, which gets more clicks at this stage.
-        const offers = ev.offers || [];
+        const offers = past ? [] : (ev.offers || []);
         const live = offers.find(o => o.type === 'Watch Live' && o.status === 'available');
         const tix = offers.find(o => o.type === 'Tickets' && o.status === 'available');
         const offer = live || tix;
@@ -757,12 +767,52 @@
           label + ' — ' + (v.name || 'this show') +
           (ok ? ', ' + d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''));
 
-        el.append(date, venue, a);
+        el.append(date, venue);
+        if (!past) el.appendChild(a);
         return el;
       };
 
-      const url = 'https://rest.bandsintown.com/artists/' + encodeURIComponent(ARTIST) +
-                  '/events?app_id=' + encodeURIComponent(APP_ID) + '&date=upcoming';
+      const endpoint = (when) =>
+        'https://rest.bandsintown.com/artists/' + encodeURIComponent(ARTIST) +
+        '/events?app_id=' + encodeURIComponent(APP_ID) + '&date=' + when;
+      const url = endpoint('upcoming');
+
+      /* Past shows are booker evidence — the rooms, the geography, the frequency.
+         Fetched only on click so nobody pays for history they didn't ask for, and
+         cached after the first load. Rows are newest-first and carry no link: a
+         ticket button on a show that already happened is worse than no button. */
+      const pastBtn  = document.getElementById('pastBtn');
+      const pastWrap = document.getElementById('pastShows');
+      const pastList = document.getElementById('pastList');
+      const PAST_LIMIT = 12;
+      let pastLoaded = false;
+
+      if (pastBtn) pastBtn.addEventListener('click', () => {
+        const open = pastWrap.hidden;
+        pastWrap.hidden = !open;
+        pastBtn.setAttribute('aria-expanded', String(open));
+        pastBtn.textContent = open ? 'Hide past shows' : 'Past shows';
+        if (!open || pastLoaded) return;
+
+        pastLoaded = true;
+        pastList.innerHTML = '<p class="shows-msg">Loading…</p>';
+        fetch(endpoint('past'))
+          .then(r => r.ok ? r.json() : Promise.reject('HTTP ' + r.status))
+          .then(events => {
+            if (!Array.isArray(events) || !events.length) {
+              pastList.innerHTML = '<p class="shows-msg">Nothing in the archive yet.</p>';
+              return;
+            }
+            events.sort((a, b) => new Date(b.datetime) - new Date(a.datetime));
+            pastList.innerHTML = '';
+            events.slice(0, PAST_LIMIT).forEach(ev => pastList.appendChild(row(ev, true)));
+          })
+          .catch(err => {
+            console.error('[Bandsintown] past events failed:', err);
+            pastList.innerHTML = '<p class="shows-msg">Couldn\'t load past dates just now.</p>';
+            pastLoaded = false;
+          });
+      });
 
       fetch(url)
         .then(r => r.ok ? r.json() : Promise.reject('HTTP ' + r.status))
