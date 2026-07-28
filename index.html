@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Deni Bonet &amp; Chris Flynn — electric violin &amp; guitar</title>
-<meta name="description" content="Deni Bonet and Chris Flynn — electric violin, guitar and two voices. Carnegie Hall to Mountain Stage. Also performing as Shut Up &amp; Play." />
+<title>Bonet &amp; Flynn — electric violin, guitar &amp; two voices</title>
+<meta name="description" content="Deni Bonet and Chris Flynn — electric violin, guitar and two voices. Carnegie Hall to living rooms. Booking now." />
 <meta name="theme-color" content="#FAF6EE" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -173,11 +173,13 @@
   .nav-links > a:hover::after,
   .nav-links > a:focus-visible::after{transform:scaleX(1);}
   .nav-social{display:flex;align-items:center;gap:15px;}
-  .nav-social a{display:flex;color:var(--muted);padding:2px;transition:color .2s;}
-  .nav-social a:hover{color:var(--red-deep);}
-  /* Solid marks: the shape is filled with currentColor and the glyph is knocked
-     out in the page colour, so hover recolours the whole icon in one property. */
-  .nav-social svg{width:22px;height:22px;display:block;}
+  /* Official brand marks. The header set is the same artwork reduced to ink with
+     the white knockouts made transparent, so the page shows through the f, the
+     play triangle and the camera ring. Raster, so hover shifts opacity rather
+     than colour — there's no currentColor to inherit. */
+  .nav-social a{display:flex;padding:2px;}
+  .nav-social img{height:22px;width:auto;display:block;opacity:.6;transition:opacity .2s;}
+  .nav-social a:hover img{opacity:1;}
   .menu-btn{display:none;background:none;border:0;color:var(--ink);font-size:var(--step-4);cursor:pointer;padding:6px;}
 
   /* ---------- HERO (split: type | photo) ---------- */
@@ -396,17 +398,13 @@
     margin:14px 0 0;max-width:36ch;
   }
   .signup-form{display:flex;gap:12px;flex-wrap:wrap;}
-  /* Shared field styling — keyed off "not hidden" so the honeypot and the
-     locale/html_type carriers stay invisible while EMAIL and ZIP both inherit. */
-  .signup-form input:not([type=hidden]){
-    font-family:"Archivo";font-size:var(--step-0);color:var(--ink);
+  .signup-form input[type=email]{
+    flex:1;min-width:220px;font-family:"Archivo";font-size:var(--step-0);color:var(--ink);
     background:var(--paper);border:1px solid var(--line-strong);border-radius:999px;
     padding:14px 22px;transition:border-color .2s;
   }
-  .signup-form input[type=email]{flex:1;min-width:180px;}
-  .signup-form input[name=ZIP]{flex:none;width:7rem;padding-left:18px;padding-right:18px;}
-  .signup-form input:not([type=hidden])::placeholder{color:var(--muted);}
-  .signup-form input:not([type=hidden]):focus{outline:none;border-color:var(--red-deep);}
+  .signup-form input[type=email]::placeholder{color:var(--muted);}
+  .signup-form input[type=email]:focus{outline:none;border-color:var(--red-deep);}
   .signup-form button{flex:none;}
   .signup-done{
     flex-basis:100%;margin:4px 0 0;color:var(--red-deep);
@@ -420,7 +418,7 @@
   .foot-social{display:flex;align-items:center;gap:20px;}
   .foot-social a{display:flex;transition:transform .2s,opacity .2s;opacity:.92;}
   .foot-social a:hover{transform:translateY(-2px);opacity:1;}
-  .foot-social svg{width:34px;height:34px;display:block;}
+  .foot-social img{height:34px;width:auto;display:block;}
   .foot-inner{display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;}
   .foot-inner small{color:#9C8B76;font-size:var(--step--2);line-height:var(--lh-small);}
 
@@ -429,7 +427,7 @@
     .nav-links{gap:20px;}
     .nav-links > a{font-size:var(--step--2);}
     .nav-social{gap:13px;}
-    .nav-social svg{width:20px;height:20px;}
+    .nav-social img{height:20px;}
   }
 
   @media(max-width:900px){
@@ -452,7 +450,7 @@
     .nav-links > a{padding:15px 28px;width:100%;font-size:var(--step-1);}
     .nav-links > a::after{display:none;}
     .nav-social{padding:16px 28px 4px;gap:22px;}
-    .nav-social svg{width:22px;height:22px;}
+    .nav-social img{height:26px;}
     .menu-btn{display:block;}
 
     .about-cols{grid-template-columns:1fr;gap:28px;}
@@ -464,10 +462,7 @@
     .show .venue{grid-column:1/-1;order:3;}
     .sup-grid{grid-template-columns:1fr;}
     .sup-visual{order:-1;aspect-ratio:16/9;}
-    /* Email takes its own row, ZIP + button share the second — three across
-       is too tight at phone widths. */
-    .signup-form input[type=email]{flex-basis:100%;min-width:0;}
-    .signup-form input[name=ZIP]{flex:1;width:auto;}
+    .signup-form input[type=email]{min-width:0;}
   }
 
   @media(prefers-reduced-motion:reduce){
@@ -493,25 +488,15 @@
         <a href="#live">Shows</a>
         <a href="#book">Booking</a>
         <span class="nav-social">
-          <a href="https://www.facebook.com/bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on Facebook">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" fill="currentColor"/>
-              <path d="M13.2 20v-6.5h2.15l.4-2.6h-2.55V9.25c0-.75.25-1.25 1.35-1.25h1.3V5.85c-.32-.04-1.2-.13-2.25-.13-2.2 0-3.7 1.35-3.7 3.82V10.9H7.75v2.6h2.15V20z" fill="var(--paper)"/>
-            </svg>
-          </a>
-          <a href="https://www.instagram.com/bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on Instagram">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="2" y="2" width="20" height="20" rx="5.6" fill="currentColor"/>
-              <circle cx="12" cy="12" r="4.1" fill="none" stroke="var(--paper)" stroke-width="1.9"/>
-              <circle cx="17.1" cy="6.9" r="1.15" fill="var(--paper)"/>
-            </svg>
-          </a>
-          <a href="https://www.youtube.com/@bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on YouTube">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="1.6" y="4.8" width="20.8" height="14.4" rx="4.8" fill="currentColor"/>
-              <path d="M10.2 8.8l5.8 3.2-5.8 3.2z" fill="var(--paper)"/>
-            </svg>
-          </a>
+        <a href="https://www.facebook.com/bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on Facebook">
+          <img src="images/social/fb-mono.png" alt="" width="22" height="22">
+        </a>
+        <a href="https://www.instagram.com/bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on Instagram">
+          <img src="images/social/ig-mono.png" alt="" width="22" height="22">
+        </a>
+        <a href="https://www.youtube.com/@bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on YouTube">
+          <img src="images/social/yt-mono.png" alt="" width="32" height="22">
+        </a>
         </span>
       </nav>
       <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
@@ -532,14 +517,10 @@
         <!-- BREVO — replace the action URL below: Brevo > Marketing > Forms > your
              form > Share > HTML. Field names must stay exactly as they are. -->
         <form class="signup-form" id="signupForm" method="POST" target="brevoTarget"
-              action="https://d67cde3d.sibforms.com/serve/MUIFAGzlBsCFGvNhu_BA6jUJ8FJ9O4WOLroUskO2Yq6b1WG5vCW8Ja2rYi8rA62We5tff1X6r3YPvoXa41fXGFT9XrzdJe2d10k3uCMr7ScfiIxDPfdcw6TW4_CD1f2Ri95i6Y4XVmEENCoSWsGyqbO3zPM9lQS-NOGvbMf84DD-lRwWFVM_P0rbIUMwi03QgASr5YXD1Ev_W59eTw==">
+              action="https://YOUR-ACCOUNT-ID.sibforms.com/serve/YOUR-FORM-ID">
           <label class="sr-only" for="EMAIL">Email address</label>
           <input id="EMAIL" name="EMAIL" type="email" required
                  placeholder="you@email.com" autocomplete="email">
-          <label class="sr-only" for="ZIP">ZIP code (optional)</label>
-          <input id="ZIP" name="ZIP" type="text" inputmode="numeric"
-                 pattern="[0-9]{5}" maxlength="5"
-                 placeholder="ZIP" autocomplete="postal-code">
           <input type="hidden" name="email_address_check" value="">
           <input type="hidden" name="locale" value="en">
           <input type="hidden" name="html_type" value="simple">
@@ -694,33 +675,16 @@
     <div class="wrap foot-inner">
       <span class="foot-social">
         <a href="https://www.facebook.com/bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on Facebook">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <rect width="24" height="24" rx="5.6" fill="#1877F2"/>
-            <path d="M16.05 15.35l.44-2.88h-2.76v-1.87c0-.79.39-1.56 1.63-1.56h1.26V6.6s-1.14-.2-2.23-.2c-2.28 0-3.76 1.38-3.76 3.87v2.19H7.99v2.88h2.64V22h3.1v-6.65z" fill="#fff"/>
-          </svg>
+          <img src="images/social/fb.png" alt="" width="34" height="34">
         </a>
         <a href="https://www.instagram.com/bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on Instagram">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <defs>
-              <linearGradient id="igGrad" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
-                <stop offset="0" stop-color="#FEDA75"/><stop offset=".25" stop-color="#FA7E1E"/>
-                <stop offset=".55" stop-color="#D62976"/><stop offset=".8" stop-color="#962FBF"/>
-                <stop offset="1" stop-color="#4F5BD5"/>
-              </linearGradient>
-            </defs>
-            <rect width="24" height="24" rx="5.6" fill="url(#igGrad)"/>
-            <circle cx="12" cy="12" r="4.1" fill="none" stroke="#fff" stroke-width="1.9"/>
-            <circle cx="17.1" cy="6.9" r="1.15" fill="#fff"/>
-          </svg>
+          <img src="images/social/ig.png" alt="" width="34" height="34">
         </a>
         <a href="https://www.youtube.com/@bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on YouTube">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <rect x="1" y="4.6" width="22" height="14.8" rx="4.6" fill="#FF0000"/>
-            <path d="M10.1 8.7l6 3.3-6 3.3z" fill="#fff"/>
-          </svg>
+          <img src="images/social/yt.png" alt="" width="49" height="34">
         </a>
       </span>
-      <small>© <span id="yr"></span> Deni Bonet &amp; Chris Flynn. Also performing as Shut Up &amp; Play.</small>
+      <small>© <span id="yr"></span> Deni Bonet &amp; Chris Flynn</small>
     </div>
   </footer>
 
@@ -909,7 +873,6 @@
         setTimeout(() => {
           document.getElementById('signupDone').hidden = false;
           document.getElementById('EMAIL').value = '';
-          document.getElementById('ZIP').value = '';
         }, 400);
       });
     })();
