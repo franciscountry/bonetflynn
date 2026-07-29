@@ -329,7 +329,12 @@
   /* ---------- PRAISE (quote band) ---------- */
   .praise{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
   .praise .label{margin:0 0 30px;}
-  .praise-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:38px;}
+  /* Ten quotes, three per page. The grid lives on .praise-page (not
+     .praise-grid) so a short final page can drop to one column via
+     .is-single without fighting the three-column layout the fuller pages need. */
+  .praise-page{display:none;}
+  .praise-page.is-active{display:grid;grid-template-columns:repeat(3,1fr);gap:38px;}
+  .praise-page.is-single.is-active{grid-template-columns:1fr;max-width:520px;margin:0 auto;}
   .quote{margin:0;}
   .quote::before{
     content:"\201C";display:block;font-family:"Fraunces",serif;font-style:italic;
@@ -345,6 +350,22 @@
   .quote figcaption span{
     display:block;font-weight:400;color:var(--muted);font-size:var(--step--2);
     letter-spacing:.01em;margin-top:3px;line-height:var(--lh-small);}
+
+  .praise-nav{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:34px;}
+  .praise-arrow{
+    display:grid;place-items:center;width:40px;height:40px;flex:none;border-radius:50%;
+    border:1px solid var(--line-strong);background:transparent;color:var(--ink);
+    font-size:var(--step-1);line-height:1;cursor:pointer;
+    transition:border-color .2s,background .2s,transform .2s;
+  }
+  .praise-arrow:hover{border-color:var(--ink);background:var(--paper);transform:translateY(-1px);}
+  .praise-dots{display:flex;gap:10px;}
+  .praise-dot{
+    width:9px;height:9px;padding:0;border:0;border-radius:50%;
+    background:var(--line-strong);cursor:pointer;transition:background .2s,transform .2s;
+  }
+  .praise-dot:hover{background:var(--muted);}
+  .praise-dot.is-active{background:var(--red-deep);transform:scale(1.25);}
 
   /* ---------- SECTION SCAFFOLD ---------- */
   section{padding:clamp(54px,7vw,94px) 0;position:relative;}
@@ -545,7 +566,7 @@
     .hero-photo::after{left:0;right:0;top:auto;bottom:0;width:auto;height:4px;}
     .hero-copy{padding:38px var(--gutter) 56px;}
     .hero-hinge .rule{max-width:120px;}
-    .praise-grid{grid-template-columns:1fr;gap:30px;}
+    .praise-page.is-active{grid-template-columns:1fr;gap:30px;}
     .quote + .quote{border-top:1px solid var(--line);padding-top:30px;}
   }
   @media(max-width:860px){
@@ -650,19 +671,65 @@
   <section class="praise">
     <div class="wrap">
       <p class="label">What the rooms say</p>
-      <div class="praise-grid">
-        <figure class="quote">
-          <blockquote>Deni Bonet and Chris Flynn's performances are irresistible for their charisma and musicality.</blockquote>
-          <figcaption>John Platt<span>WFUV 90.7 FM, Public Radio from Fordham University</span></figcaption>
-        </figure>
-        <figure class="quote">
-          <blockquote>Together they remind me George Allen and Gracie Burns, or Lucy and Ricky; their banter, charisma and musicality combine to create a playful, lively, sometimes surprising performance.</blockquote>
-          <figcaption>Linda Bolton<span>Cozy Cabin Concerts</span></figcaption>
-        </figure>
-        <figure class="quote">
-          <blockquote>Great to have hosted you at Wexford Arts Centre. Wonderful evening of stunning music, stories and songs!</blockquote>
-          <figcaption>Elizabeth Whyte<span>Executive Director, Wexford Arts Centre</span></figcaption>
-        </figure>
+      <div class="praise-grid" id="praiseGrid" aria-live="polite">
+        <div class="praise-page is-active" data-page="0">
+          <figure class="quote">
+            <blockquote>Deni Bonet and Chris Flynn's performances are irresistible for their charisma and musicality.</blockquote>
+            <figcaption>John Platt<span>WFUV 90.7 FM, Public Radio from Fordham University</span></figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>Together they remind me George Allen and Gracie Burns, or Lucy and Ricky; their banter, charisma and musicality combine to create a playful, lively, sometimes surprising performance.</blockquote>
+            <figcaption>Linda Bolton<span>Cozy Cabin Concerts</span></figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>Great to have hosted you at Wexford Arts Centre. Wonderful evening of stunning music, stories and songs!</blockquote>
+            <figcaption>Elizabeth Whyte<span>Executive Director, Wexford Arts Centre</span></figcaption>
+          </figure>
+        </div>
+        <div class="praise-page" data-page="1">
+          <figure class="quote">
+            <blockquote>What a wonderful evening! It was a pleasure to meet you and Chris and an equal pleasure to experience your combined incredible musicianship. Here's to more Bonet &amp; Flynn in years to come.</blockquote>
+            <figcaption>Dean Gray<span>Merryall Center, New Milford, CT</span></figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>Thank you for your amazing performance at the Steamer Firehouse Gallery!! Everyone loved you (of course). The only people who were disappointed were those who had other plans on Friday.</blockquote>
+            <figcaption>Helen Arbor Young<span>Ossining Arts Council</span></figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>Thank you so much for a fabulous night! You are so full of LIGHT and LOVE! (plus talent, joy, and the list goes on…) You and Chris are wonderful together. We all had a terrific night. Thank you so much!</blockquote>
+            <figcaption>Anne-Marie Cannata<span>Director, The Buttonwood Tree Performing Arts Center</span></figcaption>
+          </figure>
+        </div>
+        <div class="praise-page" data-page="2">
+          <figure class="quote">
+            <blockquote>I loved watching the interactions between Deni and Chris. I had a wonderful time, and many of our patrons and staff told me that they did as well! We will all be talking about this concert for a long time to come — Deni and Chris are blessed with such talent!</blockquote>
+            <figcaption>Amina Chaudhri<span>Goshen Public Library &amp; Historical Society, Goshen, New York</span></figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>Acclaimed violinist Deni Bonet and guitarist Chris Flynn wowed an enthusiastic audience with an outstanding performance at our library. The exceptional performance, fun stories, and upbeat energy created a fantastic evening for all that were lucky to see the show. We can't wait to have them back at the Patterson Library!</blockquote>
+            <figcaption>Lillie Muscente<span>PR Coordinator, Patterson Library</span></figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>Deni Bonet and Chris Flynn are a refreshing musical delight! I, and our patrons, highly recommend them for a library concert!</blockquote>
+            <figcaption>Melissa Tidd<span>Goshen Public Library and Historical Society</span></figcaption>
+          </figure>
+        </div>
+        <div class="praise-page is-single" data-page="3">
+          <figure class="quote">
+            <blockquote>A concert with Deni and Chris is better than a B12 shot!</blockquote>
+            <figcaption>Janet Olinkiewicz<span>Floyd Memorial Library</span></figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="praise-nav">
+        <button class="praise-arrow" id="praisePrev" type="button" aria-label="Previous testimonials">‹</button>
+        <div class="praise-dots" id="praiseDots">
+          <button class="praise-dot is-active" type="button" data-page="0" aria-label="Testimonials, page 1 of 4" aria-current="true"></button>
+          <button class="praise-dot" type="button" data-page="1" aria-label="Testimonials, page 2 of 4"></button>
+          <button class="praise-dot" type="button" data-page="2" aria-label="Testimonials, page 3 of 4"></button>
+          <button class="praise-dot" type="button" data-page="3" aria-label="Testimonials, page 4 of 4"></button>
+        </div>
+        <button class="praise-arrow" id="praiseNext" type="button" aria-label="Next testimonials">›</button>
       </div>
     </div>
   </section>
@@ -1002,6 +1069,32 @@
           document.getElementById('EMAIL').value = '';
         }, 400);
       });
+    })();
+
+    /* Praise carousel: three quotes per page, one short spotlight page at the
+       end. Both ends loop — four pages is short enough that wrap-around reads
+       as a feature, not a dead end. */
+    (() => {
+      const pages = [...document.querySelectorAll('.praise-page')];
+      const dots  = [...document.querySelectorAll('.praise-dot')];
+      const prev  = document.getElementById('praisePrev');
+      const next  = document.getElementById('praiseNext');
+      if (!pages.length || !prev || !next) return;
+      let i = Math.max(0, pages.findIndex(p => p.classList.contains('is-active')));
+
+      const show = (n) => {
+        i = (n + pages.length) % pages.length;
+        pages.forEach((p, idx) => p.classList.toggle('is-active', idx === i));
+        dots.forEach((d, idx) => {
+          const on = idx === i;
+          d.classList.toggle('is-active', on);
+          d.setAttribute('aria-current', String(on));
+        });
+      };
+
+      prev.addEventListener('click', () => show(i - 1));
+      next.addEventListener('click', () => show(i + 1));
+      dots.forEach((d, idx) => d.addEventListener('click', () => show(idx)));
     })();
 
     const io = new IntersectionObserver((entries) => {
