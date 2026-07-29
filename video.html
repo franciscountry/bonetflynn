@@ -489,9 +489,6 @@
   }
   .hero-signup{margin-top:34px;max-width:30rem;}
   .signup-form input:not([type=hidden]){transition:background .25s ease,border-color .2s ease;}
-  /* Five digits never needs 220px. Fixed and narrow so the email field takes
-     the rest — and matched on input.zip, which out-specifies the rule above. */
-  .signup-form input.zip{flex:0 0 96px;min-width:0;text-align:center;letter-spacing:.06em;}
   .hero-note{
     color:var(--muted);font-size:var(--step--1);line-height:var(--lh-small);
     margin:14px 0 0;max-width:36ch;
@@ -502,6 +499,9 @@
     background:var(--paper);border:1px solid var(--line-strong);border-radius:999px;
     padding:14px 22px;transition:border-color .2s;
   }
+  /* Must sit after the rule above: same specificity, so source order decides.
+     Five digits doesn't need 220px — the email field takes what's left. */
+  .signup-form input.zip{flex:0 0 96px;min-width:0;text-align:center;letter-spacing:.06em;}
   .signup-form input:not([type=hidden])::placeholder{color:var(--muted);}
   .signup-form input:not([type=hidden]):focus{outline:none;border-color:var(--red-deep);}
   .signup-form button{flex:none;}
