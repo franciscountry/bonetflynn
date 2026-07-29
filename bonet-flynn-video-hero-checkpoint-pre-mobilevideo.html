@@ -317,10 +317,6 @@
 
   @media(max-width:900px){
     .vhero{height:auto;min-height:0;padding-bottom:clamp(36px,6vh,64px);}
-    /* Phone: the footage becomes a shallow band above the copy rather than a
-       full-height panel — a 16:9 strip on a tall screen wastes the screen. */
-    .vhero-media{height:52vh;top:0;bottom:auto;}
-    .vhero-copy{padding-top:calc(52vh + 26px);}
     .vhero-media{position:absolute;}
     .vhero-copy{padding-top:38vh;}
   }
@@ -615,8 +611,7 @@
   <!-- HERO (video variant) -->
   <section class="vhero" id="top">
     <video class="vhero-media" id="heroVideo" poster="images/hero-poster.jpg"
-           src="videos/hero.mp4" autoplay muted loop playsinline
-           preload="metadata" aria-hidden="true" tabindex="-1"></video>
+           muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
     <div class="vhero-scrim" aria-hidden="true"></div>
     <div class="vhero-copy">
       <p class="eyebrow vhero-eyebrow">electric violin, guitar &amp; two voices</p>
@@ -801,21 +796,32 @@
   <script>
     document.getElementById('yr').textContent = new Date().getFullYear();
 
-    /* One 1280px file for every device, autoplaying declaratively in the markup —
-       autoplay + muted + playsinline is what iOS requires. The only thing JS still
-       decides is motion sensitivity: if the visitor asks for reduced motion we stop
-       it and leave the poster frame showing. */
+    /* The video is 3.4MB, so it only loads where it earns its place: wide screens,
+       motion allowed, and not on a metered connection. Everywhere else the poster
+       frame does the job at 70KB. */
     (() => {
       const v = document.getElementById('heroVideo');
       if (!v) return;
-      const still = matchMedia('(prefers-reduced-motion: reduce)');
-      const apply = () => {
-        if (still.matches) { v.pause(); v.removeAttribute('autoplay'); }
-        else { v.play().catch(() => {}); }
-      };
-      still.addEventListener('change', apply);
-      apply();
-      v.addEventListener('error', () => console.error('[hero video] failed to load videos/hero.mp4'));
+      const still  = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const narrow = matchMedia('(max-width: 900px)').matches;
+      const conn   = navigator.connection || {};
+      if (still || narrow || conn.saveData) {
+        console.log('[hero video] not loaded —',
+          still ? 'reduced motion is on' :
+          narrow ? 'window is under 900px wide (currently ' + window.innerWidth + 'px)' :
+          'browser is in data-saver mode');
+        return;
+      }
+      const file = matchMedia('(min-width: 1400px)').matches ? 'videos/hero-1600.mp4' : 'videos/hero-1000.mp4';
+      const src = document.createElement('source');
+      src.src = file; src.type = 'video/mp4';
+      v.appendChild(src);
+      v.addEventListener('error', () => console.error('[hero video] could not load ' + file +
+        ' — check the file is in videos/ and the name matches exactly'), true);
+      v.addEventListener('playing', () => console.log('[hero video] playing ' + file));
+      v.muted = true;                 // property as well as attribute; Safari wants both
+      v.load();
+      v.play().catch(err => console.error('[hero video] autoplay blocked:', err.name, err.message));
     })();
 
     const nav = document.getElementById('nav');
