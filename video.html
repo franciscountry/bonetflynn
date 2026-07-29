@@ -84,12 +84,6 @@
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);}
 
   .amp{font-family:"Fraunces",serif;font-style:italic;font-weight:500;color:var(--red);}
-  /* Inside Anton headings the italic ampersand's swash drops below the cap line.
-     Sized down and lifted so it sits on the same optical baseline as the caps. */
-  h1 .amp,h2 .amp,h3 .amp{
-    font-size:.9em;display:inline-block;line-height:1em;
-    transform:translateY(-.18em);margin:0 .05em;
-  }
 
   .eyebrow{
     font-family:"Fraunces",serif;font-style:italic;font-weight:500;
@@ -274,7 +268,16 @@
     margin:26px 0 0;max-width:34ch;color:#DED3C6;
     font-size:var(--step-1);line-height:var(--lh-body);
   }
-  .vhero .hero-signup{margin-top:30px;}
+  .vhero .hero-signup{margin-top:30px;max-width:34rem;}
+  .vhero .signup-form input:not([type=hidden]){transition:background .25s ease,border-color .2s ease;}
+  /* :focus-within lifts the whole row, not just the field being typed in — the
+     zip and email read as one control, so they shouldn't shade independently. */
+  .vhero .signup-form:focus-within input:not([type=hidden]){
+    background:rgba(247,242,233,.26);border-color:rgba(247,242,233,.6);
+  }
+  .vhero .signup-form:focus-within input:not([type=hidden]):focus{
+    background:rgba(247,242,233,.34);border-color:#F7F2E9;
+  }
   .vhero-note{
     color:#C3B7A9;font-size:var(--step--1);line-height:var(--lh-small);
     margin:14px 0 0;max-width:36ch;
@@ -344,10 +347,10 @@
   /* z-index so the ampersand is never painted over by a neighbouring section's
      background. .edge drops the negative pull where the next block is opaque —
      otherwise the section slides up over the glyph and clips it. */
-  .divider{display:flex;justify-content:center;padding:0;margin:-14px 0;position:relative;z-index:1;}
+  .divider{display:flex;justify-content:center;padding:0;margin:-6px 0;position:relative;z-index:1;}
+  .divider::before{content:"";height:1px;width:min(220px,42vw);background:var(--line);}
+  .divider::after{display:none;}
   .divider.edge{margin:0;}
-  .divider .amp{font-size:var(--step-6);opacity:.9;}
-  .divider::before,.divider::after{content:"";height:1px;flex:1;background:var(--line);align-self:center;margin:0 26px;max-width:220px;}
 
   .sec-head{margin-bottom:38px;max-width:60ch;}
   .sec-head h2{font-size:var(--step-9);margin-top:14px;}
@@ -485,6 +488,7 @@
     overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
   }
   .hero-signup{margin-top:34px;max-width:30rem;}
+  .signup-form input:not([type=hidden]){transition:background .25s ease,border-color .2s ease;}
   .hero-note{
     color:var(--muted);font-size:var(--step--1);line-height:var(--lh-small);
     margin:14px 0 0;max-width:36ch;
@@ -611,7 +615,7 @@
            muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
     <div class="vhero-scrim" aria-hidden="true"></div>
     <div class="vhero-copy">
-      <p class="eyebrow vhero-eyebrow">electric violin, guitar <span class="amp">&amp;</span> two voices</p>
+      <p class="eyebrow vhero-eyebrow">electric violin, guitar &amp; two voices</p>
       <div class="hero-names">
         <h1 class="n">Deni Bonet</h1>
         <div class="hero-hinge"><span class="rule"></span></div>
@@ -665,7 +669,7 @@
       <div class="reveal about-cols">
         <div>
           <p class="label">The duo</p>
-          <p class="about-lead">Two players <span class="amp">&amp;</span> a sound big enough you'll look for the band.</p>
+          <p class="about-lead">Two players &amp; a sound big enough you'll look for the band.</p>
           <a class="nerfa" href="https://nerfa.org/" target="_blank" rel="noopener">
             <img src="images/nerfa-2026.png" width="520" height="520" loading="lazy"
                  alt="NERFA 2026 Formal Showcase Artist — Northeast Regional Folk Alliance">
@@ -705,7 +709,7 @@
     </div>
   </section>
 
-  <div class="divider"><span class="amp">&amp;</span></div>
+  <div class="divider" aria-hidden="true"></div>
 
   <!-- WATCH -->
   <section id="watch">
@@ -730,7 +734,7 @@
     </div>
   </section>
 
-  <div class="divider"><span class="amp">&amp;</span></div>
+  <div class="divider" aria-hidden="true"></div>
 
   <!-- LIVE -->
   <section id="live">
@@ -765,7 +769,7 @@
     <div class="wrap">
       <div class="reveal">
         <p class="label">Booking</p>
-        <h2>Bring the duo <span class="amp">&amp;</span> everybody leaves smiling.</h2>
+        <h2>Bring the duo &amp; everybody leaves smiling.</h2>
         <p>Listening rooms, theaters, festivals, private events. Tell us the date and the space — we'll tell you what fits.</p>
         <a class="book-email" href="mailto:booking@bonetflynn.com">booking@bonetflynn.com</a>
       </div>
