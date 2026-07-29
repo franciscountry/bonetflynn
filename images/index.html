@@ -58,7 +58,8 @@
 
     --nav-h:96px;      /* header height — hero padding, photo cap and the mobile
                           dropdown offset all derive from this, so change it here only */
-    --mark-h:76px;     /* silhouette in the header */
+    --mark-d:126px;    /* header badge — bigger than the bar, so it overhangs */
+    --mark-h:98px;     /* illustration inside it */
     --maxw:1180px;
     --gutter:28px;
   }
@@ -127,6 +128,7 @@
      edge, and the links run to the viewport gutter like the hero photo does. */
   .nav-inner{
     display:flex;align-items:center;justify-content:space-between;height:var(--nav-h);
+    position:relative;
     max-width:none;width:100%;
     padding-left:max(var(--gutter), calc((100vw - var(--maxw))/2 + var(--gutter)));
     padding-right:var(--gutter);
@@ -135,17 +137,23 @@
      header stays empty. Past the fold the silhouette fades in on its own as the
      home affordance. visibility (not just opacity) keeps it out of the tab order
      while hidden, and it still occupies space so nothing shifts on reveal. */
+  /* A round badge rather than a bare mark, sized past the bar height so it hangs
+     below it. Opaque fill because the overhanging part sits over page content;
+     align-self:flex-start biases the overhang downward instead of clipping it
+     against the top of the viewport. */
   .brand{
-    display:flex;align-items:center;gap:12px;
-    font-family:"Anton",sans-serif;font-weight:400;
-    font-size:var(--brand);letter-spacing:.04em;text-transform:uppercase;
+    width:var(--mark-d);height:var(--mark-d);flex:none;
+    align-self:flex-start;margin-top:5px;
+    display:grid;place-items:center;
+    border-radius:50%;background:var(--paper);
+    box-shadow:inset 0 0 0 2px var(--red);
     opacity:0;visibility:hidden;
     transition:opacity .35s ease, visibility .35s ease;
   }
   .nav.solid .brand{opacity:1;visibility:visible;}
   /* Wordmark lives in the hero and the footer. Delete this rule to bring it back. */
   .brand-text{display:none;}
-  .brand-mark{height:var(--mark-h);width:auto;flex:none;}
+  .brand-mark{height:var(--mark-h);width:auto;flex:none;margin-top:2px;}
   /* The serif ampersand needs air to read; wedged between two Anton words it fights
      the baseline. Anton's own ampersand sits flush — the Fraunces one stays the
      signature in the hero and section heads, where it has room. */
@@ -473,7 +481,7 @@
     .quote + .quote{border-top:1px solid var(--line);padding-top:30px;}
   }
   @media(max-width:860px){
-    :root{--nav-h:76px;--mark-h:58px;}
+    :root{--nav-h:76px;--mark-d:98px;--mark-h:76px;}
     .nav-links{
       position:fixed;inset:var(--nav-h) 0 auto 0;background:rgba(250,246,238,.98);backdrop-filter:blur(10px);
       flex-direction:column;gap:0;padding:10px 0 20px;border-bottom:1px solid var(--line);
