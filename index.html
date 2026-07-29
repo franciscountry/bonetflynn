@@ -288,38 +288,11 @@
   .about-lead .amp{font-family:"Fraunces";font-weight:500;}
   .about-body{text-wrap:pretty;color:var(--ink-soft);line-height:var(--lh-body);}
 
-  /* Showcase badge. Every internal dimension is em-based off --badge-w, so the
-     lockup holds its proportions at any size — change that one value to resize.
-     Deliberately outside the page type scale: if the text scaled with the viewport
-     while the wreath didn't, it would outgrow the laurel. */
-  .nerfa{
-    --badge-w:230px;
-    --badge-ink:var(--ink);
-    width:var(--badge-w);margin-top:38px;text-align:left;
-    font-size:calc(var(--badge-w) / 300 * 16px);
-    color:var(--badge-ink);
-  }
-  .nerfa p{margin:0;}
-  /* Left-aligned to the column edge so it lines up with the label and pull quote
-     above it. Only the award text inside the wreath is centred. */
-  /* NERFA's own wordmark, banjo removed, recoloured from their light-on-dark
-     asset to sit on the bone page. */
-  .nerfa-logo{display:block;width:100%;height:auto;margin-bottom:.8em;}
-  .nerfa-wrap{position:relative;display:flex;align-items:center;justify-content:center;}
-  .nerfa-wreath{width:100%;height:auto;color:var(--red-deep);opacity:.85;}
-  /* Fraunces italic reads as an award; Anton read as a poster inside a laurel.
-     49% rather than 50% because the wreath's opening sits below its centre. */
-  .nerfa-award{
-    position:absolute;top:49%;left:50%;transform:translate(-50%,-50%);width:72%;
-    text-align:center;
-    font-family:"Fraunces",serif;font-style:italic;font-weight:500;
-    font-size:1.3em;line-height:1.15;letter-spacing:.005em;
-  }
-  .nerfa-award span{
-    display:block;font-family:"Anton",sans-serif;font-style:normal;font-weight:400;
-    letter-spacing:.02em;font-size:1.5em;line-height:1;color:var(--red-deep);
-    margin-bottom:.14em;
-  }
+  /* Official NERFA showcase badge. Their artwork, unmodified — its cream ground
+     is a near match for --paper-2 and it keeps the gold to a border. */
+  .nerfa{display:block;width:230px;margin-top:38px;}
+  .nerfa img{display:block;width:100%;height:auto;}
+  .nerfa:hover img{opacity:.9;}
   .about-body p{margin:0 0 18px;margin:0 0 0.75lh;}
   .about-cols{display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(30px,6vw,80px);align-items:start;}
 
@@ -608,49 +581,10 @@
         <div>
           <p class="label">The duo</p>
           <p class="about-lead">Two players <span class="amp">&amp;</span> a sound big enough you'll look for the band.</p>
-          <div class="nerfa">
-            <img class="nerfa-logo" src="images/nerfa-logo.svg"
-                 alt="Northeast Regional Folk Alliance" width="234" height="77" loading="lazy">
-            <div class="nerfa-wrap">
-              <svg class="nerfa-wreath" viewBox="0 0 500 440" fill="currentColor" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <path id="lf" d="M0 0C11-10 31-13 46 0 31 13 11 10 0 0"/>
-              <g id="lb">
-                <use href="#lf" transform="translate(269 412) rotate(50) scale(0.87)"/>
-                <use href="#lf" transform="translate(306 407) rotate(37) scale(0.97)"/>
-                <use href="#lf" transform="translate(341 395) rotate(25) scale(1.05)"/>
-                <use href="#lf" transform="translate(374 378) rotate(13) scale(1.10)"/>
-                <use href="#lf" transform="translate(402 353) rotate(1) scale(1.13)"/>
-                <use href="#lf" transform="translate(423 323) rotate(-10) scale(1.15)"/>
-                <use href="#lf" transform="translate(437 288) rotate(-21) scale(1.15)"/>
-                <use href="#lf" transform="translate(442 252) rotate(-33) scale(1.13)"/>
-                <use href="#lf" transform="translate(439 215) rotate(-44) scale(1.10)"/>
-                <use href="#lf" transform="translate(430 179) rotate(-55) scale(1.05)"/>
-                <use href="#lf" transform="translate(412 146) rotate(-66) scale(1.00)"/>
-                <use href="#lf" transform="translate(389 117) rotate(-77) scale(0.94)"/>
-                <use href="#lf" transform="translate(362 92) rotate(-88) scale(0.88)"/>
-                <use href="#lf" transform="translate(331 72) rotate(-99) scale(0.81)"/>
-                <use href="#lf" transform="translate(276 393) rotate(26) scale(0.62)"/>
-                <use href="#lf" transform="translate(315 385) rotate(10) scale(0.70)"/>
-                <use href="#lf" transform="translate(350 368) rotate(-4) scale(0.76)"/>
-                <use href="#lf" transform="translate(381 344) rotate(-18) scale(0.79)"/>
-                <use href="#lf" transform="translate(405 312) rotate(-32) scale(0.80)"/>
-                <use href="#lf" transform="translate(418 275) rotate(-46) scale(0.79)"/>
-                <use href="#lf" transform="translate(419 236) rotate(-59) scale(0.77)"/>
-                <use href="#lf" transform="translate(411 197) rotate(-72) scale(0.74)"/>
-                <use href="#lf" transform="translate(394 162) rotate(-86) scale(0.69)"/>
-                <use href="#lf" transform="translate(369 131) rotate(-99) scale(0.64)"/>
-                <use href="#lf" transform="translate(339 106) rotate(-112) scale(0.58)"/>
-                <path d="M254 412C372 412 442 336 442 246 442 158 384 100 324 68"
-                      fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round"/>
-              </g>
-            </defs>
-            <use href="#lb"/>
-            <use href="#lb" transform="translate(500 0) scale(-1 1)"/>
-            <circle cx="250" cy="414" r="7"/><circle cx="232" cy="407" r="5"/><circle cx="268" cy="407" r="5"/>
-          </svg>
-              <p class="nerfa-award"><span>2026</span>Official<br>Showcase Artist</p>
-            </div>
+          <a class="nerfa" href="https://nerfa.org/" target="_blank" rel="noopener">
+            <img src="images/nerfa-2026.png" width="520" height="520" loading="lazy"
+                 alt="NERFA 2026 Formal Showcase Artist — Northeast Regional Folk Alliance">
+          </a>
           </div>
         </div>
         <div class="about-body">
