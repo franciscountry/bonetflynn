@@ -442,10 +442,12 @@
   .foot-inner small{color:#9C8B76;font-size:var(--step--2);line-height:var(--lh-small);}
 
   /* ---------- RESPONSIVE ---------- */
-  /* No spare margin at these widths, so the badge sits nearly flush with the bar
-     and stops reaching down into the content. */
-  @media(max-width:1200px){
-    :root{--mark-d:106px;--mark-h:84px;}
+  /* Below ~1404px the left margin is narrower than the badge, so an overhang would
+     land on the content column no matter where it sits. Under that threshold the
+     badge shrinks to fit inside the bar and stops overhanging entirely. */
+  @media(max-width:1440px){
+    :root{--mark-d:84px;--mark-h:66px;}
+    .brand{align-self:center;margin-top:0;margin-left:0;}
   }
 
   @media(max-width:1120px){
@@ -465,7 +467,7 @@
     .quote + .quote{border-top:1px solid var(--line);padding-top:30px;}
   }
   @media(max-width:860px){
-    :root{--nav-h:76px;--mark-d:88px;--mark-h:70px;}
+    :root{--nav-h:76px;--mark-d:66px;--mark-h:52px;}
     .nav-links{
       position:fixed;inset:var(--nav-h) 0 auto 0;background:rgba(250,246,238,.98);backdrop-filter:blur(10px);
       flex-direction:column;gap:0;padding:10px 0 20px;border-bottom:1px solid var(--line);
