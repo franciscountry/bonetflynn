@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#FAF6EE" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Archivo:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500;1,9..144,600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500;1,9..144,600&display=swap" rel="stylesheet" />
 <style>
   :root{
     --paper:#FAF6EE;        /* page — warm bone */
@@ -45,13 +45,13 @@
     /* Display outliers. The reading scale tops out around 54px; these three
        carry the page's loud moments and are tuned by eye, not by ratio. */
     --brand:     clamp(1.35rem, 1.28rem + 0.35vw, 1.7rem);            /* 21.6→27.2 wordmark */
-    --display-1: clamp(2.125rem, 1.775rem + 1.75vw, 3.875rem);        /* 34→62   section hero heads */
-    --display-2: clamp(2.25rem, 1.875rem + 1.875vw, 4.25rem);         /* 36→68   the names */
+    --display-1: clamp(2.375rem, 1.925rem + 2.25vw, 4.625rem);        /* 38→74   section hero heads */
+    --display-2: clamp(2.5rem, 1.975rem + 2.625vw, 5.125rem);         /* 40→82   the names */
 
     /* Line heights in em, not unitless. An em value computes once against the
        element's own size, so a heading can't inherit a body ratio — which is
        exactly what threw the ampersand's line box off. */
-    --lh-display: 1.05em;
+    --lh-display: 0.98em;
     --lh-tight:   1.25em;
     --lh-body:    1.5em;
     --lh-small:   1.375em;
@@ -78,12 +78,21 @@
   }
   a{color:inherit;text-decoration:none;}
   img{max-width:100%;display:block;}
-  h1,h2,h3{margin:0;text-wrap:balance;font-family:"Alfa Slab One",serif;font-weight:400;line-height:var(--lh-display);letter-spacing:-.012em;}
+  h1,h2,h3{margin:0;text-wrap:balance;font-family:"Anton",sans-serif;font-weight:400;line-height:var(--lh-display);letter-spacing:.01em;text-transform:uppercase;}
   ::selection{background:var(--red);color:#fff;}
 
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);}
 
-  .amp{font-family:"Instrument Serif",serif;font-style:italic;color:var(--red);}
+  .amp{font-family:"Fraunces",serif;font-style:italic;font-weight:500;color:var(--red);}
+  /* Fraunces reshapes its ampersand across the opsz axis — at small text sizes,
+     auto-sizing picks the plain "text" cut instead of the ornate one the hero
+     names get. Pinned to the hero's optical size so small Fraunces ampersands
+     (eyebrow, bio-card roles) get the same glyph, just smaller. Color/weight
+     stay inherited from whatever the surrounding line already sets. */
+  .amp-small{
+    color:inherit;font-weight:inherit;
+    font-optical-sizing:none;font-variation-settings:"opsz" 30;
+  }
 
   .eyebrow{
     font-family:"Fraunces",serif;font-style:italic;font-weight:500;
@@ -155,9 +164,12 @@
   /* 400px source for a badge that displays at 66–98px: enough for 3x screens.
      The 200px PNG was right at the limit at 2x and mushy above it. */
   .brand-mark{height:var(--mark-h);width:auto;flex:none;margin-top:2px;}
-  /* The wordmark is hidden on this page, so this only guards against the .amp
-     italic leaking in if .brand-text is ever brought back. */
-  .brand .amp{font-style:normal;font-size:1em;line-height:1em;color:var(--red);margin:0 .1em;}
+  /* Anton's own ampersand sits flush; if .brand-text is ever brought back this
+     keeps the .amp italic from leaking into the wordmark. */
+  .brand .amp{
+    font-family:"Anton",sans-serif;font-style:normal;font-weight:400;
+    font-size:1em;line-height:1em;color:var(--red);margin:0 .1em;
+  }
   .nav-links{display:flex;gap:28px;align-items:center;}
   /* Caps read larger and wider than lowercase, so this steps down one and adds
      tracking — caps set tight are hard to parse. Direct-child selector so the
@@ -202,16 +214,21 @@
     font-size:var(--display-2);
     line-height:var(--lh-display);
   }
-  /* The red bar is the hinge now — no ampersand between the names. */
-  .hero-hinge{display:flex;align-items:center;gap:22px;margin:clamp(8px,1vw,14px) 0 clamp(4px,.6vw,8px);}
-  /* Instrument Serif's ampersand is optically smaller than the slab it sits
-     under, so it runs at 1.15× the name size. Its own shadow — over a bright
-     frame the red thins out badly without one. */
-  .hero-hinge .amp{
-    font-size:calc(var(--display-2) * 1.15);line-height:1em;
+  /* Second line indents in from the first, ampersand riding small and
+     top-justified right beside the name — the poster-style stack, not a
+     centered hinge. align-items:flex-start plus a small negative margin on
+     the amp is what gets its cap-height level with the name's instead of
+     its (much taller) own vertical center. */
+  .hero-name2{
+    display:flex;align-items:flex-start;gap:14px;
+    margin:clamp(2px,.4vw,8px) 0 0 clamp(34px,5vw,72px);
+  }
+  .hero-name2 .amp{
+    font-size:calc(var(--display-2) * 0.5);line-height:1em;
+    margin-top:.03em;
     text-shadow:0 2px 18px rgba(23,19,15,.55);
   }
-  .hero-hinge .rule{height:2px;flex:1;max-width:220px;background:rgba(247,242,233,.42);}
+  .hero-name2 .n{margin:0;}
   .hero-tag{margin:30px 0 0;max-width:34ch;color:var(--muted);font-size:var(--step-1);line-height:var(--lh-body);}
   .hero-cta{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
 
@@ -390,7 +407,7 @@
   .reveal.in{opacity:1;transform:none;}
 
   /* ---------- ABOUT ---------- */
-  .about-lead{font-size:var(--step-4);line-height:var(--lh-tight);max-width:26ch;font-family:"Alfa Slab One",serif;font-weight:400;letter-spacing:-.012em;}
+  .about-lead{font-size:var(--step-4);line-height:var(--lh-tight);max-width:24ch;font-family:"Archivo";font-weight:600;letter-spacing:-.005em;}
   .about-body{text-wrap:pretty;color:var(--ink-soft);line-height:var(--lh-body);}
 
   /* Official NERFA showcase badge. Their artwork, unmodified — its cream ground
@@ -417,7 +434,7 @@
     text-align:center;padding:26px;transition:border-color .25s,transform .25s,background .25s;
   }
   .media:hover{border-color:var(--line-strong);background:#EDE4D2;transform:translateY(-3px);}
-  .media .plat{font-family:"Alfa Slab One",serif;font-weight:400;font-size:var(--step-2);letter-spacing:-.01em;margin-bottom:8px;}
+  .media .plat{font-family:"Anton";font-weight:400;font-size:var(--step-3);letter-spacing:.02em;margin-bottom:8px;}
   .media .hint{color:var(--muted);font-size:var(--step--1);line-height:var(--lh-small);}
   .media .amp{font-size:var(--step-6);margin-bottom:10px;}
 
@@ -460,7 +477,7 @@
     padding:24px 8px;border-bottom:1px solid var(--line);transition:background .2s;
   }
   .show:hover{background:rgba(23,19,15,.035);}
-  .show .date{font-family:"Alfa Slab One",serif;font-weight:400;font-size:var(--step-1);letter-spacing:-.01em;line-height:var(--lh-tight);}
+  .show .date{font-family:"Anton";font-weight:400;font-size:var(--step-2);letter-spacing:.01em;line-height:var(--lh-tight);}
   .show .date span{display:block;font-family:"Archivo";font-weight:500;font-size:var(--step--2);color:var(--muted);letter-spacing:.14em;text-transform:uppercase;line-height:var(--lh-small);}
   .show .venue{font-size:var(--step-0);line-height:var(--lh-tight);}
   .show .venue small{display:block;color:var(--muted);font-size:var(--step--1);line-height:var(--lh-small);}
@@ -497,7 +514,7 @@
 
   /* ---------- BOOK ---------- */
   .book{text-align:center;}
-  .book h2{font-size:var(--display-1);max-width:18ch;margin:0 auto 10px;}
+  .book h2{font-size:var(--display-1);max-width:22ch;margin:0 auto 10px;}
   .book h2 .payoff{display:block;color:var(--red-deep);}
   .book p{color:var(--muted);max-width:44ch;margin:20px auto 34px;line-height:var(--lh-body);}
   .book-email{
@@ -565,7 +582,7 @@
     .hero-photo{order:-1;border-left:0;border-bottom:1px solid var(--line);}
     .hero-photo::after{left:0;right:0;top:auto;bottom:0;width:auto;height:4px;}
     .hero-copy{padding:38px var(--gutter) 56px;}
-    .hero-hinge .rule{max-width:120px;}
+    .hero-name2{margin-left:0;}
     .praise-page.is-active{grid-template-columns:1fr;gap:30px;}
     .quote + .quote{border-top:1px solid var(--line);padding-top:30px;}
   }
@@ -640,13 +657,12 @@
            preload="metadata" aria-hidden="true" tabindex="-1"></video>
     <div class="vhero-scrim" aria-hidden="true"></div>
     <div class="vhero-copy">
-      <p class="eyebrow vhero-eyebrow">electric violin, guitar &amp; two voices</p>
+      <p class="eyebrow vhero-eyebrow" hidden>electric violin, guitar <span class="amp amp-small">&amp;</span> two voices</p>
       <div class="hero-names">
         <h1 class="n">Deni Bonet</h1>
-        <div class="hero-hinge"><span class="amp">&amp;</span><span class="rule"></span></div>
-        <h1 class="n">Chris Flynn</h1>
+        <div class="hero-name2"><span class="amp">&amp;</span><h1 class="n">Chris Flynn</h1></div>
       </div>
-      <p class="vhero-tag">Carnegie Hall to living rooms. Same two players, same joy.</p>
+      <p class="vhero-tag">Carnegie Hall to living rooms. Same two players, same energy.</p>
       <div class="hero-signup">
         <form class="signup-form" id="signupForm" method="POST" target="brevoTarget"
               action="https://YOUR-ACCOUNT-ID.sibforms.com/serve/YOUR-FORM-ID">
@@ -670,7 +686,7 @@
   <!-- PRAISE -->
   <section class="praise">
     <div class="wrap">
-      <p class="label">What the rooms say</p>
+      <p class="label">What people are saying</p>
       <div class="praise-grid" id="praiseGrid" aria-live="polite">
         <div class="praise-page is-active" data-page="0">
           <figure class="quote">
@@ -761,7 +777,7 @@
                  loading="lazy">
           </div>
           <h3>Deni Bonet</h3>
-          <p class="role">electric violin &amp; vocals</p>
+          <p class="role">electric violin <span class="amp amp-small">&amp;</span> vocals</p>
           <p>With a dynamic career spanning stages around the world, Deni Bonet has built a reputation as a virtuoso electric violinist, singer-songwriter, and captivating performer. Early on, Deni honed her craft as an original member of the house band for NPR's Mountain Stage before launching a standout solo career and becoming an in-demand collaborator for legends like Cyndi Lauper, R.E.M., and Sarah McLachlan.</p>
           <p>From performing at Carnegie Hall and the White House to touring internationally, she has continually redefined what it means to rock a violin. A fixture of New York's vibrant live scene, Deni has brought her fiery string work and electric energy to countless stages, festivals, and recordings across the globe.</p>
         </div>
@@ -772,7 +788,7 @@
                  loading="lazy">
           </div>
           <h3>Chris Flynn</h3>
-          <p class="role">guitar &amp; vocals</p>
+          <p class="role">guitar <span class="amp amp-small">&amp;</span> vocals</p>
           <p>With a career deeply rooted in the heart of the East Coast music scene, Chris Flynn has built a reputation as a dynamic guitarist, vocalist, and musical director. Early on, Chris helped pioneer a communal approach to the indie music business as a founder of Cropduster Records, an artist-owned label and cooperative collective that served as a hub for the NY/NJ roots and pop scenes.</p>
           <p>He also served as the Musical Director for New York's famed All-Star Irish Rock Revue, guiding an annual St. Patrick's Day tradition that brought together an incredible cross-section of talent, from local heroes to Rock &amp; Roll Hall of Fame royalty including Ronnie Spector and members of the Alice Cooper Group and Bad Company. It was through this iconic celebration that Chris and Deni Bonet first met and began their long-standing musical collaboration.</p>
         </div>
