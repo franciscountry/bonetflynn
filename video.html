@@ -210,16 +210,11 @@
     font-size:var(--display-2);
     line-height:var(--lh-display);
   }
-  .hero-hinge{display:flex;align-items:center;gap:22px;margin:10px 0 6px;}
-  /* Sized below the names and given a real line box — an oversized glyph on a
-     .7 line-height was spilling out of its row onto the name underneath.
-     The small left margin is optical: the italic swash hangs past its sidebearing. */
-  .hero-hinge .amp{
-    font-family:"Fraunces",serif;font-style:italic;font-weight:400;
-    font-size:calc(var(--display-2) * 0.7);line-height:1em;color:var(--red);
-    margin-left:.06em;
+  /* The red bar is the hinge now — no ampersand between the names. */
+  .hero-hinge{display:flex;align-items:center;margin:clamp(10px,1.4vw,20px) 0;}
+  .hero-hinge .rule{
+    height:5px;flex:none;width:clamp(84px,11vw,164px);background:var(--red);
   }
-  .hero-hinge .rule{height:1px;flex:1;max-width:200px;background:var(--line-strong);}
   .hero-tag{margin:30px 0 0;max-width:34ch;color:var(--muted);font-size:var(--step-1);line-height:var(--lh-body);}
   .hero-cta{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
 
@@ -613,7 +608,7 @@
       <p class="eyebrow vhero-eyebrow">electric violin, guitar <span class="amp">&amp;</span> two voices</p>
       <div class="hero-names">
         <h1 class="n">Deni Bonet</h1>
-        <div class="hero-hinge"><span class="amp">&amp;</span><span class="rule"></span></div>
+        <div class="hero-hinge"><span class="rule"></span></div>
         <h1 class="n">Chris Flynn</h1>
       </div>
       <p class="vhero-tag">Carnegie Hall to living rooms. Same two players, same joy.</p>
