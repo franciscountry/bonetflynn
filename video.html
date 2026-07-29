@@ -152,6 +152,8 @@
   .nav.solid .brand{opacity:1;visibility:visible;}
   /* Wordmark lives in the hero and the footer. Delete this rule to bring it back. */
   .brand-text{display:none;}
+  /* 400px source for a badge that displays at 66–98px: enough for 3x screens.
+     The 200px PNG was right at the limit at 2x and mushy above it. */
   .brand-mark{height:var(--mark-h);width:auto;flex:none;margin-top:2px;}
   /* The serif ampersand needs air to read; wedged between two Anton words it fights
      the baseline. Anton's own ampersand sits flush — the Fraunces one stays the
@@ -582,7 +584,7 @@
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
       <a href="#top" class="brand" aria-label="Bonet and Flynn — back to top">
-        <img class="brand-mark" src="images/mark.png" alt="" width="211" height="200">
+        <img class="brand-mark" src="images/mark.webp" alt="" width="422" height="400">
         <span class="brand-text">Bonet <span class="amp">&amp;</span> Flynn</span>
       </a>
       <nav class="nav-links" id="navlinks">
