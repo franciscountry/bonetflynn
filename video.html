@@ -244,14 +244,16 @@
   /* Starts below the bar rather than behind it, so the footage never reaches the
      top of the window. Height accounts for the bar so the hero still fills the
      viewport exactly. */
+  /* Fills the viewport under the bar. Any crop that's needed comes off the
+     bottom — object-position:center top pins the top edge of the frame, so heads
+     are never touched and the floor goes instead. */
   .vhero{
-    position:relative;
-    min-height:calc(100svh - var(--nav-h));
+    position:relative;height:calc(100svh - var(--nav-h));
     display:flex;align-items:flex-end;
-    padding:clamp(40px,10vh,120px) 0 clamp(44px,8vh,96px);
+    padding:0 0 clamp(28px,4vw,64px);
     overflow:hidden;background:var(--ink);
   }
-  .vhero-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .vhero-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;}
   /* Flat tint rather than a gradient — a gradient reads as a visible band across
      the top of the frame. Brightness under the headline peaks at 155/255 in this
      clip, so .52 keeps bone type well clear of it at the worst moment. */
@@ -312,7 +314,7 @@
   }
 
   @media(max-width:900px){
-    .vhero{min-height:auto;padding-bottom:clamp(36px,6vh,64px);}
+    .vhero{height:auto;min-height:0;padding-bottom:clamp(36px,6vh,64px);}
     .vhero-media{position:absolute;}
     .vhero-copy{padding-top:38vh;}
   }
@@ -469,9 +471,11 @@
   /* ---------- BOOK ---------- */
   /* Inverted block — the page's closing statement gets its own room. */
   .book{text-align:center;background:var(--ink);color:#DED3C6;}
-  .book .label{color:#9C8B76;}
+  .book .label{color:#B5A38C;}
   .book h2{color:#F7F2E9;}
-  .book p{color:#C3B7A9;}
+  /* 9.4:1 was technically legible but read as dim; 14:1 sits closer to how the
+     bone type reads on the light sections. */
+  .book p{color:#E8DFD2;}
   .book .book-email{color:#F7F2E9;border-bottom-color:var(--red);}
   .book .book-email:hover{color:var(--red);}
   .book h2{font-size:var(--display-1);max-width:16ch;margin:0 auto 10px;}
@@ -501,7 +505,7 @@
   }
   /* Must sit after the rule above: same specificity, so source order decides.
      Five digits doesn't need 220px — the email field takes what's left. */
-  .signup-form input.zip{flex:0 0 96px;min-width:0;text-align:center;letter-spacing:.06em;}
+  .signup-form input.zip{flex:0 0 116px;min-width:0;text-align:center;letter-spacing:.03em;}
   .signup-form input:not([type=hidden])::placeholder{color:var(--muted);}
   .signup-form input:not([type=hidden]):focus{outline:none;border-color:var(--red-deep);}
   .signup-form button{flex:none;}
