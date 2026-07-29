@@ -144,6 +144,11 @@
   .brand{
     width:var(--mark-d);height:var(--mark-d);flex:none;
     align-self:flex-start;margin-top:5px;
+    /* Pulled out of the content column into the left margin, so the overhang
+       falls on empty page rather than on headings. Clamped so it never travels
+       closer than 14px to the viewport edge, and stops moving once the margin
+       runs out on narrower screens. */
+    margin-left:calc(-1 * clamp(0px, (100vw - var(--maxw))/2 + 14px, 150px));
     display:grid;place-items:center;
     border-radius:50%;background:var(--paper);
     box-shadow:inset 0 0 0 1px var(--line);
@@ -437,6 +442,12 @@
   .foot-inner small{color:#9C8B76;font-size:var(--step--2);line-height:var(--lh-small);}
 
   /* ---------- RESPONSIVE ---------- */
+  /* No spare margin at these widths, so the badge sits nearly flush with the bar
+     and stops reaching down into the content. */
+  @media(max-width:1200px){
+    :root{--mark-d:106px;--mark-h:84px;}
+  }
+
   @media(max-width:1120px){
     .nav-links{gap:20px;}
     .nav-links > a{font-size:var(--step--2);}
@@ -454,7 +465,7 @@
     .quote + .quote{border-top:1px solid var(--line);padding-top:30px;}
   }
   @media(max-width:860px){
-    :root{--nav-h:76px;--mark-d:98px;--mark-h:76px;}
+    :root{--nav-h:76px;--mark-d:88px;--mark-h:70px;}
     .nav-links{
       position:fixed;inset:var(--nav-h) 0 auto 0;background:rgba(250,246,238,.98);backdrop-filter:blur(10px);
       flex-direction:column;gap:0;padding:10px 0 20px;border-bottom:1px solid var(--line);
