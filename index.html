@@ -272,6 +272,9 @@
 
   /* ---------- SECTION SCAFFOLD ---------- */
   section{padding:clamp(54px,7vw,94px) 0;position:relative;}
+  /* The header is fixed, so an anchor jump would park the section top behind it.
+     This stops the scroll short by the bar height plus a little air. */
+  section[id]{scroll-margin-top:calc(var(--nav-h) + 18px);}
   section.hero{padding:var(--nav-h) 0 0;}
   section.praise{padding:clamp(44px,5vw,62px) 0;}
   /* z-index so the ampersand is never painted over by a neighbouring section's
