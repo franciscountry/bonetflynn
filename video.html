@@ -256,7 +256,7 @@
      top of the window. Height accounts for the bar so the hero still fills the
      viewport exactly. */
   .vhero{
-    position:relative;margin-top:var(--nav-h);
+    position:relative;
     min-height:calc(100svh - var(--nav-h));
     display:flex;align-items:flex-end;
     padding:clamp(40px,10vh,120px) 0 clamp(44px,8vh,96px);
@@ -284,18 +284,21 @@
     color:#C3B7A9;font-size:var(--step--1);line-height:var(--lh-small);
     margin:14px 0 0;max-width:36ch;
   }
-  .vhero .signup-form input[type=email]{
+  .vhero .signup-form input:not([type=hidden]){
     background:rgba(247,242,233,.12);border-color:rgba(247,242,233,.38);color:#F7F2E9;
   }
-  .vhero .signup-form input[type=email]::placeholder{color:rgba(247,242,233,.6);}
-  .vhero .signup-form input[type=email]:focus{border-color:#F7F2E9;}
+  .vhero .signup-form input:not([type=hidden])::placeholder{color:rgba(247,242,233,.6);}
+  .vhero .signup-form input:not([type=hidden]):focus{border-color:#F7F2E9;}
   .vhero .signup-done{color:#F0C9C2;}
 
   /* The bar is a solid dark band the video runs beneath, rather than something
      laid over the footage. Same treatment at every scroll position, so nothing
      changes state as you move down the page. */
+  /* Sticky rather than fixed: the bar takes up real space at the top of the
+     document, so the hero starts underneath it without any offset maths — and
+     the video can't run up behind it. */
   header.nav,header.nav.solid{
-    background:var(--ink);backdrop-filter:none;box-shadow:none;
+    position:sticky;top:0;background:var(--ink);backdrop-filter:none;box-shadow:none;
   }
   header.nav .nav-links > a{color:rgba(247,242,233,.86);}
   header.nav .nav-links > a:hover{color:#fff;}
@@ -485,14 +488,15 @@
     margin:14px 0 0;max-width:36ch;
   }
   .signup-form{display:flex;gap:12px;flex-wrap:wrap;}
-  .signup-form .zip{flex:0 0 92px;min-width:0;text-align:center;}
-  .signup-form input[type=email]{
+  /* Same pill as the email field, just narrower. */
+  .signup-form .zip{flex:0 0 108px;min-width:0;text-align:center;letter-spacing:.04em;}
+  .signup-form input:not([type=hidden]){
     flex:1;min-width:220px;font-family:"Archivo";font-size:var(--step-0);color:var(--ink);
     background:var(--paper);border:1px solid var(--line-strong);border-radius:999px;
     padding:14px 22px;transition:border-color .2s;
   }
-  .signup-form input[type=email]::placeholder{color:var(--muted);}
-  .signup-form input[type=email]:focus{outline:none;border-color:var(--red-deep);}
+  .signup-form input:not([type=hidden])::placeholder{color:var(--muted);}
+  .signup-form input:not([type=hidden]):focus{outline:none;border-color:var(--red-deep);}
   .signup-form button{flex:none;}
   .signup-done{
     flex-basis:100%;margin:4px 0 0;color:var(--red-deep);
@@ -558,7 +562,7 @@
     .show .venue{grid-column:1/-1;order:3;}
     .sup-grid{grid-template-columns:1fr;}
     .sup-visual{order:-1;aspect-ratio:16/9;}
-    .signup-form input[type=email]{min-width:0;}
+    .signup-form input:not([type=hidden]){min-width:0;}
   }
 
   @media(prefers-reduced-motion:reduce){
