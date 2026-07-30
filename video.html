@@ -758,7 +758,7 @@
       <div class="reveal about-cols">
         <div>
           <p class="label">The duo</p>
-          <p class="about-lead">Two players &amp; a sound big enough you'll look for the band.</p>
+          <p class="about-lead">Two players and a sound big enough you'll look for the band.</p>
           <a class="nerfa" href="https://nerfa.org/" target="_blank" rel="noopener">
             <img src="images/nerfa-2026.png" width="520" height="520" loading="lazy"
                  alt="NERFA 2026 Formal Showcase Artist — Northeast Regional Folk Alliance">
@@ -934,6 +934,16 @@
       if (!list) return;
       const page = 'https://www.bandsintown.com/a/' + ARTIST.replace(/^id_/, '');
 
+      /* Hot Pants and Tony shares this Bandsintown artist page's feed but
+         isn't Bonet & Flynn — checked against title, lineup and venue name
+         since which field carries it isn't consistent event to event. */
+      const isHotPantsAndTony = (ev) => {
+        const needle = /hot\s*pants?\s*(and|&)\s*tony/i;
+        const haystack = [ev.title, (ev.venue || {}).name, ...(ev.lineup || [])]
+          .filter(Boolean).join(' | ');
+        return needle.test(haystack);
+      };
+
       const msg = (html) => {
         list.innerHTML = '';
         const p = document.createElement('p');
@@ -1019,6 +1029,7 @@
         fetch(endpoint('past'))
           .then(r => r.ok ? r.json() : Promise.reject('HTTP ' + r.status))
           .then(events => {
+            events = Array.isArray(events) ? events.filter(ev => !isHotPantsAndTony(ev)) : events;
             if (!Array.isArray(events) || !events.length) {
               pastList.innerHTML = '<p class="shows-msg">Nothing in the archive yet.</p>';
               return;
@@ -1037,6 +1048,7 @@
       fetch(url)
         .then(r => r.ok ? r.json() : Promise.reject('HTTP ' + r.status))
         .then(events => {
+          events = Array.isArray(events) ? events.filter(ev => !isHotPantsAndTony(ev)) : events;
           if (!Array.isArray(events) || !events.length) {
             msg('No dates on the calendar right now — we\'re booking. ' +
                 '<a href="#book">Get in touch</a> and let\'s find one.');
