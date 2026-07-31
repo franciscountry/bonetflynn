@@ -344,16 +344,19 @@
     .vhero-copy{padding-top:38vh;}
   }
 
-  /* ---------- PRAISE (quote band) ---------- */
-  .praise{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  /* ---------- PRAISE (quote cards) ---------- */
   .praise .label{margin:0 0 30px;}
   /* Ten quotes, three per page. The grid lives on .praise-page (not
      .praise-grid) so a short final page can drop to one column via
      .is-single without fighting the three-column layout the fuller pages need. */
   .praise-page{display:none;}
-  .praise-page.is-active{display:grid;grid-template-columns:repeat(3,1fr);gap:38px;}
+  .praise-page.is-active{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
   .praise-page.is-single.is-active{grid-template-columns:1fr;max-width:520px;margin:0 auto;}
-  .quote{margin:0;}
+  /* Same card recipe as .player in About: border, page-off background, radius. */
+  .quote{
+    margin:0;border:1px solid var(--line);border-radius:14px;
+    padding:26px 26px 28px;background:var(--paper-2);
+  }
   .quote::before{
     content:"\201C";display:block;font-family:"Fraunces",serif;font-style:italic;
     color:var(--red);font-size:var(--step-8);line-height:.6em;margin-bottom:16px;
@@ -376,7 +379,7 @@
     font-size:var(--step-1);line-height:1;cursor:pointer;
     transition:border-color .2s,background .2s,transform .2s;
   }
-  .praise-arrow:hover{border-color:var(--ink);background:var(--paper);transform:translateY(-1px);}
+  .praise-arrow:hover{border-color:var(--ink);background:var(--paper-2);transform:translateY(-1px);}
   .praise-dots{display:flex;gap:10px;}
   .praise-dot{
     width:9px;height:9px;padding:0;border:0;border-radius:50%;
@@ -586,8 +589,7 @@
     .hero-photo::after{left:0;right:0;top:auto;bottom:0;width:auto;height:4px;}
     .hero-copy{padding:38px var(--gutter) 56px;}
     .hero-name2{margin-left:0;}
-    .praise-page.is-active{grid-template-columns:1fr;gap:30px;}
-    .quote + .quote{border-top:1px solid var(--line);padding-top:30px;}
+    .praise-page.is-active{grid-template-columns:1fr;gap:20px;}
   }
   @media(max-width:860px){
     :root{--nav-h:76px;--mark-d:70px;--mark-h:44px;}
