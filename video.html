@@ -157,6 +157,12 @@
     box-shadow:inset 0 0 0 1px var(--line);
     opacity:0;visibility:hidden;
     transition:opacity .35s ease, visibility .35s ease;
+    /* will-change alone, no translateZ/transform: forcing a full 3D layer
+       on a border-radius:50% element is a known WebKit/iOS trigger for the
+       GPU layer's tile bounds clipping the circle (a flat top edge) —
+       exactly the wrong tool for the mid-transition glitch this was meant
+       to fix. */
+    will-change:opacity;
   }
   .nav.solid .brand{opacity:1;visibility:visible;}
   /* Wordmark lives in the hero and the footer. Delete this rule to bring it back. */
@@ -594,12 +600,14 @@
   .foot-inner small{color:#9C8B76;font-size:var(--step--2);line-height:var(--lh-small);}
 
   /* ---------- RESPONSIVE ---------- */
-  /* Below ~1404px the left margin is narrower than the badge, so an overhang would
-     land on the content column no matter where it sits. Under that threshold the
-     badge shrinks to fit inside the bar and stops overhanging entirely. */
+  /* Below ~1404px the left margin is narrower than the badge, so a sideways
+     overhang would land on the content column no matter where it sits —
+     margin-left stays 0 here. Vertically, though, it still hangs below the
+     bar over the page content, same idea as desktop: sitting flush inside
+     the bar's own height left it feeling squeezed against the top edge. */
   @media(max-width:1440px){
     :root{--mark-d:88px;--mark-h:56px;}
-    .brand{align-self:center;margin-top:0;margin-left:0;}
+    .brand{align-self:flex-start;margin-top:20px;margin-left:0;}
   }
 
   @media(max-width:1120px){
@@ -940,7 +948,15 @@
     })();
 
     const nav = document.getElementById('nav');
-    const onScroll = () => nav.classList.toggle('solid', window.scrollY > 40);
+    // Hysteresis (60 to show, 30 to hide) instead of one 40px line — scroll
+    // position jitters near a single boundary during momentum/rubber-band
+    // scrolling, which was re-triggering the brand badge's fade repeatedly
+    // and showing up as a rendering glitch (cut-off circle, flash of black).
+    let solid = nav.classList.contains('solid');
+    const onScroll = () => {
+      if (!solid && window.scrollY > 60) { solid = true; nav.classList.add('solid'); }
+      else if (solid && window.scrollY < 30) { solid = false; nav.classList.remove('solid'); }
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, {passive:true});
 
