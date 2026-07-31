@@ -291,26 +291,49 @@
     font-size:var(--step-1);line-height:var(--lh-body);
   }
   .line2{display:block;}
-  .vhero .hero-signup{margin-top:30px;max-width:34rem;}
-  .vhero .signup-form input:not([type=hidden]){transition:background .25s ease,border-color .2s ease;}
-  /* :focus-within lifts the whole row, not just the field being typed in — the
-     zip and email read as one control, so they shouldn't shade independently. */
-  .vhero .signup-form:focus-within input:not([type=hidden]){
-    background:rgba(247,242,233,.26);border-color:rgba(247,242,233,.6);
+
+  /* Hero + signup live in a shared relative parent so the form can be
+     pinned back over the video on desktop (absolute, matching the old
+     on-video position) while flowing as a normal block below it on
+     phones — see the hero-signup-band rules further down. */
+  .hero-wrap{position:relative;}
+  .hero-signup-band{
+    padding-left:max(var(--gutter), calc((100vw - var(--maxw))/2 + var(--gutter)));
+    padding-right:var(--gutter);
   }
-  .vhero .signup-form:focus-within input:not([type=hidden]):focus{
-    background:rgba(247,242,233,.34);border-color:#F7F2E9;
+  .hero-signup-band .hero-signup{max-width:34rem;margin-top:0;}
+
+  @media(min-width:901px){
+    /* Desktop: .vhero reserves extra bottom padding sized to fit the band
+       plus a gap on each side of it, so the tagline (bottom-aligned inside
+       .vhero-copy) and the form never compete for the same space. Pinned
+       40px off the very bottom, not flush — closer to the tagline like it
+       sat when it was part of .vhero-copy's own flow, with breathing room
+       left below it before the video's edge too. */
+    .hero-signup-band{
+      position:absolute;left:0;right:0;bottom:40px;
+      pointer-events:none;
+    }
+    .vhero{padding-bottom:120px;}
+    .hero-signup-band .hero-signup{pointer-events:auto;}
+    /* On-video styling — light, translucent fields, since this sits over
+       the footage here (unlike the plain-page mobile layout below). */
+    .hero-signup-band .signup-form input:not([type=hidden]){transition:background .25s ease,border-color .2s ease;}
+    /* :focus-within lifts the whole row, not just the field being typed in —
+       the zip and email read as one control, so they shouldn't shade independently. */
+    .hero-signup-band .signup-form:focus-within input:not([type=hidden]){
+      background:rgba(247,242,233,.26);border-color:rgba(247,242,233,.6);
+    }
+    .hero-signup-band .signup-form:focus-within input:not([type=hidden]):focus{
+      background:rgba(247,242,233,.34);border-color:#F7F2E9;
+    }
+    .hero-signup-band .signup-form input:not([type=hidden]){
+      background:rgba(247,242,233,.12);border-color:rgba(247,242,233,.38);color:#F7F2E9;
+    }
+    .hero-signup-band .signup-form input:not([type=hidden])::placeholder{color:rgba(247,242,233,.6);}
+    .hero-signup-band .signup-form input:not([type=hidden]):focus{border-color:#F7F2E9;}
+    .hero-signup-band .signup-done{color:#F0C9C2;}
   }
-  .vhero-note{
-    color:#C3B7A9;font-size:var(--step--1);line-height:var(--lh-small);
-    margin:14px 0 0;max-width:36ch;
-  }
-  .vhero .signup-form input:not([type=hidden]){
-    background:rgba(247,242,233,.12);border-color:rgba(247,242,233,.38);color:#F7F2E9;
-  }
-  .vhero .signup-form input:not([type=hidden])::placeholder{color:rgba(247,242,233,.6);}
-  .vhero .signup-form input:not([type=hidden]):focus{border-color:#F7F2E9;}
-  .vhero .signup-done{color:#F0C9C2;}
 
   /* The bar is a solid dark band the video runs beneath, rather than something
      laid over the footage. Same treatment at every scroll position, so nothing
@@ -330,18 +353,17 @@
      so the circle stays defined where it overhangs onto the light page below. */
   .brand{background:var(--paper);box-shadow:inset 0 0 0 2px var(--ink);}
 
-  @media(max-width:860px){
-    .nav-links{background:rgba(23,19,15,.98);border-bottom:0;}
-  }
-
   @media(max-width:900px){
-    .vhero{height:auto;min-height:0;padding-bottom:clamp(36px,6vh,64px);}
-    /* Phone: the footage becomes a shallow band above the copy rather than a
-       full-height panel — a 16:9 strip on a tall screen wastes the screen. */
-    .vhero-media{height:52vh;top:0;bottom:auto;}
-    .vhero-copy{padding-top:calc(52vh + 26px);}
-    .vhero-media{position:absolute;}
-    .vhero-copy{padding-top:38vh;}
+    /* Phone: height comes from content (copy + a 52vh floor for the footage),
+       not a fixed viewport height — the video fills whatever that ends up
+       being (base .vhero-media rule: inset:0, height:100%) so it always
+       covers the full copy block instead of a fixed band the copy can
+       overflow past onto plain background. */
+    .vhero{height:auto;min-height:52vh;padding-bottom:clamp(36px,6vh,64px);}
+    /* Below the video here, not overlaid on it — plain page background,
+       so the base (non on-video) input styles apply automatically since
+       this is no longer inside .vhero. */
+    .hero-signup-band{margin-top:28px;padding-bottom:clamp(24px,5vw,40px);}
   }
 
   /* ---------- PRAISE (quote cards) ---------- */
@@ -598,8 +620,8 @@
   @media(max-width:860px){
     :root{--nav-h:76px;--mark-d:70px;--mark-h:44px;}
     .nav-links{
-      position:fixed;inset:var(--nav-h) 0 auto 0;background:rgba(250,246,238,.98);backdrop-filter:blur(10px);
-      flex-direction:column;gap:0;padding:10px 0 20px;border-bottom:1px solid var(--line);
+      position:fixed;inset:var(--nav-h) 0 auto 0;background:rgba(23,19,15,.98);backdrop-filter:blur(10px);
+      flex-direction:column;gap:0;padding:10px 0 20px;border-bottom:0;
       transform:translateY(-120%);transition:transform .3s ease;
     }
     .nav-links.open{transform:translateY(0);}
@@ -618,7 +640,13 @@
     .show .venue{grid-column:1/-1;order:3;}
     .sup-grid{grid-template-columns:1fr;}
     .sup-visual{order:-1;aspect-ratio:16/9;}
-    .signup-form input:not([type=hidden]){min-width:0;}
+    /* min-width:0 alone let email shrink to fit alongside zip+button instead
+       of wrapping — not enough room left to type in. Forcing its own full
+       row (excluding .zip, whose own rule holds it to 116px — same
+       specificity as this one, so without the exclusion it wins on source
+       order and goes full-width too) fixes that; zip and the button then
+       pair up on the row below. */
+    .signup-form input:not([type=hidden]):not(.zip){min-width:0;flex:1 1 100%;}
   }
 
   @media(prefers-reduced-motion:reduce){
@@ -660,18 +688,22 @@
   </header>
 
   <!-- HERO (video variant) -->
-  <section class="vhero" id="top">
-    <video class="vhero-media" id="heroVideo" poster="images/hero-poster.jpg"
-           src="videos/hero.mp4" autoplay muted loop playsinline
-           preload="metadata" aria-hidden="true" tabindex="-1"></video>
-    <div class="vhero-scrim" aria-hidden="true"></div>
-    <div class="vhero-copy">
-      <p class="eyebrow vhero-eyebrow" hidden>electric violin, guitar <span class="amp amp-small">&amp;</span> two voices</p>
-      <div class="hero-names">
-        <h1 class="n">Deni Bonet</h1>
-        <div class="hero-name2"><span class="amp">&amp;</span><h1 class="n">Chris Flynn</h1></div>
+  <div class="hero-wrap">
+    <section class="vhero" id="top">
+      <video class="vhero-media" id="heroVideo" poster="images/hero-poster.jpg"
+             src="videos/hero.mp4" autoplay muted loop playsinline
+             preload="metadata" aria-hidden="true" tabindex="-1"></video>
+      <div class="vhero-scrim" aria-hidden="true"></div>
+      <div class="vhero-copy">
+        <p class="eyebrow vhero-eyebrow" hidden>electric violin, guitar <span class="amp amp-small">&amp;</span> two voices</p>
+        <div class="hero-names">
+          <h1 class="n">Deni Bonet</h1>
+          <div class="hero-name2"><span class="amp">&amp;</span><h1 class="n">Chris Flynn</h1></div>
+        </div>
+        <p class="vhero-tag">Carnegie Hall to living rooms.<span class="line2">A show you'll be talking about tomorrow.</span></p>
       </div>
-      <p class="vhero-tag">Carnegie Hall to living rooms.<span class="line2">A show you'll be talking about tomorrow.</span></p>
+    </section>
+    <div class="hero-signup-band">
       <div class="hero-signup">
         <form class="signup-form" id="signupForm" method="POST" target="brevoTarget"
               action="https://YOUR-ACCOUNT-ID.sibforms.com/serve/YOUR-FORM-ID">
@@ -690,7 +722,7 @@
         <iframe name="brevoTarget" title="Mailing list signup" style="display:none" aria-hidden="true"></iframe>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- PRAISE -->
   <section class="praise">
