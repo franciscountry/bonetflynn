@@ -372,7 +372,7 @@
     display:block;font-weight:400;color:var(--muted);font-size:var(--step--2);
     letter-spacing:.01em;margin-top:3px;line-height:var(--lh-small);}
 
-  .praise-nav{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:34px;}
+  .praise-nav{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:16px;}
   .praise-arrow{
     display:grid;place-items:center;width:40px;height:40px;flex:none;border-radius:50%;
     border:1px solid var(--line-strong);background:transparent;color:var(--ink);
@@ -398,7 +398,10 @@
      scrolling past normally. */
   [id]{scroll-margin-top:calc(var(--nav-h) + 18px);}
   section.hero{padding:var(--nav-h) 0 0;}
-  section.praise{padding:clamp(30px,3.5vw,44px) 0;}
+  section.praise{padding:clamp(30px,3.5vw,44px) 0 8px;}
+  /* Quotes sit right above the Duo section — no gap between them specifically,
+     unlike every other section boundary on the page. */
+  .praise + section{padding-top:8px;}
 
   .sec-head{margin-bottom:38px;max-width:60ch;}
   .sec-head h2{font-size:var(--step-9);margin-top:14px;}
@@ -418,6 +421,10 @@
   .nerfa:hover img{opacity:.9;}
   .about-body p{margin:0 0 18px;margin:0 0 0.75lh;}
   .about-cols{display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(30px,6vw,80px);align-items:start;}
+  /* .label and .about-lead are <p>s with no margin reset, so without this
+     they carry the UA default top margin and the column starts lower than
+     .about-body (which zeroes it on .about-body p). */
+  .about-cols .label{margin-top:0;}
 
   .players{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:48px;}
   .player{border:1px solid var(--line);border-radius:14px;padding:22px 22px 28px;background:var(--paper-2);}
