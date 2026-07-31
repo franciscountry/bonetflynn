@@ -389,19 +389,12 @@
   .praise-dot.is-active{background:var(--red-deep);transform:scale(1.25);}
 
   /* ---------- SECTION SCAFFOLD ---------- */
-  section{padding:clamp(54px,7vw,94px) 0;position:relative;}
+  section{padding:clamp(36px,5vw,64px) 0;position:relative;}
   /* The header is fixed, so an anchor jump would park the section top behind it.
      This stops the scroll short by the bar height plus a little air. */
   section[id]{scroll-margin-top:calc(var(--nav-h) + 18px);}
   section.hero{padding:var(--nav-h) 0 0;}
-  section.praise{padding:clamp(44px,5vw,62px) 0;}
-  /* z-index so the ampersand is never painted over by a neighbouring section's
-     background. .edge drops the negative pull where the next block is opaque —
-     otherwise the section slides up over the glyph and clips it. */
-  .divider{display:flex;justify-content:center;align-items:center;padding:0;margin:-6px 0;position:relative;z-index:1;}
-  .divider::before,.divider::after{content:"";height:1px;width:min(180px,34vw);background:var(--line);}
-  .divider span{width:9px;height:9px;margin:0 18px;background:var(--red);transform:rotate(45deg);}
-  .divider.edge{margin:0;}
+  section.praise{padding:clamp(30px,3.5vw,44px) 0;}
 
   .sec-head{margin-bottom:38px;max-width:60ch;}
   .sec-head h2{font-size:var(--step-9);margin-top:14px;}
@@ -446,8 +439,12 @@
 
   /* Watch runs tighter than the other sections — the video is the whole section,
      so it doesn't need a full block of air above and below it. */
-  #watch{padding:clamp(30px,4vw,54px) 0;}
+  #watch{padding:clamp(20px,3vw,38px) 0;}
   #watch .sec-head{margin-bottom:26px;}
+  /* Nav's Watch link jumps straight to the video card, not the section top —
+     same fixed-header offset as section[id] gets, since this is an <a>, not
+     a section, so it doesn't inherit that rule. */
+  #videoCard{scroll-margin-top:calc(var(--nav-h) + 18px);}
 
   /* Click-to-play video card: thumbnail only until clicked, so the YouTube
      player never loads for visitors who don't watch. Opens on YouTube if JS is off. */
@@ -636,7 +633,7 @@
       </a>
       <nav class="nav-links" id="navlinks">
         <a href="#about">About</a>
-        <a href="#watch">Watch</a>
+        <a href="#videoCard">Watch</a>
         <a href="#live">Shows</a>
         <a href="#book">Booking</a>
         <span class="nav-social">
@@ -802,8 +799,6 @@
     </div>
   </section>
 
-  <div class="divider" aria-hidden="true"><span></span></div>
-
   <!-- WATCH -->
   <section id="watch">
     <div class="wrap">
@@ -826,8 +821,6 @@
       </div>
     </div>
   </section>
-
-  <div class="divider" aria-hidden="true"><span></span></div>
 
   <!-- LIVE -->
   <section id="live">
