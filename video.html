@@ -390,9 +390,13 @@
 
   /* ---------- SECTION SCAFFOLD ---------- */
   section{padding:clamp(36px,5vw,64px) 0;position:relative;}
-  /* The header is fixed, so an anchor jump would park the section top behind it.
-     This stops the scroll short by the bar height plus a little air. */
-  section[id]{scroll-margin-top:calc(var(--nav-h) + 18px);}
+  /* The header is fixed, so an anchor jump would park the target behind it.
+     This stops the scroll short by the bar height plus a little air. Nav
+     targets live on the inner heading, not the section — the section's own
+     top padding would otherwise show as a gap between the nav and the
+     heading on a direct jump, on top of the padding sections already get
+     scrolling past normally. */
+  [id]{scroll-margin-top:calc(var(--nav-h) + 18px);}
   section.hero{padding:var(--nav-h) 0 0;}
   section.praise{padding:clamp(30px,3.5vw,44px) 0;}
 
@@ -441,10 +445,6 @@
      so it doesn't need a full block of air above and below it. */
   #watch{padding:clamp(20px,3vw,38px) 0;}
   #watch .sec-head{margin-bottom:26px;}
-  /* Nav's Watch link jumps straight to the video card, not the section top —
-     same fixed-header offset as section[id] gets, since this is an <a>, not
-     a section, so it doesn't inherit that rule. */
-  #videoCard{scroll-margin-top:calc(var(--nav-h) + 18px);}
 
   /* Click-to-play video card: thumbnail only until clicked, so the YouTube
      player never loads for visitors who don't watch. Opens on YouTube if JS is off. */
@@ -688,7 +688,7 @@
   <!-- PRAISE -->
   <section class="praise">
     <div class="wrap">
-      <p class="label">What people are saying</p>
+      <p class="label" id="about">What people are saying</p>
       <div class="praise-grid" id="praiseGrid" aria-live="polite">
         <div class="praise-page is-active" data-page="0">
           <figure class="quote">
@@ -753,7 +753,7 @@
   </section>
 
   <!-- ABOUT -->
-  <section id="about">
+  <section>
     <div class="wrap">
       <div class="reveal about-cols">
         <div>
@@ -823,9 +823,9 @@
   </section>
 
   <!-- LIVE -->
-  <section id="live">
+  <section>
     <div class="wrap">
-      <div class="reveal sec-head">
+      <div class="reveal sec-head" id="live">
         <p class="label">On stage</p>
         <h2>Upcoming shows</h2>
       </div>
@@ -851,9 +851,9 @@
   </section>
 
   <!-- BOOK -->
-  <section id="book" class="book">
+  <section class="book">
     <div class="wrap">
-      <div class="reveal">
+      <div class="reveal" id="book">
         <p class="label">Booking</p>
         <h2>Book the duo.<span class="payoff">Everybody leaves smiling.</span></h2>
         <p>Listening rooms to house concerts. Theaters to festivals.<span class="line2">You know your audience. We know how to win them over.</span></p>
@@ -934,7 +934,7 @@
          isn't Bonet & Flynn — checked against title, lineup and venue name
          since which field carries it isn't consistent event to event. */
       const isHotPantsAndTony = (ev) => {
-        const needle = /hot\s*pants?\s*(and|&)\s*tony/i;
+        const needle = /hot\s*pant'?s?\s*(and|&)\s*tony/i;
         const haystack = [ev.title, (ev.venue || {}).name, ...(ev.lineup || [])]
           .filter(Boolean).join(' | ');
         return needle.test(haystack);
