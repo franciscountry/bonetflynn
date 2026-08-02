@@ -28,6 +28,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html _site/
+          cp robots.txt _site/
           cp -r images _site/
           cp -r videos _site/
 
