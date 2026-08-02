@@ -1,369 +1,920 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Deni Bonet & Chris Flynn</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --red: #E8193C;
-      --yellow: #FFD600;
-      --black: #0A0A0A;
-      --offwhite: #F5F0E8;
-      --gray: #1A1A1A;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bonet &amp; Flynn — electric violin, guitar &amp; two voices</title>
+<meta name="description" content="Deni Bonet and Chris Flynn — electric violin, guitar and two voices. Carnegie Hall to living rooms. Booking now." />
+<meta name="theme-color" content="#FAF6EE" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500;1,9..144,600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#FAF6EE;        /* page — warm bone */
+    --paper-2:#F1EADC;      /* raised surfaces: cards, strips */
+    --sand:#E7DCC9;         /* photo slots */
+    --ink:#17130F;          /* body type */
+    --ink-soft:#3B322A;     /* long-form copy */
+    --muted:#6F6157;        /* secondary type */
+    --red:#E23A2E;          /* accent — display only */
+    --red-deep:#B12318;     /* accent — text, buttons, anything small */
+    --red-darker:#8E1A12;
+    --line:rgba(23,19,15,.13);
+    --line-strong:rgba(23,19,15,.30);
+
+    /* ---- Fluid type scale --------------------------------------------------
+       Base 16→21px, interpolated 320→1920px. Ratio widens with the viewport:
+       ~1.067 between small steps, ~1.125 between large ones, so body text barely
+       grows while display type grows a lot. Clamped at both ends — uncapped, a
+       headline would keep inflating past 1920px on an ultrawide.
+       Root stays at 16px and everything is rem-based, so browser font-size
+       preferences and zoom still work.                                        */
+    --step--3:   clamp(0.8232rem, 0.8035rem + 0.09861vw, 0.9218rem);  /* 13.2→14.8 label, eyebrow */
+    --step--2:   clamp(0.8784rem, 0.8466rem + 0.1587vw, 1.037rem);    /* 14.1→16.6 */
+    --step--1:   clamp(0.9372rem, 0.8913rem + 0.2295vw, 1.167rem);    /* 15→18.7  captions, meta */
+    --step-0:    clamp(1rem, 0.9375rem + 0.3125vw, 1.312rem);         /* 16→21    body */
+    --step-1:    clamp(1.067rem, 0.9851rem + 0.4096vw, 1.477rem);     /* 17.1→23.6 */
+    --step-2:    clamp(1.138rem, 1.034rem + 0.5226vw, 1.661rem);      /* 18.2→26.6 */
+    --step-3:    clamp(1.215rem, 1.084rem + 0.654vw, 1.869rem);       /* 19.4→29.9 */
+    --step-4:    clamp(1.296rem, 1.135rem + 0.8062vw, 2.102rem);      /* 20.7→33.6 */
+    --step-6:    clamp(1.476rem, 1.239rem + 1.185vw, 2.661rem);       /* 23.6→42.6 */
+    --step-8:    clamp(1.68rem, 1.343rem + 1.688vw, 3.368rem);        /* 26.9→53.9 */
+    --step-9:    clamp(1.793rem, 1.393rem + 1.996vw, 3.789rem);       /* 28.7→60.6 section heads */
+
+    /* Display outliers. The reading scale tops out around 54px; these three
+       carry the page's loud moments and are tuned by eye, not by ratio. */
+    --brand:     clamp(1.35rem, 1.28rem + 0.35vw, 1.7rem);            /* 21.6→27.2 wordmark */
+    --display-1: clamp(2.375rem, 1.925rem + 2.25vw, 4.625rem);        /* 38→74   section hero heads */
+    --display-2: clamp(2.5rem, 1.975rem + 2.625vw, 5.125rem);         /* 40→82   the names */
+
+    /* Line heights in em, not unitless. An em value computes once against the
+       element's own size, so a heading can't inherit a body ratio — which is
+       exactly what threw the ampersand's line box off. */
+    --lh-display: 0.98em;
+    --lh-tight:   1.25em;
+    --lh-body:    1.5em;
+    --lh-small:   1.375em;
+
+    --nav-h:96px;      /* header height — hero padding, photo cap and the mobile
+                          dropdown offset all derive from this, so change it here only */
+    --mark-d:126px;    /* header badge — bigger than the bar, so it overhangs */
+    --mark-h:98px;     /* illustration inside it */
+    --maxw:1180px;
+    --gutter:28px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Archivo",system-ui,sans-serif;
+    font-size:var(--step-0);
+    line-height:var(--lh-body);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  h1,h2,h3{margin:0;text-wrap:balance;font-family:"Anton",sans-serif;font-weight:400;line-height:var(--lh-display);letter-spacing:.01em;text-transform:uppercase;}
+  ::selection{background:var(--red);color:#fff;}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);}
+
+  .amp{font-family:"Fraunces",serif;font-style:italic;font-weight:500;color:var(--red);}
+  /* Inside Anton headings the italic ampersand's swash drops below the cap line.
+     Sized down and lifted so it sits on the same optical baseline as the caps. */
+  h1 .amp,h2 .amp,h3 .amp{
+    font-size:.9em;display:inline-block;line-height:1em;
+    transform:translateY(-.18em);margin:0 .05em;
+  }
+
+  .eyebrow{
+    font-family:"Fraunces",serif;font-style:italic;font-weight:500;
+    color:var(--red-deep);font-size:var(--step-1);letter-spacing:.01em;line-height:var(--lh-tight);}
+  .label{
+    font-family:"Archivo",sans-serif;font-weight:600;
+    text-transform:uppercase;letter-spacing:.18em;font-size:var(--step--1);color:var(--muted);line-height:var(--lh-small);}
+
+  a:focus-visible,button:focus-visible{outline:2px solid var(--red-deep);outline-offset:3px;border-radius:2px;}
+
+  /* .ph is the shared photo-slot wrapper for the two portrait cards. */
+  .ph{position:relative;background:var(--sand);display:grid;place-items:center;overflow:hidden;}
+  .ph img{width:100%;height:100%;object-fit:cover;}
+  .ph-note{
+    position:absolute;left:18px;bottom:14px;
+    font-size:var(--step--3);letter-spacing:.2em;text-transform:uppercase;
+    color:#8C7B65;font-weight:600;
+  }
+  /* photo slot sitting on the dark panel */
+  .ph.on-dark{background:#241D17;}
+  .ph.on-dark .sil{color:var(--paper);}
+  .ph.on-dark .ph-note{color:#9C8B76;}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    background:linear-gradient(var(--paper),rgba(250,246,238,0));
+    transition:background .3s ease,box-shadow .3s ease;
+  }
+  header.nav.solid{
+    background:rgba(250,246,238,.92);
+    backdrop-filter:blur(8px);
+    box-shadow:0 1px 0 var(--line);
+  }
+  /* Not held to the 1180px column: the brand lines up with the hero copy's left
+     edge, and the links run to the viewport gutter like the hero photo does. */
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;height:var(--nav-h);
+    position:relative;
+    max-width:none;width:100%;
+    padding-left:max(var(--gutter), calc((100vw - var(--maxw))/2 + var(--gutter)));
+    padding-right:var(--gutter);
+  }
+  /* At the top of the page the hero already carries the names at full size, so the
+     header stays empty. Past the fold the silhouette fades in on its own as the
+     home affordance. visibility (not just opacity) keeps it out of the tab order
+     while hidden, and it still occupies space so nothing shifts on reveal. */
+  /* A round badge rather than a bare mark, sized past the bar height so it hangs
+     below it. Opaque fill because the overhanging part sits over page content;
+     align-self:flex-start biases the overhang downward instead of clipping it
+     against the top of the viewport. */
+  .brand{
+    width:var(--mark-d);height:var(--mark-d);flex:none;
+    align-self:flex-start;margin-top:5px;
+    /* Pulled out of the content column into the left margin, so the overhang
+       falls on empty page rather than on headings. Clamped so it never travels
+       closer than 14px to the viewport edge, and stops moving once the margin
+       runs out on narrower screens. */
+    margin-left:calc(-1 * clamp(0px, (100vw - var(--maxw))/2 + 14px, 150px));
+    display:grid;place-items:center;
+    border-radius:50%;background:var(--paper);
+    box-shadow:inset 0 0 0 1px var(--line);
+    opacity:0;visibility:hidden;
+    transition:opacity .35s ease, visibility .35s ease;
+  }
+  .nav.solid .brand{opacity:1;visibility:visible;}
+  /* Wordmark lives in the hero and the footer. Delete this rule to bring it back. */
+  .brand-text{display:none;}
+  .brand-mark{height:var(--mark-h);width:auto;flex:none;margin-top:2px;}
+  /* The serif ampersand needs air to read; wedged between two Anton words it fights
+     the baseline. Anton's own ampersand sits flush — the Fraunces one stays the
+     signature in the hero and section heads, where it has room. */
+  .brand .amp{
+    font-family:"Anton",sans-serif;font-style:normal;font-weight:400;
+    font-size:1em;line-height:1em;color:var(--red);margin:0 .1em;
+  }
+  .nav-links{display:flex;gap:28px;align-items:center;}
+  /* Caps read larger and wider than lowercase, so this steps down one and adds
+     tracking — caps set tight are hard to parse. Direct-child selector so the
+     social icons in the same bar don't inherit any of it. */
+  .nav-links > a{
+    position:relative;
+    font-size:var(--step--1);font-weight:600;
+    text-transform:uppercase;letter-spacing:.09em;
+    color:var(--muted);transition:color .2s;line-height:var(--lh-small);
+  }
+  /* Same 2px red rule that sits under the booking address, drawn in from the left. */
+  .nav-links > a::after{
+    content:"";position:absolute;left:0;right:0;bottom:-7px;height:2px;
+    background:var(--red);transform:scaleX(0);transform-origin:left;
+    transition:transform .25s cubic-bezier(.2,.7,.2,1);
+  }
+  .nav-links > a:hover{color:var(--ink);}
+  .nav-links > a:hover::after,
+  .nav-links > a:focus-visible::after{transform:scaleX(1);}
+  .nav-social{display:flex;align-items:center;gap:15px;}
+  /* Official brand marks. The header set is the same artwork reduced to ink with
+     the white knockouts made transparent, so the page shows through the f, the
+     play triangle and the camera ring. Raster, so hover shifts opacity rather
+     than colour — there's no currentColor to inherit. */
+  .nav-social a{display:flex;padding:2px;}
+  .nav-social img{height:22px;width:auto;display:block;opacity:.6;transition:opacity .2s;}
+  .nav-social a:hover img{opacity:1;}
+  .menu-btn{display:none;background:none;border:0;color:var(--ink);font-size:var(--step-4);cursor:pointer;padding:6px;}
+
+  /* ---------- HERO (split: type | photo) ---------- */
+  .hero{
+    display:grid;grid-template-columns:1.02fr .98fr;
+    padding:var(--nav-h) 0 0;align-items:stretch;
+  }
+  .hero-copy{
+    display:flex;flex-direction:column;justify-content:center;
+    padding:clamp(36px,6vw,72px) clamp(28px,4.5vw,60px)
+            clamp(36px,6vw,72px) max(var(--gutter), calc((100vw - var(--maxw))/2 + var(--gutter)));
+  }
+  .hero-eyebrow{margin:0 0 20px;font-size:var(--step-1);}
+  .hero-names .n{
+    font-size:var(--display-2);
+    line-height:var(--lh-display);
+  }
+  .hero-hinge{display:flex;align-items:center;gap:22px;margin:10px 0 6px;}
+  /* Sized below the names and given a real line box — an oversized glyph on a
+     .7 line-height was spilling out of its row onto the name underneath.
+     The small left margin is optical: the italic swash hangs past its sidebearing. */
+  .hero-hinge .amp{
+    font-family:"Fraunces",serif;font-style:italic;font-weight:400;
+    font-size:calc(var(--display-2) * 0.7);line-height:1em;color:var(--red);
+    margin-left:.06em;
+  }
+  .hero-hinge .rule{height:1px;flex:1;max-width:200px;background:var(--line-strong);}
+  .hero-tag{margin:30px 0 0;max-width:34ch;color:var(--muted);font-size:var(--step-1);line-height:var(--lh-body);}
+  .hero-cta{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
+
+  /* Deliberately plain: a block image in normal flow, sized by its own intrinsic
+     ratio. No aspect-ratio, no absolute positioning, no object-fit, no blend mode —
+     every one of those was a candidate for the iOS rendering failure. */
+  .hero-photo{position:relative;border-left:1px solid var(--line);}
+  .hero-photo img{display:block;width:100%;height:auto;}
+  /* Red edge rule lives on the panel itself now, not on an inner wrapper. */
+  .hero-photo::after{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--red);
+  }
+
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;font-family:"Archivo";font-weight:600;
+    font-size:var(--step-0);padding:14px 26px;border-radius:999px;cursor:pointer;transition:all .2s;
+    border:1px solid var(--line-strong);color:var(--ink);background:transparent;
+  }
+  .btn:hover{border-color:var(--ink);transform:translateY(-1px);}
+  .btn.solid{background:var(--red-deep);border-color:var(--red-deep);color:#fff;}
+  .btn.solid:hover{background:var(--red-darker);border-color:var(--red-darker);}
+
+  /* load animation */
+  /* fill-mode 'both' rather than an opacity:0 base state — if a browser refuses the
+     animation, the element stays visible instead of stuck invisible. */
+  .anim .hero-eyebrow{animation:fadeUp .7s .1s ease both;}
+  .anim .hero-names{animation:fadeUp .8s .25s cubic-bezier(.2,.7,.2,1) both;}
+  .anim .hero-tag,.anim .hero-signup{animation:fadeUp .7s .5s ease both;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+  /* ---------- PRAISE (quote band) ---------- */
+  .praise{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .praise .label{margin:0 0 30px;}
+  .praise-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:38px;}
+  .quote{margin:0;}
+  .quote::before{
+    content:"\201C";display:block;font-family:"Fraunces",serif;font-style:italic;
+    color:var(--red);font-size:var(--step-8);line-height:.6em;margin-bottom:16px;
+  }
+  .quote blockquote{
+    margin:0 0 18px;margin:0 0 0.75lh;font-family:"Fraunces",serif;font-style:italic;
+    font-size:var(--step-1);line-height:var(--lh-tight);color:var(--ink);
+  }
+  .quote figcaption{
+    font-family:"Archivo",sans-serif;font-weight:600;font-size:var(--step--1);
+    letter-spacing:.02em;color:var(--ink-soft);line-height:var(--lh-small);}
+  .quote figcaption span{
+    display:block;font-weight:400;color:var(--muted);font-size:var(--step--2);
+    letter-spacing:.01em;margin-top:3px;line-height:var(--lh-small);}
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{padding:clamp(54px,7vw,94px) 0;position:relative;}
+  /* The header is fixed, so an anchor jump would park the section top behind it.
+     This stops the scroll short by the bar height plus a little air. */
+  section[id]{scroll-margin-top:calc(var(--nav-h) + 18px);}
+  section.hero{padding:var(--nav-h) 0 0;}
+  section.praise{padding:clamp(44px,5vw,62px) 0;}
+  /* z-index so the ampersand is never painted over by a neighbouring section's
+     background. .edge drops the negative pull where the next block is opaque —
+     otherwise the section slides up over the glyph and clips it. */
+  .divider{display:flex;justify-content:center;padding:0;margin:-14px 0;position:relative;z-index:1;}
+  .divider.edge{margin:0;}
+  .divider .amp{font-size:var(--step-6);opacity:.9;}
+  .divider::before,.divider::after{content:"";height:1px;flex:1;background:var(--line);align-self:center;margin:0 26px;max-width:220px;}
+
+  .sec-head{margin-bottom:38px;max-width:60ch;}
+  .sec-head h2{font-size:var(--step-9);margin-top:14px;}
+  .sec-head .amp{font-style:italic;}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* ---------- ABOUT ---------- */
+  .about-lead{font-size:var(--step-4);line-height:var(--lh-tight);max-width:24ch;font-family:"Archivo";font-weight:600;letter-spacing:-.005em;}
+  .about-lead .amp{font-family:"Fraunces";font-weight:500;}
+  .about-body{text-wrap:pretty;color:var(--ink-soft);line-height:var(--lh-body);}
+
+  /* Official NERFA showcase badge. Their artwork, unmodified — its cream ground
+     is a near match for --paper-2 and it keeps the gold to a border. */
+  .nerfa{display:block;width:230px;margin-top:38px;}
+  .nerfa img{display:block;width:100%;height:auto;}
+  .nerfa:hover img{opacity:.9;}
+  .about-body p{margin:0 0 18px;margin:0 0 0.75lh;}
+  .about-cols{display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(30px,6vw,80px);align-items:start;}
+
+  .players{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:48px;}
+  .player{border:1px solid var(--line);border-radius:14px;padding:22px 22px 28px;background:var(--paper-2);}
+  .player-photo{aspect-ratio:4/5;margin-bottom:20px;border-radius:10px;}
+  .player h3{font-size:var(--step-3);margin-bottom:4px;}
+  .player .role{font-family:"Fraunces";font-style:italic;color:var(--red-deep);font-size:var(--step-1);margin-bottom:16px;line-height:var(--lh-tight);}
+  .player p{color:var(--muted);font-size:var(--step-0);margin:0;line-height:var(--lh-body);text-wrap:pretty;}
+  .player p + p{margin-top:18px;margin-top:0.75lh;}
+
+  /* ---------- LISTEN ---------- */
+  .listen-grid{display:grid;grid-template-columns:1fr;gap:22px;}
+  .media{
+    border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper-2);
+    aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:26px;transition:border-color .25s,transform .25s,background .25s;
+  }
+  .media:hover{border-color:var(--line-strong);background:#EDE4D2;transform:translateY(-3px);}
+  .media .plat{font-family:"Anton";font-weight:400;font-size:var(--step-3);letter-spacing:.02em;margin-bottom:8px;}
+  .media .hint{color:var(--muted);font-size:var(--step--1);line-height:var(--lh-small);}
+  .media .amp{font-size:var(--step-6);margin-bottom:10px;}
+
+  /* Watch runs tighter than the other sections — the video is the whole section,
+     so it doesn't need a full block of air above and below it. */
+  #watch{padding:clamp(30px,4vw,54px) 0;}
+  #watch .sec-head{margin-bottom:26px;}
+
+  /* Click-to-play video card: thumbnail only until clicked, so the YouTube
+     player never loads for visitors who don't watch. Opens on YouTube if JS is off. */
+  .media.video{padding:0;position:relative;overflow:hidden;aspect-ratio:16/9;}
+  .media.video img{width:100%;height:100%;object-fit:cover;}
+  .media.video .play{
+    position:absolute;inset:0;display:grid;place-items:center;
+    background:rgba(23,19,15,.18);transition:background .25s;
+  }
+  .media.video:hover .play{background:rgba(23,19,15,.08);}
+  .media.video .play i{
+    width:74px;height:74px;border-radius:50%;background:var(--red-deep);
+    display:grid;place-items:center;transition:transform .25s;
+  }
+  .media.video:hover .play i{transform:scale(1.08);}
+  .media.video .play i::after{
+    content:"";border-left:22px solid #fff;
+    border-top:14px solid transparent;border-bottom:14px solid transparent;
+    margin-left:6px;
+  }
+  .media.video .cap{
+    position:absolute;left:0;right:0;bottom:0;padding:14px 16px;
+    background:rgba(23,19,15,.62);color:#F3ECE2;
+    font-family:"Archivo";font-weight:600;font-size:var(--step--1);text-align:left;line-height:var(--lh-small);}
+  .media.video.playing{background:#17130F;}
+  .media.video.playing:hover{transform:none;}
+  .media.video iframe{width:100%;height:100%;border:0;display:block;}
+
+  /* ---------- LIVE ---------- */
+  .shows{border-top:1px solid var(--line);}
+  .show{
+    display:grid;grid-template-columns:150px 1fr auto;gap:24px;align-items:center;
+    padding:24px 8px;border-bottom:1px solid var(--line);transition:background .2s;
+  }
+  .show:hover{background:rgba(23,19,15,.035);}
+  .show .date{font-family:"Anton";font-weight:400;font-size:var(--step-2);letter-spacing:.01em;line-height:var(--lh-tight);}
+  .show .date span{display:block;font-family:"Archivo";font-weight:500;font-size:var(--step--2);color:var(--muted);letter-spacing:.14em;text-transform:uppercase;line-height:var(--lh-small);}
+  .show .venue{font-size:var(--step-0);line-height:var(--lh-tight);}
+  .show .venue small{display:block;color:var(--muted);font-size:var(--step--1);line-height:var(--lh-small);}
+  .show .tix{font-family:"Archivo";font-weight:600;font-size:var(--step--1);color:var(--red-deep);white-space:nowrap;line-height:var(--lh-small);}
+  .show .tix:hover{text-decoration:underline;}
+  .shows-note{color:var(--muted);font-size:var(--step--1);margin-top:22px;line-height:var(--lh-small);}
+  .shows-note a{color:var(--red-deep);text-decoration:underline;text-underline-offset:3px;}
+  .shows-msg{
+    padding:30px 8px;color:var(--muted);font-size:var(--step-0);
+    border-bottom:1px solid var(--line);margin:0;line-height:var(--lh-body);}
+  .shows-msg a{color:var(--red-deep);text-decoration:underline;text-underline-offset:3px;}
+  .shows-follow{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:28px;}
+  .past-wrap{margin-top:34px;}
+  .past-wrap .label{margin-bottom:14px;}
+  /* Past rows carry no action link, so they collapse to two columns. */
+  .past-wrap .show{grid-template-columns:150px 1fr;}
+  .shows-follow .shows-note{margin:0;max-width:34ch;}
+
+  /* ---------- SHUT UP & PLAY (the one dark panel) ---------- */
+  .sup{background:var(--ink);color:#F3ECE2;}
+  .sup .label{color:#9C8B76;}
+  .sup .amp{color:var(--red);}
+  .sup-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(30px,6vw,70px);align-items:center;}
+  .sup h2{font-size:var(--display-1);color:#F3ECE2;line-height:var(--lh-display);}
+  .sup .kicker{font-family:"Fraunces";font-style:italic;color:var(--red);font-size:var(--step-2);margin-bottom:18px;line-height:var(--lh-tight);}
+  .sup p{color:#CFC3B4;font-size:var(--step-0);margin:0 0 0.75lh;max-width:46ch;line-height:var(--lh-body);}
+  .sup .btn{border-color:rgba(243,236,226,.32);color:#F3ECE2;}
+  .sup .btn:hover{border-color:#F3ECE2;}
+  .sup .btn.solid{background:var(--red-deep);border-color:var(--red-deep);color:#fff;}
+  .sup .btn.solid:hover{background:var(--red-darker);border-color:var(--red-darker);}
+  .sup-visual{
+    border:1px solid rgba(243,236,226,.18);border-radius:16px;aspect-ratio:4/3;overflow:hidden;
+  }
+
+  /* ---------- BOOK ---------- */
+  .book{text-align:center;}
+  .book h2{font-size:var(--display-1);max-width:16ch;margin:0 auto 10px;}
+  .book .amp{font-style:italic;}
+  .book p{color:var(--muted);max-width:44ch;margin:20px auto 34px;line-height:var(--lh-body);}
+  .book-email{
+    font-family:"Archivo";font-weight:700;font-size:var(--step-6);letter-spacing:-.01em;
+    color:var(--ink);border-bottom:2px solid var(--red);padding-bottom:4px;transition:color .2s;line-height:var(--lh-display);}
+  .book-email:hover{color:var(--red-deep);}
+
+  /* ---------- MAILING LIST ---------- */
+  .sr-only{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+  }
+  .hero-signup{margin-top:34px;max-width:30rem;}
+  .hero-note{
+    color:var(--muted);font-size:var(--step--1);line-height:var(--lh-small);
+    margin:14px 0 0;max-width:36ch;
+  }
+  .signup-form{display:flex;gap:12px;flex-wrap:wrap;}
+  .signup-form input[type=email]{
+    flex:1;min-width:220px;font-family:"Archivo";font-size:var(--step-0);color:var(--ink);
+    background:var(--paper);border:1px solid var(--line-strong);border-radius:999px;
+    padding:14px 22px;transition:border-color .2s;
+  }
+  .signup-form input[type=email]::placeholder{color:var(--muted);}
+  .signup-form input[type=email]:focus{outline:none;border-color:var(--red-deep);}
+  .signup-form button{flex:none;}
+  .signup-done{
+    flex-basis:100%;margin:4px 0 0;color:var(--red-deep);
+    font-family:"Fraunces",serif;font-style:italic;font-size:var(--step-1);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:46px 0 40px;background:var(--ink);color:#CFC3B4;}
+  /* Brand colours, drawn to match each platform's official mark. The header keeps
+     the mono set so the icons stay quiet up there and pay off down here. */
+  .foot-social{display:flex;align-items:center;gap:20px;}
+  .foot-social a{display:flex;transition:transform .2s,opacity .2s;opacity:.92;}
+  .foot-social a:hover{transform:translateY(-2px);opacity:1;}
+  .foot-social img{height:34px;width:auto;display:block;}
+  .foot-inner{display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;}
+  .foot-inner small{color:#9C8B76;font-size:var(--step--2);line-height:var(--lh-small);}
+
+  /* ---------- RESPONSIVE ---------- */
+  /* Below ~1404px the left margin is narrower than the badge, so an overhang would
+     land on the content column no matter where it sits. Under that threshold the
+     badge shrinks to fit inside the bar and stops overhanging entirely. */
+  @media(max-width:1440px){
+    :root{--mark-d:84px;--mark-h:66px;}
+    .brand{align-self:center;margin-top:0;margin-left:0;}
+  }
+
+  @media(max-width:1120px){
+    .nav-links{gap:20px;}
+    .nav-links > a{font-size:var(--step--2);}
+    .nav-social{gap:13px;}
+    .nav-social img{height:20px;}
+  }
+
+  @media(max-width:900px){
+    .hero{grid-template-columns:1fr;}
+    .hero-photo{order:-1;border-left:0;border-bottom:1px solid var(--line);}
+    .hero-photo::after{left:0;right:0;top:auto;bottom:0;width:auto;height:4px;}
+    .hero-copy{padding:38px var(--gutter) 56px;}
+    .hero-hinge .rule{max-width:120px;}
+    .praise-grid{grid-template-columns:1fr;gap:30px;}
+    .quote + .quote{border-top:1px solid var(--line);padding-top:30px;}
+  }
+  @media(max-width:860px){
+    :root{--nav-h:76px;--mark-d:66px;--mark-h:52px;}
+    .nav-links{
+      position:fixed;inset:var(--nav-h) 0 auto 0;background:rgba(250,246,238,.98);backdrop-filter:blur(10px);
+      flex-direction:column;gap:0;padding:10px 0 20px;border-bottom:1px solid var(--line);
+      transform:translateY(-120%);transition:transform .3s ease;
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--black); color: var(--offwhite); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+    .nav-links.open{transform:translateY(0);}
+    .nav-links > a{padding:15px 28px;width:100%;font-size:var(--step-1);}
+    .nav-links > a::after{display:none;}
+    .nav-social{padding:16px 28px 4px;gap:22px;}
+    .nav-social img{height:26px;}
+    .menu-btn{display:block;}
 
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2.5rem; height: 64px;
-      background: rgba(10,10,10,0.92); backdrop-filter: blur(10px);
-      border-bottom: 2px solid var(--red); transition: border-color 0.3s;
-    }
-    .nav-logo { font-family: 'Bebas Neue', cursive; font-size: 1.5rem; letter-spacing: 0.08em; color: var(--yellow); text-decoration: none; }
-    .nav-logo span { color: var(--red); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--offwhite); text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--yellow); }
+    .about-cols{grid-template-columns:1fr;gap:28px;}
+    .about-lead{max-width:none;}
+    .players{grid-template-columns:1fr;margin-top:34px;}
+    .listen-grid{grid-template-columns:1fr;}
+    .media{aspect-ratio:auto;padding:34px;}
+    .show{grid-template-columns:1fr auto;gap:8px 18px;}
+    .show .venue{grid-column:1/-1;order:3;}
+    .sup-grid{grid-template-columns:1fr;}
+    .sup-visual{order:-1;aspect-ratio:16/9;}
+    .signup-form input[type=email]{min-width:0;}
+  }
 
-    #hero { position: relative; height: 100vh; overflow: hidden; }
-    .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease; background-size: cover; background-position: center; }
-    .slide.active { opacity: 1; }
-    .slide-1 { background: radial-gradient(ellipse at 30% 60%, #3d0a1a 0%, #0a0a0a 70%); }
-    .slide-2 { background: radial-gradient(ellipse at 70% 40%, #1a0d2e 0%, #0a0a0a 70%); }
-    .slide-3 { background: radial-gradient(ellipse at 50% 70%, #1a1a0a 0%, #0a0a0a 70%); }
-    .slide::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,10,10,0.1) 0%, rgba(10,10,10,0.75) 100%); }
-    .slide-shape { position: absolute; border-radius: 50%; pointer-events: none; }
-    .slide-shape-1 { width: 500px; height: 500px; border: 60px solid rgba(232,25,60,0.1); top: -120px; right: -100px; }
-    .slide-shape-2 { width: 300px; height: 300px; border: 40px solid rgba(255,214,0,0.06); bottom: 10%; left: 5%; }
-
-    .hero-content { position: absolute; bottom: 12%; left: 6%; z-index: 10; }
-    .hero-tag { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--yellow); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
-    .hero-tag::before { content: ''; display: inline-block; width: 40px; height: 2px; background: var(--yellow); }
-    h1 { font-family: 'Bebas Neue', cursive; font-size: clamp(4rem, 11vw, 10rem); line-height: 0.9; letter-spacing: 0.02em; color: var(--offwhite); }
-    h1 .amp { color: var(--red); font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.6em; }
-    .hero-sub { font-size: 0.9rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,232,0.55); margin-top: 1.2rem; }
-    .hero-cta { display: inline-block; margin-top: 2rem; padding: 0.9rem 2.2rem; background: var(--red); color: var(--offwhite); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; transition: background 0.2s, color 0.2s; }
-    .hero-cta:hover { background: var(--yellow); color: var(--black); }
-
-    .slide-dots { position: absolute; bottom: 2rem; right: 5%; z-index: 10; display: flex; flex-direction: column; gap: 0.5rem; }
-    .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(245,240,232,0.25); cursor: pointer; transition: background 0.3s, transform 0.3s; }
-    .dot.active { background: var(--yellow); transform: scale(1.6); }
-
-    .scroll-indicator { position: absolute; bottom: 2.5rem; left: 6%; z-index: 10; display: flex; align-items: center; gap: 0.75rem; font-size: 0.62rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(245,240,232,0.4); }
-    .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, transparent, rgba(245,240,232,0.4)); animation: scrollPulse 2s ease-in-out infinite; }
-    @keyframes scrollPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-
-    section { padding: 6rem 6%; }
-    .section-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.35em; text-transform: uppercase; color: var(--red); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem; }
-    .section-label::before { content: ''; display: inline-block; width: 28px; height: 2px; background: var(--red); }
-    h2 { font-family: 'Bebas Neue', cursive; font-size: clamp(2.8rem, 6vw, 5.5rem); line-height: 0.95; letter-spacing: 0.03em; color: var(--offwhite); margin-bottom: 2rem; }
-    .yellow-bar { display: inline-block; width: 50px; height: 4px; background: var(--yellow); margin-bottom: 1.5rem; }
-
-    #about { background: var(--gray); display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-    .about-image-block { position: relative; }
-    .img-placeholder { width: 100%; aspect-ratio: 3/4; background: linear-gradient(135deg, #2a1010, #1a0d20); display: flex; align-items: center; justify-content: center; font-size: 6rem; position: relative; z-index: 1; }
-    .about-image-block::before { content: ''; position: absolute; top: 1.5rem; left: 1.5rem; right: -1.5rem; bottom: -1.5rem; border: 3px solid var(--red); z-index: 0; }
-    .about-text p { font-size: 1.02rem; line-height: 1.8; color: rgba(245,240,232,0.78); margin-bottom: 1.2rem; }
-    .about-text p strong { color: var(--yellow); font-weight: 500; }
-
-    #gigs { background: var(--black); position: relative; overflow: hidden; }
-    .big-accent { font-family: 'Bebas Neue', cursive; font-size: clamp(8rem, 20vw, 18rem); color: rgba(232,25,60,0.04); line-height: 1; pointer-events: none; user-select: none; position: absolute; right: 3%; top: 50%; transform: translateY(-50%); }
-    .gigs-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem; }
-    .gig-list { display: flex; flex-direction: column; }
-    .gig-item { display: grid; grid-template-columns: 90px 1fr auto; align-items: center; gap: 2rem; padding: 1.5rem 0.5rem; border-bottom: 1px solid rgba(245,240,232,0.08); transition: background 0.25s, padding 0.25s; cursor: default; }
-    .gig-item:first-child { border-top: 1px solid rgba(245,240,232,0.08); }
-    .gig-item:hover { background: rgba(232,25,60,0.06); padding-left: 1.5rem; padding-right: 1.5rem; }
-    .gig-date { text-align: center; border-right: 2px solid var(--red); padding-right: 1.5rem; }
-    .gig-date .month { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); }
-    .gig-date .day { font-family: 'Bebas Neue', cursive; font-size: 2.6rem; line-height: 1; color: var(--offwhite); }
-    .gig-date .year { font-size: 0.62rem; color: rgba(245,240,232,0.35); letter-spacing: 0.1em; }
-    .gig-info .venue { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--offwhite); }
-    .gig-info .location { font-size: 0.8rem; color: rgba(245,240,232,0.45); margin-top: 0.2rem; letter-spacing: 0.05em; }
-    .gig-info .details { font-size: 0.75rem; color: rgba(245,240,232,0.35); margin-top: 0.15rem; }
-    .gig-ticket { display: inline-block; padding: 0.5rem 1.3rem; border: 1px solid var(--red); color: var(--red); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; white-space: nowrap; }
-    .gig-ticket:hover { background: var(--red); color: var(--offwhite); }
-    .gig-ticket.sold-out { border-color: rgba(245,240,232,0.18); color: rgba(245,240,232,0.28); pointer-events: none; }
-
-    #press { background: var(--offwhite); color: var(--black); }
-    #press .section-label { color: var(--red); }
-    #press .section-label::before { background: var(--red); }
-    #press h2 { color: var(--black); }
-    .press-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; background: rgba(0,0,0,0.1); }
-    .press-item { background: var(--offwhite); padding: 2.2rem 2rem; transition: background 0.2s; }
-    .press-item:hover { background: #e8e3da; }
-    .press-outlet { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--red); margin-bottom: 0.4rem; }
-    .press-date { font-size: 0.7rem; color: rgba(10,10,10,0.38); margin-bottom: 1rem; }
-    .press-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; line-height: 1.7; color: rgba(10,10,10,0.78); }
-    .press-link { display: inline-block; margin-top: 1.2rem; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--black); text-decoration: none; border-bottom: 1px solid var(--red); padding-bottom: 1px; }
-    .press-link:hover { color: var(--red); }
-
-    #contact { background: var(--red); display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-    #contact .section-label { color: rgba(245,240,232,0.6); }
-    #contact .section-label::before { background: rgba(245,240,232,0.6); }
-    #contact h2 { color: var(--offwhite); }
-    .contact-intro { font-size: 1rem; line-height: 1.75; color: rgba(245,240,232,0.85); }
-    .contact-intro a { color: var(--yellow); text-decoration: none; font-weight: 500; }
-    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-    .form-group label { font-size: 0.66rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,232,0.65); }
-    .form-group input, .form-group textarea, .form-group select { background: rgba(10,10,10,0.2); border: 1px solid rgba(245,240,232,0.28); color: var(--offwhite); padding: 0.9rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; border-radius: 0; -webkit-appearance: none; }
-    .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(245,240,232,0.3); }
-    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--yellow); }
-    .form-group textarea { resize: vertical; min-height: 120px; }
-    .form-group select option { background: #1a1a1a; color: var(--offwhite); }
-    .submit-btn { align-self: flex-start; padding: 1rem 2.5rem; background: var(--black); color: var(--offwhite); border: none; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: background 0.2s, color 0.2s; }
-    .submit-btn:hover { background: var(--yellow); color: var(--black); }
-
-    footer { background: var(--black); border-top: 2px solid #1a1a1a; padding: 2rem 6%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-    .footer-logo { font-family: 'Bebas Neue', cursive; font-size: 1.3rem; letter-spacing: 0.08em; color: var(--yellow); }
-    .footer-logo span { color: var(--red); }
-    .footer-copy { font-size: 0.7rem; color: rgba(245,240,232,0.28); letter-spacing: 0.1em; }
-    .footer-social { display: flex; gap: 1.2rem; }
-    .footer-social a { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,240,232,0.45); text-decoration: none; transition: color 0.2s; }
-    .footer-social a:hover { color: var(--yellow); }
-
-    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-    @media (max-width: 768px) {
-      #about, #contact { grid-template-columns: 1fr; gap: 2.5rem; }
-      .about-image-block::before { display: none; }
-      .form-row { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .gig-item { grid-template-columns: 70px 1fr; }
-      .gig-ticket { display: none; }
-      .big-accent { display: none; }
-    }
-  </style>
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;}
+    .anim .hero-names,.anim .hero-eyebrow,.anim .hero-tag,.anim .hero-signup{opacity:1;transform:none;}
+  }
+</style>
 </head>
-<body>
+<body class="anim">
 
-  <nav id="main-nav">
-    <a class="nav-logo" href="#">Deni Bonet <span>&</span> Chris Flynn</a>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#gigs">Shows</a></li>
-      <li><a href="#press">Press</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
 
-  <section id="hero">
-    <div class="slide slide-1 active">
-      <div class="slide-shape slide-shape-1"></div>
-      <div class="slide-shape slide-shape-2"></div>
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a href="#top" class="brand" aria-label="Bonet and Flynn — back to top">
+        <img class="brand-mark" src="images/mark.png" alt="" width="211" height="200">
+        <span class="brand-text">Bonet <span class="amp">&amp;</span> Flynn</span>
+      </a>
+      <nav class="nav-links" id="navlinks">
+        <a href="#about">About</a>
+        <a href="#watch">Watch</a>
+        <a href="#live">Shows</a>
+        <a href="#book">Booking</a>
+        <span class="nav-social">
+        <a href="https://www.facebook.com/bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on Facebook">
+          <img src="images/social/fb-mono.png" alt="" width="22" height="22">
+        </a>
+        <a href="https://www.instagram.com/bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on Instagram">
+          <img src="images/social/ig-mono.png" alt="" width="22" height="22">
+        </a>
+        <a href="https://www.youtube.com/@bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on YouTube">
+          <img src="images/social/yt-mono.png" alt="" width="32" height="22">
+        </a>
+        </span>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
     </div>
-    <div class="slide slide-2">
-      <div class="slide-shape slide-shape-1"></div>
-    </div>
-    <div class="slide slide-3">
-      <div class="slide-shape slide-shape-2"></div>
-    </div>
+  </header>
 
-    <div class="hero-content">
-      <div class="hero-tag">Live Music · Eclectic · Unforgettable</div>
-      <h1>Deni Bonet<br><span class="amp">&</span><br>Chris Flynn</h1>
-      <p class="hero-sub">Folk · Rock · Jazz · Everything In Between</p>
-      <a href="#gigs" class="hero-cta">See Upcoming Shows</a>
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-copy">
+      <p class="eyebrow hero-eyebrow">electric violin, guitar <span class="amp">&amp;</span> two voices</p>
+      <div class="hero-names">
+        <h1 class="n">Deni Bonet</h1>
+        <div class="hero-hinge"><span class="amp">&amp;</span><span class="rule"></span></div>
+        <h1 class="n">Chris Flynn</h1>
+      </div>
+      <p class="hero-tag">Carnegie Hall to living rooms. Same two players, same joy.</p>
+      <div class="hero-signup">
+        <!-- BREVO — replace the action URL below: Brevo > Marketing > Forms > your
+             form > Share > HTML. Field names must stay exactly as they are. -->
+        <form class="signup-form" id="signupForm" method="POST" target="brevoTarget"
+              action="https://YOUR-ACCOUNT-ID.sibforms.com/serve/YOUR-FORM-ID">
+          <label class="sr-only" for="EMAIL">Email address</label>
+          <input id="EMAIL" name="EMAIL" type="email" required
+                 placeholder="you@email.com" autocomplete="email">
+          <input type="hidden" name="email_address_check" value="">
+          <input type="hidden" name="locale" value="en">
+          <input type="hidden" name="html_type" value="simple">
+          <button class="btn solid" type="submit">Sign up</button>
+          <p class="signup-done" id="signupDone" hidden>Thanks — check your inbox to confirm.</p>
+        </form>
+        <p class="hero-note">We'll tell you when we're playing near you. Nothing else.</p>
+        <iframe name="brevoTarget" title="Mailing list signup" style="display:none" aria-hidden="true"></iframe>
+      </div>
     </div>
-
-    <div class="scroll-indicator">
-      <div class="scroll-line"></div>
-      Scroll
-    </div>
-
-    <div class="slide-dots">
-      <div class="dot active" onclick="goToSlide(0)"></div>
-      <div class="dot" onclick="goToSlide(1)"></div>
-      <div class="dot" onclick="goToSlide(2)"></div>
+    <div class="hero-photo">
+      <!-- Images live in images/ alongside this file. The hero is eagerly loaded and
+           given fetchpriority so it paints first; the portraits are lazy. -->
+      <img src="images/duo-studio.jpg" fetchpriority="high" decoding="async"
+           width="820" height="745"
+           alt="Deni Bonet playing electric violin beside Chris Flynn on acoustic guitar, leaning into each other mid-song">
     </div>
   </section>
 
+  <!-- PRAISE -->
+  <section class="praise">
+    <div class="wrap">
+      <p class="label">What the rooms say</p>
+      <div class="praise-grid">
+        <figure class="quote">
+          <blockquote>Deni Bonet and Chris Flynn's performances are irresistible for their charisma and musicality.</blockquote>
+          <figcaption>John Platt<span>WFUV 90.7 FM, Public Radio from Fordham University</span></figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>Together they remind me George Allen and Gracie Burns, or Lucy and Ricky; their banter, charisma and musicality combine to create a playful, lively, sometimes surprising performance.</blockquote>
+          <figcaption>Linda Bolton<span>Cozy Cabin Concerts</span></figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>Great to have hosted you at Wexford Arts Centre. Wonderful evening of stunning music, stories and songs!</blockquote>
+          <figcaption>Elizabeth Whyte<span>Executive Director, Wexford Arts Centre</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
   <section id="about">
-    <div class="about-image-block fade-up">
-      <div class="img-placeholder">🎻</div>
-    </div>
-    <div class="about-text fade-up">
-      <div class="section-label">About the Duo</div>
-      <h2>Two Artists.<br>One Sound.</h2>
-      <div class="yellow-bar"></div>
-      <p><strong>Deni Bonet & Chris Flynn</strong> are a dynamic musical duo whose sound refuses to stay in one lane — and that's exactly the point.</p>
-      <p>Drawing from a rich palette of folk, rock, jazz, and everything in between, their music is a joyful collision of virtuosity and spontaneity. Deni's signature violin weaves melodies that range from tender to fierce, while Chris's guitar lays down grooves as likely to move you to tears as to pull you onto the dance floor.</p>
-      <p>Together, they bring an energy that is <strong>electric, unpredictable, and entirely their own</strong> — whether performing intimate venues or packed festival stages.</p>
-      <a href="#contact" class="hero-cta" style="display:inline-block;margin-top:1.5rem;">Book the Duo</a>
-    </div>
-  </section>
+    <div class="wrap">
+      <div class="reveal about-cols">
+        <div>
+          <p class="label">The duo</p>
+          <p class="about-lead">Two players <span class="amp">&amp;</span> a sound big enough you'll look for the band.</p>
+          <a class="nerfa" href="https://nerfa.org/" target="_blank" rel="noopener">
+            <img src="images/nerfa-2026.png" width="520" height="520" loading="lazy"
+                 alt="NERFA 2026 Formal Showcase Artist — Northeast Regional Folk Alliance">
+          </a>
+        </div>
+        <div class="about-body">
+          <p>There is a rare magic in hearing two musicians create a sound so rich and expansive that you'd swear a full band was hiding in the wings. That is the signature experience of Deni Bonet and Chris Flynn.</p>
+          <p>Having graced legendary stages from Carnegie Hall to Mountain Stage, this dynamic duo brings an unforgettable and diverse energy to every performance. At the heart of their sound is a captivating balance of melody and motion. Deni's virtuosic violin playing is a force of nature, soaring, expressive, and technically brilliant. Underpinning that melodic flight is Chris's guitar work, which drives the sound with a deep, physical pulse. He effortlessly anchors the groove and holds down the harmony, giving the music a steady heartbeat you can actually feel. On top of this foundation, both swap effortlessly between commanding lead vocals and tight, interlocking harmonies.</p>
+          <p>A live show with Deni and Chris is defined by warm, playful interaction with the audience. They treat every gig like a shared experience, with the simple goal of giving the crowd a joyful escape for an hour or two. Whether they are trading off vocal duties or letting the instruments tell the story, Deni and Chris leave every audience smiling, energized, and completely connected.</p>
+        </div>
+      </div>
 
-  <section id="gigs">
-    <div class="big-accent">LIVE</div>
-    <div class="gigs-header fade-up">
-      <div>
-        <div class="section-label">On Tour</div>
-        <h2>Upcoming<br>Shows</h2>
-      </div>
-    </div>
-    <div class="gig-list fade-up">
-      <div class="gig-item">
-        <div class="gig-date"><div class="month">Mar</div><div class="day">15</div><div class="year">2026</div></div>
-        <div class="gig-info"><div class="venue">The Bitter End</div><div class="location">New York, NY</div><div class="details">Doors 7pm · Show 8pm</div></div>
-        <a href="#" class="gig-ticket">Tickets</a>
-      </div>
-      <div class="gig-item">
-        <div class="gig-date"><div class="month">Mar</div><div class="day">22</div><div class="year">2026</div></div>
-        <div class="gig-info"><div class="venue">World Café Live</div><div class="location">Philadelphia, PA</div><div class="details">Doors 6:30pm · Show 7:30pm</div></div>
-        <a href="#" class="gig-ticket">Tickets</a>
-      </div>
-      <div class="gig-item">
-        <div class="gig-date"><div class="month">Apr</div><div class="day">05</div><div class="year">2026</div></div>
-        <div class="gig-info"><div class="venue">Club Passim</div><div class="location">Cambridge, MA</div><div class="details">Doors 7pm · Show 8pm</div></div>
-        <a href="#" class="gig-ticket">Tickets</a>
-      </div>
-      <div class="gig-item">
-        <div class="gig-date"><div class="month">Apr</div><div class="day">18</div><div class="year">2026</div></div>
-        <div class="gig-info"><div class="venue">Rockwood Music Hall</div><div class="location">New York, NY</div><div class="details">Doors 8pm · Show 9pm</div></div>
-        <a href="#" class="gig-ticket">Tickets</a>
-      </div>
-      <div class="gig-item">
-        <div class="gig-date"><div class="month">May</div><div class="day">02</div><div class="year">2026</div></div>
-        <div class="gig-info"><div class="venue">Jammin Java</div><div class="location">Vienna, VA</div><div class="details">Doors 7pm · Show 8pm</div></div>
-        <a href="#" class="gig-ticket sold-out">Sold Out</a>
-      </div>
-      <div class="gig-item">
-        <div class="gig-date"><div class="month">May</div><div class="day">16</div><div class="year">2026</div></div>
-        <div class="gig-info"><div class="venue">Iron Horse Music Hall</div><div class="location">Northampton, MA</div><div class="details">Doors 7:30pm · Show 8:30pm</div></div>
-        <a href="#" class="gig-ticket">Tickets</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="press">
-    <div class="fade-up">
-      <div class="section-label">In the News</div>
-      <h2>Press &<br>Media</h2>
-    </div>
-    <div class="press-grid fade-up">
-      <div class="press-item">
-        <div class="press-outlet">Rolling Stone</div>
-        <div class="press-date">January 2026</div>
-        <div class="press-quote">"A duo that defies genre with effortless charm — Deni's violin sings, Chris's guitar responds, and the result is something rare and genuinely joyful."</div>
-        <a href="#" class="press-link">Read More ↗</a>
-      </div>
-      <div class="press-item">
-        <div class="press-outlet">No Depression</div>
-        <div class="press-date">October 2025</div>
-        <div class="press-quote">"There's a looseness to their live show that feels like watching two musicians fall in love with music all over again, every single night."</div>
-        <a href="#" class="press-link">Read More ↗</a>
-      </div>
-      <div class="press-item">
-        <div class="press-outlet">The Village Voice</div>
-        <div class="press-date">August 2025</div>
-        <div class="press-quote">"Part folk storytellers, part jazz improvisers, part rock-and-roll firestarters. This is what live music is supposed to feel like."</div>
-        <a href="#" class="press-link">Read More ↗</a>
-      </div>
-      <div class="press-item">
-        <div class="press-outlet">Acoustic Guitar Magazine</div>
-        <div class="press-date">June 2025</div>
-        <div class="press-quote">"Chris Flynn's playing is the kind of understated mastery that sneaks up on you — by the end of the set, your jaw is on the floor."</div>
-        <a href="#" class="press-link">Read More ↗</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="fade-up">
-      <div class="section-label">Get In Touch</div>
-      <h2>Book.<br>Connect.<br>Say Hello.</h2>
-      <p class="contact-intro">
-        For bookings, press inquiries, or just to say hi, reach out below or email us directly at <a href="mailto:hello@deniandchris.com">hello@deniandchris.com</a>.<br><br>
-        All booking inquiries welcome — we love playing everything from intimate rooms to festival stages.
-      </p>
-    </div>
-    <div class="fade-up">
-      <form class="contact-form" onsubmit="handleSubmit(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Your Name</label>
-            <input type="text" placeholder="Jane Smith" />
+      <div class="reveal players">
+        <div class="player">
+          <div class="ph player-photo">
+            <img src="images/deni-bonet.jpg"
+                 alt="Deni Bonet playing violin on stage, eyes down, mid-phrase"
+                 loading="lazy">
           </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" placeholder="jane@example.com" />
+          <h3>Deni Bonet</h3>
+          <p class="role">electric violin &amp; vocals</p>
+          <p>With a dynamic career spanning stages around the world, Deni Bonet has built a reputation as a virtuoso electric violinist, singer-songwriter, and captivating performer. Early on, Deni honed her craft as an original member of the house band for NPR's Mountain Stage before launching a standout solo career and becoming an in-demand collaborator for legends like Cyndi Lauper, R.E.M., and Sarah McLachlan.</p>
+          <p>From performing at Carnegie Hall and the White House to touring internationally, she has continually redefined what it means to rock a violin. A fixture of New York's vibrant live scene, Deni has brought her fiery string work and electric energy to countless stages, festivals, and recordings across the globe.</p>
+        </div>
+        <div class="player">
+          <div class="ph player-photo">
+            <img src="images/chris-flynn.jpg"
+                 alt="Chris Flynn singing into a microphone while playing guitar, Deni Bonet behind him"
+                 loading="lazy">
           </div>
+          <h3>Chris Flynn</h3>
+          <p class="role">guitar &amp; vocals</p>
+          <p>With a career deeply rooted in the heart of the East Coast music scene, Chris Flynn has built a reputation as a dynamic guitarist, vocalist, and musical director. Early on, Chris helped pioneer a communal approach to the indie music business as a founder of Cropduster Records, an artist-owned label and cooperative collective that served as a hub for the NY/NJ roots and pop scenes.</p>
+          <p>He also served as the Musical Director for New York's famed All-Star Irish Rock Revue, guiding an annual St. Patrick's Day tradition that brought together an incredible cross-section of talent, from local heroes to Rock &amp; Roll Hall of Fame royalty including Ronnie Spector and members of the Alice Cooper Group and Bad Company. It was through this iconic celebration that Chris and Deni Bonet first met and began their long-standing musical collaboration.</p>
         </div>
-        <div class="form-group">
-          <label>Inquiry Type</label>
-          <select>
-            <option value="">Select one...</option>
-            <option>Booking / Performance</option>
-            <option>Press / Media</option>
-            <option>General / Fan Mail</option>
-            <option>Collaboration</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Message</label>
-          <textarea placeholder="Tell us what you have in mind..."></textarea>
-        </div>
-        <button type="submit" class="submit-btn">Send Message</button>
-      </form>
+      </div>
     </div>
   </section>
 
+  <div class="divider"><span class="amp">&amp;</span></div>
+
+  <!-- WATCH -->
+  <section id="watch">
+    <div class="wrap">
+      <div class="reveal sec-head">
+        <p class="label">See it</p>
+        <h2>Watch</h2>
+      </div>
+      <div class="reveal listen-grid">
+        <a class="media video" id="videoCard"
+           href="https://www.youtube.com/watch?v=hnOLOfrQwO4"
+           data-yt="hnOLOfrQwO4"
+           target="_blank" rel="noopener"
+           aria-label="Play video: Bonet &amp; Flynn live">
+          <img src="https://i.ytimg.com/vi/hnOLOfrQwO4/maxresdefault.jpg"
+               onerror="this.src='https://i.ytimg.com/vi/hnOLOfrQwO4/mqdefault.jpg'"
+               alt="Deni Bonet and Chris Flynn performing" loading="lazy">
+          <span class="play" aria-hidden="true"><i></i></span>
+          <span class="cap">Watch on YouTube</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><span class="amp">&amp;</span></div>
+
+  <!-- LIVE -->
+  <section id="live">
+    <div class="wrap">
+      <div class="reveal sec-head">
+        <p class="label">On stage</p>
+        <h2>Upcoming shows</h2>
+      </div>
+      <div class="reveal shows" id="shows" aria-live="polite" aria-busy="true">
+        <p class="shows-msg">Loading dates…</p>
+      </div>
+      <div class="shows-follow">
+        <!-- Bandsintown's own "roll your own" follow link — no iframe, no script, so it
+             takes the site's button styling. If /track/id_176225 doesn't resolve, the
+             artist-page URL https://www.bandsintown.com/a/176225 always works; fans get
+             a Follow button at the top of that page. -->
+        <a class="btn solid" href="https://www.bandsintown.com/track/id_176225"
+           target="_blank" rel="noopener">Follow on Bandsintown</a>
+        <button class="btn" type="button" id="pastBtn"
+                aria-expanded="false" aria-controls="pastShows">Past shows</button>
+        <p class="shows-note" id="showsNote">One tap and they'll tell you when we're playing near you.</p>
+      </div>
+      <div class="past-wrap" id="pastShows" hidden>
+        <p class="label">Recently played</p>
+        <div class="shows" id="pastList" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOK -->
+  <section id="book" class="book">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="label">Booking</p>
+        <h2>Bring the duo <span class="amp">&amp;</span> everybody leaves smiling.</h2>
+        <p>Listening rooms, theaters, festivals, private events. Tell us the date and the space — we'll tell you what fits.</p>
+        <a class="book-email" href="mailto:booking@bonetflynn.com">booking@bonetflynn.com</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">Deni Bonet <span>&</span> Chris Flynn</div>
-    <div class="footer-social">
-      <a href="#">Instagram</a>
-      <a href="#">Facebook</a>
-      <a href="#">Spotify</a>
-      <a href="#">YouTube</a>
+    <div class="wrap foot-inner">
+      <span class="foot-social">
+        <a href="https://www.facebook.com/bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on Facebook">
+          <img src="images/social/fb.png" alt="" width="34" height="34">
+        </a>
+        <a href="https://www.instagram.com/bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on Instagram">
+          <img src="images/social/ig.png" alt="" width="34" height="34">
+        </a>
+        <a href="https://www.youtube.com/@bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on YouTube">
+          <img src="images/social/yt.png" alt="" width="49" height="34">
+        </a>
+      </span>
+      <small>© <span id="yr"></span> Deni Bonet &amp; Chris Flynn</small>
     </div>
-    <div class="footer-copy">© 2026 Deni Bonet & Chris Flynn. All rights reserved.</div>
   </footer>
 
   <script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.dot');
+    document.getElementById('yr').textContent = new Date().getFullYear();
 
-    function goToSlide(n) {
-      slides[currentSlide].classList.remove('active');
-      dots[currentSlide].classList.remove('active');
-      currentSlide = n;
-      slides[currentSlide].classList.add('active');
-      dots[currentSlide].classList.add('active');
-    }
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('solid', window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, {passive:true});
 
-    setInterval(() => goToSlide((currentSlide + 1) % slides.length), 5000);
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-    window.addEventListener('scroll', () => {
-      document.getElementById('main-nav').style.borderBottomColor =
-        window.scrollY > 60 ? 'var(--yellow)' : 'var(--red)';
+    const btn = document.getElementById('menuBtn');
+    const links = document.getElementById('navlinks');
+    btn.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+      btn.textContent = open ? '✕' : '☰';
     });
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      links.classList.remove('open'); btn.textContent = '☰'; btn.setAttribute('aria-expanded','false');
+    }));
 
-    function handleSubmit(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('.submit-btn');
-      btn.textContent = 'Message Sent ✓';
-      btn.style.background = '#1a5c1a';
-      setTimeout(() => { btn.textContent = 'Send Message'; btn.style.background = ''; e.target.reset(); }, 3000);
-    }
+    /* ------------------------------------------------------------------
+       BANDSINTOWN — ARTIST must keep the "id_" prefix. A bare number gets treated
+       as an artist *name* and the lookup 404s. APP_ID is the read-only key from
+       Bandsintown for Artists > Settings > General. It is visible in this page's
+       source, which is unavoidable without a server.
+       ------------------------------------------------------------------ */
+    (() => {
+      const ARTIST = 'id_176225';
+      const APP_ID = '379906cf5246564243a70b33dee52df0';
+
+      const list = document.getElementById('shows');
+      if (!list) return;
+      const page = 'https://www.bandsintown.com/a/' + ARTIST.replace(/^id_/, '');
+
+      const msg = (html) => {
+        list.innerHTML = '';
+        const p = document.createElement('p');
+        p.className = 'shows-msg';
+        p.innerHTML = html;
+        list.appendChild(p);
+        list.setAttribute('aria-busy', 'false');
+      };
+
+      const row = (ev, past) => {
+        const el = document.createElement('div');
+        el.className = 'show';
+        const d = new Date(ev.datetime);
+        const ok = !isNaN(d);
+
+        const date = document.createElement('div');
+        date.className = 'date';
+        date.appendChild(document.createTextNode(
+          ok ? d.toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) : 'TBA'));
+        const sub = document.createElement('span');
+        sub.textContent = ok
+          ? d.getFullYear() + ' · ' + d.toLocaleDateString('en-US', { weekday: 'short' })
+          : '';
+        date.appendChild(sub);
+
+        const venue = document.createElement('div');
+        venue.className = 'venue';
+        const v = ev.venue || {};
+        venue.appendChild(document.createTextNode(v.name || ev.title || 'Venue TBA'));
+        const where = document.createElement('small');
+        where.textContent = [v.city, v.region || v.country].filter(Boolean).join(', ');
+        venue.appendChild(where);
+
+        // Offers, in order of usefulness to someone reading the page. A live stream
+        // replaces the ticket offer rather than sitting alongside it. With no offer at
+        // all we hand off to the event's Bandsintown page — labelled as information
+        // rather than as a commitment, which gets more clicks at this stage.
+        const offers = past ? [] : (ev.offers || []);
+        const live = offers.find(o => o.type === 'Watch Live' && o.status === 'available');
+        const tix = offers.find(o => o.type === 'Tickets' && o.status === 'available');
+        const offer = live || tix;
+        const label = live ? 'Watch live' : (tix ? 'Tickets' : 'More info');
+
+        const a = document.createElement('a');
+        a.className = 'tix';
+        a.href = offer ? offer.url : (ev.url || page);
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = label + ' →';
+        a.setAttribute('aria-label',
+          label + ' — ' + (v.name || 'this show') +
+          (ok ? ', ' + d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''));
+
+        el.append(date, venue);
+        if (!past) el.appendChild(a);
+        return el;
+      };
+
+      const endpoint = (when) =>
+        'https://rest.bandsintown.com/artists/' + encodeURIComponent(ARTIST) +
+        '/events?app_id=' + encodeURIComponent(APP_ID) + '&date=' + when;
+      const url = endpoint('upcoming');
+
+      /* Past shows are booker evidence — the rooms, the geography, the frequency.
+         Fetched only on click so nobody pays for history they didn't ask for, and
+         cached after the first load. Rows are newest-first and carry no link: a
+         ticket button on a show that already happened is worse than no button. */
+      const pastBtn  = document.getElementById('pastBtn');
+      const pastWrap = document.getElementById('pastShows');
+      const pastList = document.getElementById('pastList');
+      const PAST_LIMIT = 12;
+      let pastLoaded = false;
+
+      if (pastBtn) pastBtn.addEventListener('click', () => {
+        const open = pastWrap.hidden;
+        pastWrap.hidden = !open;
+        pastBtn.setAttribute('aria-expanded', String(open));
+        pastBtn.textContent = open ? 'Hide past shows' : 'Past shows';
+        if (!open || pastLoaded) return;
+
+        pastLoaded = true;
+        pastList.innerHTML = '<p class="shows-msg">Loading…</p>';
+        fetch(endpoint('past'))
+          .then(r => r.ok ? r.json() : Promise.reject('HTTP ' + r.status))
+          .then(events => {
+            if (!Array.isArray(events) || !events.length) {
+              pastList.innerHTML = '<p class="shows-msg">Nothing in the archive yet.</p>';
+              return;
+            }
+            events.sort((a, b) => new Date(b.datetime) - new Date(a.datetime));
+            pastList.innerHTML = '';
+            events.slice(0, PAST_LIMIT).forEach(ev => pastList.appendChild(row(ev, true)));
+          })
+          .catch(err => {
+            console.error('[Bandsintown] past events failed:', err);
+            pastList.innerHTML = '<p class="shows-msg">Couldn\'t load past dates just now.</p>';
+            pastLoaded = false;
+          });
+      });
+
+      fetch(url)
+        .then(r => r.ok ? r.json() : Promise.reject('HTTP ' + r.status))
+        .then(events => {
+          if (!Array.isArray(events) || !events.length) {
+            msg('No dates on the calendar right now — we\'re booking. ' +
+                '<a href="#book">Get in touch</a> and let\'s find one.');
+            return;
+          }
+          list.innerHTML = '';
+          events.forEach(ev => list.appendChild(row(ev)));
+          list.setAttribute('aria-busy', 'false');
+        })
+        .catch(err => {
+          // Open the browser console to see what went wrong. Common causes:
+          //   HTTP 403 → APP_ID is wrong, or still set to 'YOUR_API_KEY'
+          //   HTTP 404 → ARTIST is wrong. Use the number only: bandsintown.com/a/491-bonet-flynn
+          //              means ARTIST = 'id_491', not 'id_491-bonet-flynn'
+          //   TypeError → network or CORS; try pasting the logged URL into a browser tab
+          console.error('[Bandsintown] request failed:', err, '\nURL:', url,
+            '\nPaste that URL into a browser tab — if it returns JSON, the problem is in this page. ' +
+            'If it returns an error, the problem is the ARTIST or APP_ID value.');
+          msg('Dates are listed on <a href="' + page + '" target="_blank" rel="noopener">our Bandsintown page</a>.');
+        });
+    })();
+
+    // Swap the thumbnail for the real player on click; without JS the link just
+    // opens YouTube as normal.
+    (() => {
+      const card = document.getElementById('videoCard');
+      if (!card) return;
+      card.addEventListener('click', e => {
+        e.preventDefault();
+        const f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + card.dataset.yt +
+                '?autoplay=1&rel=0&modestbranding=1';
+        f.title = 'Bonet & Flynn live video';
+        f.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture';
+        f.allowFullscreen = true;
+        card.innerHTML = '';
+        card.classList.add('playing');
+        card.appendChild(f);
+      });
+    })();
+
+    // The form posts into a hidden iframe so the visitor stays on the page.
+    (() => {
+      const form = document.getElementById('signupForm');
+      if (!form) return;
+      form.addEventListener('submit', () => {
+        setTimeout(() => {
+          document.getElementById('signupDone').hidden = false;
+          document.getElementById('EMAIL').value = '';
+        }, 400);
+      });
+    })();
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.14});
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   </script>
 </body>
 </html>
