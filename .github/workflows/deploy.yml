@@ -24,6 +24,9 @@ jobs:
       # Only these files/folders are copied into the deployed site. Everything
       # else in the repo (checkpoints, old/, campaign-template.html, etc.)
       # stays in the repo but never reaches the live site or any URL on it.
+      # CNAME carries the custom domain (bonetflynn.com) — without it in the
+      # published artifact, GitHub can drop the custom domain mapping on a
+      # future deploy.
       - name: Build minimal site
         run: |
           mkdir -p _site
@@ -31,6 +34,7 @@ jobs:
           cp robots.txt _site/
           cp -r images _site/
           cp -r videos _site/
+          echo "bonetflynn.com" > _site/CNAME
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
