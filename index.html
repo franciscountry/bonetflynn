@@ -318,16 +318,19 @@
        appearing after signup grew the band's height upward, shoving the
        email/zip fields up the page. Anchored from the top, that growth
        extends downward instead and the fields never move.
-       The 120/148 values are sized for the confirmation message's height,
-       not just the input row's — showing it used to leave zero (even
-       negative) space before the video's edge, since only the input row's
-       height was budgeted for. */
+       The 205/233 values are sized for the confirmation banner's full
+       two-line height (with margin for a little extra copy) rather than
+       shorter versions of this message that sat here before — this has
+       had to grow more than once as the message got longer, so there's
+       deliberate slack built in this time. If the message ever grows
+       past two lines again, re-check .signup-done's rendered height and
+       adjust both numbers to keep ~20-30px clear above the video's edge. */
     .hero-signup-band{
       position:absolute;left:0;right:0;
-      top:calc(100svh - var(--nav-h) - 120px);
+      top:calc(100svh - var(--nav-h) - 205px);
       pointer-events:none;
     }
-    .vhero{padding-bottom:148px;}
+    .vhero{padding-bottom:233px;}
     .hero-signup-band .hero-signup{pointer-events:auto;}
     /* On-video styling — light, translucent fields, since this sits over
        the footage here (unlike the plain-page mobile layout below). */
@@ -345,7 +348,10 @@
     }
     .hero-signup-band .signup-form input:not([type=hidden])::placeholder{color:rgba(247,242,233,.6);}
     .hero-signup-band .signup-form input:not([type=hidden]):focus{border-color:#F7F2E9;}
-    .hero-signup-band .signup-done{color:#F0C9C2;}
+    .hero-signup-band .signup-done{
+      color:#F7F2E9;background:rgba(23,19,15,.55);border-color:rgba(247,242,233,.35);
+    }
+    .hero-signup-band .signup-done::before{background:var(--red);}
   }
 
   /* The bar is a solid dark band the video runs beneath, rather than something
@@ -590,10 +596,30 @@
   .signup-form input:not([type=hidden])::placeholder{color:var(--muted);}
   .signup-form input:not([type=hidden]):focus{outline:none;border-color:var(--red-deep);}
   .signup-form button{flex:none;}
+  /* A quiet italic line was easy to miss — this needs to read as an
+     unmissable "one more step" callout, not a passing acknowledgment. */
   .signup-done{
-    flex-basis:100%;margin:4px 0 0;color:var(--red-deep);
-    font-family:"Fraunces",serif;font-style:italic;font-size:var(--step-1);
+    /* Wider than .hero-signup's own 34rem/30rem cap — the compact form row
+       needs to stay narrow, but nothing clips this from spilling past that
+       width once it's showing, so it gets room to breathe instead of
+       wrapping awkwardly inside the same narrow column. */
+    flex:0 0 42rem;width:42rem;max-width:calc(100vw - 2 * var(--gutter));
+    margin:12px 0 0;display:flex;align-items:center;gap:12px;
+    padding:14px 18px;border-radius:14px;
+    background:rgba(177,35,24,.08);border:1px solid rgba(177,35,24,.25);
+    color:var(--red-deep);
+    font-family:"Archivo",sans-serif;font-weight:600;
+    font-size:var(--step-0);line-height:var(--lh-tight);
   }
+  .signup-done::before{
+    content:"\2713";flex:none;display:grid;place-items:center;
+    width:24px;height:24px;border-radius:50%;
+    background:var(--red-deep);color:#fff;font-size:13px;font-weight:700;
+  }
+  /* Only the spam/junk note is muted, on its own line below the main
+     instruction — it's a fallback for people who don't see the email,
+     not the headline. */
+  .signup-done .signup-done-note{font-weight:400;opacity:.75;font-size:var(--step--1);margin-top:3px;}
 
   /* ---------- FOOTER ---------- */
   footer{padding:46px 0 40px;background:var(--ink);color:#CFC3B4;}
@@ -732,7 +758,7 @@
           <input type="hidden" name="locale" value="en">
           <input type="hidden" name="html_type" value="simple">
           <button class="btn solid" type="submit">Sign up</button>
-          <p class="signup-done" id="signupDone" hidden>Thanks — check your inbox to confirm.</p>
+          <p class="signup-done" id="signupDone" hidden><span>Almost done — check your email and click the link to confirm.<span class="line2 signup-done-note">Don't see it? Check your spam or junk folder.</span></span></p>
         </form>
         <iframe name="brevoTarget" title="Mailing list signup" style="display:none" aria-hidden="true"></iframe>
       </div>
