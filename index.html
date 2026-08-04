@@ -611,6 +611,11 @@
     font-family:"Archivo",sans-serif;font-weight:600;
     font-size:var(--step-0);line-height:var(--lh-tight);
   }
+  /* display:flex above beats the browser's own [hidden]{display:none} —
+     author styles always win over user-agent defaults for the same
+     property, regardless of selector order. Without this override the
+     banner shows permanently, hidden attribute or not. */
+  .signup-done[hidden]{display:none;}
   .signup-done::before{
     content:"\2713";flex:none;display:grid;place-items:center;
     width:24px;height:24px;border-radius:50%;
