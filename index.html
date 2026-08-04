@@ -312,15 +312,22 @@
   @media(min-width:901px){
     /* Desktop: .vhero reserves extra bottom padding sized to fit the band
        plus a gap on each side of it, so the tagline (bottom-aligned inside
-       .vhero-copy) and the form never compete for the same space. Pinned
-       40px off the very bottom, not flush — closer to the tagline like it
-       sat when it was part of .vhero-copy's own flow, with breathing room
-       left below it before the video's edge too. */
+       .vhero-copy) and the form never compete for the same space. Anchored
+       from the top (not bottom) at a fixed distance below .vhero's own
+       bottom edge — bottom-anchoring meant the confirmation message
+       appearing after signup grew the band's height upward, shoving the
+       email/zip fields up the page. Anchored from the top, that growth
+       extends downward instead and the fields never move.
+       The 120/148 values are sized for the confirmation message's height,
+       not just the input row's — showing it used to leave zero (even
+       negative) space before the video's edge, since only the input row's
+       height was budgeted for. */
     .hero-signup-band{
-      position:absolute;left:0;right:0;bottom:40px;
+      position:absolute;left:0;right:0;
+      top:calc(100svh - var(--nav-h) - 120px);
       pointer-events:none;
     }
-    .vhero{padding-bottom:120px;}
+    .vhero{padding-bottom:148px;}
     .hero-signup-band .hero-signup{pointer-events:auto;}
     /* On-video styling — light, translucent fields, since this sits over
        the footage here (unlike the plain-page mobile layout below). */
@@ -714,7 +721,7 @@
     <div class="hero-signup-band">
       <div class="hero-signup">
         <form class="signup-form" id="signupForm" method="POST" target="brevoTarget"
-              action="https://YOUR-ACCOUNT-ID.sibforms.com/serve/YOUR-FORM-ID">
+              action="https://d67cde3d.sibforms.com/serve/MUIFAGzlBsCFGvNhu_BA6jUJ8FJ9O4WOLroUskO2Yq6b1WG5vCW8Ja2rYi8rA62We5tff1X6r3YPvoXa41fXGFT9XrzdJe2d10k3uCMr7ScfiIxDPfdcw6TW4_CD1f2Ri95i6Y4XVmEENCoSWsGyqbO3zPM9lQS-NOGvbMf84DD-lRwWFVM_P0rbIUMwi03QgASr5YXD1Ev_W59eTw==">
           <label class="sr-only" for="EMAIL">Email address</label>
           <input id="EMAIL" name="EMAIL" type="email" required
                  placeholder="you@email.com" autocomplete="email">
