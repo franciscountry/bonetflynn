@@ -630,10 +630,11 @@
   footer{padding:46px 0 40px;background:var(--ink);color:#CFC3B4;}
   /* Brand colours, drawn to match each platform's official mark. The header keeps
      the mono set so the icons stay quiet up there and pay off down here. */
-  .foot-social{display:flex;align-items:center;gap:20px;}
-  .foot-social a{display:flex;transition:transform .2s,opacity .2s;opacity:.92;}
+  .foot-social{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:16px 30px;}
+  .foot-social a{display:flex;align-items:center;gap:11px;transition:transform .2s,opacity .2s;opacity:.92;}
   .foot-social a:hover{transform:translateY(-2px);opacity:1;}
   .foot-social img{height:34px;width:auto;display:block;}
+  .foot-social .follow{font-weight:600;font-size:var(--step--2);letter-spacing:.02em;line-height:var(--lh-small);white-space:nowrap;}
   .foot-inner{display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;}
   .foot-inner small{color:#9C8B76;font-size:var(--step--2);line-height:var(--lh-small);}
 
@@ -724,7 +725,7 @@
         <a href="https://www.instagram.com/bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on Instagram">
           <img src="images/social/ig-mono.png" alt="" width="22" height="22">
         </a>
-        <a href="https://www.youtube.com/@bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on YouTube">
+        <a href="https://www.youtube.com/@bonetflynn?sub_confirmation=1" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on YouTube">
           <img src="images/social/yt-mono.png" alt="" width="32" height="22">
         </a>
         </span>
@@ -951,14 +952,17 @@
   <footer>
     <div class="wrap foot-inner">
       <span class="foot-social">
-        <a href="https://www.facebook.com/bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on Facebook">
+        <a href="https://www.facebook.com/bonetflynn" target="_blank" rel="noopener">
           <img src="images/social/fb.png" alt="" width="34" height="34">
+          <span class="follow">Follow on Facebook</span>
         </a>
-        <a href="https://www.instagram.com/bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on Instagram">
+        <a href="https://www.instagram.com/bonetflynn" target="_blank" rel="noopener">
           <img src="images/social/ig.png" alt="" width="34" height="34">
+          <span class="follow">Follow on Instagram</span>
         </a>
-        <a href="https://www.youtube.com/@bonetflynn" target="_blank" rel="noopener" aria-label="Bonet &amp; Flynn on YouTube">
+        <a href="https://www.youtube.com/@bonetflynn?sub_confirmation=1" target="_blank" rel="noopener">
           <img src="images/social/yt.png" alt="" width="49" height="34">
+          <span class="follow">Subscribe on YouTube</span>
         </a>
       </span>
       <small>© <span id="yr"></span> Deni Bonet &amp; Chris Flynn</small>
