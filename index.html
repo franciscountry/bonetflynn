@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Bonet &amp; Flynn — electric violin, guitar &amp; two voices</title>
-<meta name="description" content="Deni Bonet and Chris Flynn — electric violin, guitar and two voices. Carnegie Hall to living rooms. Booking now." />
+<title>Bonet &amp; Flynn: electric violin, guitar &amp; two voices</title>
+<meta name="description" content="Deni Bonet and Chris Flynn: electric violin, guitar and two voices. Living rooms to Carnegie Hall. Booking now." />
 <meta name="theme-color" content="#FAF6EE" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -413,14 +413,23 @@
     display:block;font-weight:400;color:var(--muted);font-size:var(--step--2);
     letter-spacing:.01em;margin-top:3px;line-height:var(--lh-small);}
 
-  .praise-nav{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:16px;}
+  /* The shell wraps the grid and the nav so the arrows — still DOM children
+     of .praise-nav, which keeps the mobile flex layout and the JS untouched —
+     can be absolutely positioned to flank the quotes on desktop. */
+  .praise-shell{position:relative;}
+  .praise-nav{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:22px;}
   .praise-arrow{
-    display:grid;place-items:center;width:40px;height:40px;flex:none;border-radius:50%;
-    border:1px solid var(--line-strong);background:transparent;color:var(--ink);
-    font-size:var(--step-1);line-height:1;cursor:pointer;
-    transition:border-color .2s,background .2s,transform .2s;
+    display:grid;place-items:center;width:48px;height:48px;flex:none;border-radius:50%;
+    border:0;background:var(--red-deep);color:#fff;cursor:pointer;
+    box-shadow:0 2px 10px rgba(23,19,15,.18);
+    transition:background .2s,transform .2s;
+    /* 50% of the shell, nudged up: the nav row below the grid (~25px) pulls
+       the shell's midpoint under the grid's, and the arrow is 48px tall. */
+    position:absolute;top:calc(50% - 36px);z-index:2;
   }
-  .praise-arrow:hover{border-color:var(--ink);background:var(--paper-2);transform:translateY(-1px);}
+  #praisePrev{left:-24px;}
+  #praiseNext{right:-24px;}
+  .praise-arrow:hover{background:var(--red-darker);transform:scale(1.06);}
   .praise-dots{display:flex;gap:10px;}
   .praise-dot{
     width:9px;height:9px;padding:0;border:0;border-radius:50%;
@@ -568,6 +577,8 @@
   .book h2{font-size:var(--display-1);max-width:22ch;margin:0 auto 10px;}
   .book h2 .payoff{display:block;color:var(--red-deep);}
   .book p{color:var(--muted);max-width:44ch;margin:20px auto 34px;line-height:var(--lh-body);}
+  .book-epk{font-size:var(--step--1);margin-top:34px;}
+  .book-epk a{color:var(--red-deep);text-decoration:underline;text-underline-offset:3px;}
   .book-email{
     font-family:"Archivo";font-weight:700;font-size:var(--step-6);letter-spacing:-.01em;
     color:var(--ink);border-bottom:2px solid var(--red);padding-bottom:4px;transition:color .2s;line-height:var(--lh-display);}
@@ -663,6 +674,9 @@
     .hero-copy{padding:38px var(--gutter) 56px;}
     .hero-name2{margin-left:0;}
     .praise-page.is-active{grid-template-columns:1fr;gap:20px;}
+    /* Single column leaves no room beside the cards, so the arrows fall back
+       into the nav row's flex flow, flanking the dots. */
+    .praise-arrow{position:static;width:44px;height:44px;}
   }
   @media(max-width:860px){
     :root{--nav-h:76px;--mark-d:70px;--mark-h:44px;}
@@ -709,7 +723,7 @@
   <!-- NAV -->
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
-      <a href="#top" class="brand" aria-label="Bonet and Flynn — back to top">
+      <a href="#top" class="brand" aria-label="Bonet and Flynn, back to top">
         <img class="brand-mark" src="images/mark.webp" alt="" width="422" height="400">
         <span class="brand-text">Bonet <span class="amp">&amp;</span> Flynn</span>
       </a>
@@ -747,7 +761,7 @@
           <h1 class="n">Deni Bonet</h1>
           <div class="hero-name2"><span class="amp">&amp;</span><h1 class="n">Chris Flynn</h1></div>
         </div>
-        <p class="vhero-tag">Carnegie Hall to living rooms.<span class="line2">A show you'll be talking about tomorrow.</span></p>
+        <p class="vhero-tag">Living rooms to Carnegie Hall.<span class="line2">A show you'll be talking about tomorrow.</span></p>
       </div>
     </section>
     <div class="hero-signup-band">
@@ -764,7 +778,7 @@
           <input type="hidden" name="locale" value="en">
           <input type="hidden" name="html_type" value="simple">
           <button class="btn solid" type="submit">Sign up</button>
-          <p class="signup-done" id="signupDone" hidden><span>Almost done — check your email and click the link to confirm.<span class="line2 signup-done-note">Don't see it? Check your spam or junk folder.</span></span></p>
+          <p class="signup-done" id="signupDone" hidden><span>Almost done! Check your email and click the link to confirm.<span class="line2 signup-done-note">Don't see it? Check your spam or junk folder.</span></span></p>
         </form>
         <iframe name="brevoTarget" title="Mailing list signup" style="display:none" aria-hidden="true"></iframe>
       </div>
@@ -775,6 +789,7 @@
   <section class="praise">
     <div class="wrap">
       <p class="label" id="about">What people are saying</p>
+      <div class="praise-shell">
       <div class="praise-grid" id="praiseGrid" aria-live="polite">
         <div class="praise-page is-active" data-page="0">
           <figure class="quote">
@@ -826,14 +841,15 @@
         </div>
       </div>
       <div class="praise-nav">
-        <button class="praise-arrow" id="praisePrev" type="button" aria-label="Previous testimonials">‹</button>
+        <button class="praise-arrow" id="praisePrev" type="button" aria-label="Previous testimonials"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></button>
         <div class="praise-dots" id="praiseDots">
           <button class="praise-dot is-active" type="button" data-page="0" aria-label="Testimonials, page 1 of 4" aria-current="true"></button>
           <button class="praise-dot" type="button" data-page="1" aria-label="Testimonials, page 2 of 4"></button>
           <button class="praise-dot" type="button" data-page="2" aria-label="Testimonials, page 3 of 4"></button>
           <button class="praise-dot" type="button" data-page="3" aria-label="Testimonials, page 4 of 4"></button>
         </div>
-        <button class="praise-arrow" id="praiseNext" type="button" aria-label="Next testimonials">›</button>
+        <button class="praise-arrow" id="praiseNext" type="button" aria-label="Next testimonials"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg></button>
+      </div>
       </div>
     </div>
   </section>
@@ -847,7 +863,7 @@
           <p class="about-lead">Two players with a sound so big, you'll look for the band.</p>
           <a class="nerfa" href="https://nerfa.org/" target="_blank" rel="noopener">
             <img src="images/nerfa-2026.png" width="520" height="520" loading="lazy"
-                 alt="NERFA 2026 Formal Showcase Artist — Northeast Regional Folk Alliance">
+                 alt="NERFA 2026 Formal Showcase Artist, Northeast Regional Folk Alliance">
           </a>
         </div>
         <div class="about-body">
@@ -944,6 +960,7 @@
         <h2>Book the duo.<span class="payoff">Everybody leaves smiling.</span></h2>
         <p>Listening rooms to house concerts. Theaters to festivals.<span class="line2">You know your audience. We know how to win them over.</span></p>
         <a class="book-email" href="mailto:booking@bonetflynn.com">booking@bonetflynn.com</a>
+        <p class="book-epk">Presenters: the <a href="epk.html">electronic press kit</a> has bios, photos, video &amp; press quotes.</p>
       </div>
     </div>
   </section>
@@ -1087,7 +1104,7 @@
         a.rel = 'noopener';
         a.textContent = label + ' →';
         a.setAttribute('aria-label',
-          label + ' — ' + (v.name || 'this show') +
+          label + ', ' + (v.name || 'this show') +
           (ok ? ', ' + d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''));
 
         el.append(date, venue);
@@ -1143,7 +1160,7 @@
         .then(events => {
           events = Array.isArray(events) ? events.filter(ev => !isHotPantsAndTony(ev)) : events;
           if (!Array.isArray(events) || !events.length) {
-            msg('No dates on the calendar right now — we\'re booking. ' +
+            msg('No dates on the calendar right now, but we\'re booking. ' +
                 '<a href="#book">Get in touch</a> and let\'s find one.');
             return;
           }
