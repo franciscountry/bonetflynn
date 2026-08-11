@@ -645,7 +645,10 @@
   .foot-social a{display:flex;align-items:center;gap:11px;transition:transform .2s,opacity .2s;opacity:.92;}
   .foot-social a:hover{transform:translateY(-2px);opacity:1;}
   .foot-social img{height:34px;width:auto;display:block;}
-  .foot-social .follow{font-weight:600;font-size:var(--step--2);letter-spacing:.02em;line-height:var(--lh-small);white-space:nowrap;}
+  .foot-social .follow{font-weight:600;font-size:var(--step--2);letter-spacing:.02em;line-height:var(--lh-small);white-space:nowrap;text-align:left;}
+  /* Handle under the platform name — same stacked treatment as the EPK page,
+     so the @name can be read (or copied) right off the footer. */
+  .foot-social .fhandle{display:block;font-weight:400;font-size:var(--step--3);color:#9C8B76;letter-spacing:.02em;margin-top:2px;}
   .foot-inner{display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;}
   .foot-inner small{color:#9C8B76;font-size:var(--step--2);line-height:var(--lh-small);}
 
@@ -973,15 +976,15 @@
       <span class="foot-social">
         <a href="https://www.facebook.com/bonetflynn" target="_blank" rel="noopener">
           <img src="images/social/fb.png" alt="" width="34" height="34">
-          <span class="follow">Follow on Facebook</span>
+          <span class="follow">Facebook<span class="fhandle">@bonetflynn</span></span>
         </a>
         <a href="https://www.instagram.com/bonetflynn" target="_blank" rel="noopener">
           <img src="images/social/ig.png" alt="" width="34" height="34">
-          <span class="follow">Follow on Instagram</span>
+          <span class="follow">Instagram<span class="fhandle">@bonetflynn</span></span>
         </a>
         <a href="https://www.youtube.com/@bonetflynn?sub_confirmation=1" target="_blank" rel="noopener">
           <img src="images/social/yt.png" alt="" width="49" height="34">
-          <span class="follow">Subscribe on YouTube</span>
+          <span class="follow">YouTube<span class="fhandle">@bonetflynn</span></span>
         </a>
       </span>
       <small>© <span id="yr"></span> Deni Bonet &amp; Chris Flynn</small>
