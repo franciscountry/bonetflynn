@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bonet &amp; Flynn Electronic Press Kit</title>
+<meta name="description" content="Electronic press kit for Deni Bonet and Chris Flynn: bios, photos, video, press quotes and booking contact." />
+<meta name="theme-color" content="#FAF6EE" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500;1,9..144,600&family=Source+Serif+4:ital@1&display=swap" rel="stylesheet" />
+<style>
+  /* Shares the main site's tokens — if index.html's palette or type scale
+     changes, mirror it here. */
+  :root{
+    --paper:#FAF6EE;
+    --paper-2:#F1EADC;
+    --sand:#E7DCC9;
+    --ink:#17130F;
+    --ink-soft:#3B322A;
+    --muted:#6F6157;
+    --red:#E23A2E;
+    --red-deep:#B12318;
+    --red-darker:#8E1A12;
+    --line:rgba(23,19,15,.13);
+    --line-strong:rgba(23,19,15,.30);
+
+    --step--3:   clamp(0.8232rem, 0.8035rem + 0.09861vw, 0.9218rem);
+    --step--2:   clamp(0.8784rem, 0.8466rem + 0.1587vw, 1.037rem);
+    --step--1:   clamp(0.9372rem, 0.8913rem + 0.2295vw, 1.167rem);
+    --step-0:    clamp(1rem, 0.9375rem + 0.3125vw, 1.312rem);
+    --step-1:    clamp(1.067rem, 0.9851rem + 0.4096vw, 1.477rem);
+    --step-2:    clamp(1.138rem, 1.034rem + 0.5226vw, 1.661rem);
+    --step-3:    clamp(1.215rem, 1.084rem + 0.654vw, 1.869rem);
+    --step-4:    clamp(1.296rem, 1.135rem + 0.8062vw, 2.102rem);
+    --step-6:    clamp(1.476rem, 1.239rem + 1.185vw, 2.661rem);
+    --step-8:    clamp(1.68rem, 1.343rem + 1.688vw, 3.368rem);
+    --step-9:    clamp(1.793rem, 1.393rem + 1.996vw, 3.789rem);
+    --display-1: clamp(2.375rem, 1.925rem + 2.25vw, 4.625rem);
+    --display-2: clamp(2.5rem, 1.975rem + 2.625vw, 5.125rem);
+
+    --lh-display: 0.98em;
+    --lh-tight:   1.25em;
+    --lh-body:    1.5em;
+    --lh-small:   1.375em;
+
+    --nav-h:76px;
+    --maxw:1180px;
+    --gutter:28px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Archivo",system-ui,sans-serif;
+    font-size:var(--step-0);
+    line-height:var(--lh-body);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  h1,h2,h3{margin:0;text-wrap:balance;font-family:"Anton",sans-serif;font-weight:400;line-height:var(--lh-display);letter-spacing:.01em;text-transform:uppercase;}
+  ::selection{background:var(--red);color:#fff;}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);}
+
+  .amp{font-family:"Fraunces",serif;font-style:italic;font-weight:500;color:var(--red);}
+  .amp-small{
+    color:inherit;font-weight:inherit;
+    font-optical-sizing:none;font-variation-settings:"opsz" 30;
+  }
+
+  .eyebrow{
+    font-family:"Fraunces",serif;font-style:italic;font-weight:500;
+    color:var(--red-deep);font-size:var(--step-1);letter-spacing:.01em;line-height:var(--lh-tight);}
+  .label{
+    font-family:"Archivo",sans-serif;font-weight:600;
+    text-transform:uppercase;letter-spacing:.18em;font-size:var(--step-0);color:var(--muted);line-height:var(--lh-small);}
+
+  a:focus-visible,button:focus-visible{outline:2px solid var(--red-deep);outline-offset:3px;border-radius:2px;}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;font-family:"Archivo";font-weight:600;
+    font-size:var(--step-0);padding:14px 26px;border-radius:999px;cursor:pointer;transition:all .2s;
+    border:1px solid var(--line-strong);color:var(--ink);background:transparent;
+  }
+  .btn:hover{border-color:var(--ink);transform:translateY(-1px);}
+  .btn.solid{background:var(--red-deep);border-color:var(--red-deep);color:#fff;}
+  .btn.solid:hover{background:var(--red-darker);border-color:var(--red-darker);}
+
+  /* ---------- NAV (dark sticky bar, same as the main site) ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:50;background:var(--ink);
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;height:var(--nav-h);
+    max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);
+  }
+  .brand{display:flex;align-items:center;gap:14px;}
+  .brand-mark{height:44px;width:auto;flex:none;
+    background:var(--paper);border-radius:50%;padding:8px;box-shadow:inset 0 0 0 2px var(--ink);}
+  .brand-text{
+    font-family:"Anton",sans-serif;text-transform:uppercase;letter-spacing:.02em;
+    color:#F7F2E9;font-size:var(--step-1);line-height:1;
+  }
+  .brand-text .amp{font-family:"Anton";font-style:normal;font-weight:400;color:var(--red);margin:0 .08em;}
+  .nav-links{display:flex;gap:24px;align-items:center;}
+  .nav-links > a{
+    position:relative;
+    font-size:var(--step--1);font-weight:600;
+    text-transform:uppercase;letter-spacing:.09em;
+    color:rgba(247,242,233,.86);transition:color .2s;line-height:var(--lh-small);
+  }
+  .nav-links > a::after{
+    content:"";position:absolute;left:0;right:0;bottom:-7px;height:2px;
+    background:var(--red);transform:scaleX(0);transform-origin:left;
+    transition:transform .25s cubic-bezier(.2,.7,.2,1);
+  }
+  .nav-links > a:hover{color:#fff;}
+  .nav-links > a:hover::after,
+  .nav-links > a:focus-visible::after{transform:scaleX(1);}
+  .menu-btn{display:none;background:none;border:0;color:#F7F2E9;font-size:var(--step-4);cursor:pointer;padding:6px;}
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{padding:clamp(36px,5vw,64px) 0;position:relative;}
+  [id]{scroll-margin-top:calc(var(--nav-h) + 18px);}
+  .sec-head{margin-bottom:38px;max-width:60ch;}
+  .sec-head h2{font-size:var(--step-9);margin-top:14px;}
+
+  /* ---------- EPK HERO ---------- */
+  .epk-hero{
+    padding:clamp(44px,7vw,90px) 0 clamp(36px,5vw,60px);
+    border-bottom:1px solid var(--line);
+  }
+  .epk-hero .eyebrow{margin:0 0 20px;}
+  .epk-hero h1{font-size:var(--display-2);}
+  .epk-hero .hero-name2{
+    display:flex;align-items:flex-start;gap:14px;
+    margin:clamp(2px,.4vw,8px) 0 0 clamp(34px,5vw,72px);
+  }
+  .epk-hero .hero-name2 .amp{
+    font-size:calc(var(--display-2) * 0.5);line-height:1em;margin-top:.03em;
+  }
+  .epk-tag{margin:28px 0 0;max-width:38ch;color:var(--muted);font-size:var(--step-1);line-height:var(--lh-body);}
+  .epk-cta{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
+
+  /* ---------- AT A GLANCE ---------- */
+  .glance{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+  .fact{border:1px solid var(--line);border-radius:14px;padding:22px;background:var(--paper-2);}
+  .fact .label{font-size:var(--step--2);margin:0 0 10px;}
+  .fact p{margin:0;font-weight:600;font-size:var(--step-0);line-height:var(--lh-tight);text-wrap:pretty;}
+  .fact p span{display:block;font-weight:400;color:var(--muted);font-size:var(--step--1);margin-top:6px;line-height:var(--lh-small);}
+
+  /* ---------- BIOS ---------- */
+  .bio-block{border:1px solid var(--line);border-radius:14px;background:var(--paper-2);padding:26px 28px 28px;margin-bottom:24px;}
+  .bio-block:last-child{margin-bottom:0;}
+  .bio-head{display:flex;align-items:baseline;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:14px;}
+  .bio-head h3{font-size:var(--step-2);}
+  .bio-head .hint{color:var(--muted);font-size:var(--step--2);line-height:var(--lh-small);}
+  .copy-btn{
+    font-family:"Archivo";font-weight:600;font-size:var(--step--2);
+    color:var(--red-deep);background:none;border:1px solid var(--line-strong);
+    border-radius:999px;padding:7px 16px;cursor:pointer;transition:all .2s;white-space:nowrap;
+  }
+  .copy-btn:hover{border-color:var(--red-deep);}
+  .copy-btn.copied{background:var(--red-deep);border-color:var(--red-deep);color:#fff;}
+  .bio-text p{margin:0 0 0.75lh;color:var(--ink-soft);line-height:var(--lh-body);text-wrap:pretty;}
+  .bio-text p:last-child{margin-bottom:0;}
+  .bio-oneliner{
+    font-size:var(--step-4);line-height:var(--lh-tight);font-family:"Archivo";
+    font-weight:600;letter-spacing:-.005em;color:var(--ink);margin:0;
+  }
+
+  .players{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:26px;}
+  .player{border:1px solid var(--line);border-radius:14px;padding:22px 22px 28px;background:var(--paper-2);}
+  .player h3{font-size:var(--step-3);margin-bottom:4px;}
+  .player .role{font-family:"Fraunces";font-style:italic;color:var(--red-deep);font-size:var(--step-1);margin:0 0 16px;line-height:var(--lh-tight);}
+  .player p{color:var(--muted);font-size:var(--step-0);margin:0;line-height:var(--lh-body);text-wrap:pretty;}
+  .player p + p{margin-top:0.75lh;}
+  .player .site{font-family:"Archivo";font-weight:600;font-size:var(--step--1);color:var(--red-deep);line-height:var(--lh-small);margin-top:18px;display:inline-block;}
+  .player .site:hover{text-decoration:underline;}
+
+  /* ---------- PHOTOS ---------- */
+  .photo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;}
+  /* Cards in a row differ in image ratio, so the grid stretches the short one.
+     Meta pins to the bottom and the photo slot absorbs the slack — centered on
+     sand — instead of dead paper below the caption. */
+  .photo-card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper-2);display:flex;flex-direction:column;}
+  .photo-card .ph{background:var(--sand);flex:1;display:grid;place-items:center;}
+  .photo-card img{width:100%;height:auto;display:block;}
+  .photo-meta{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 20px;flex-wrap:wrap;}
+  .photo-meta .cap{font-weight:600;font-size:var(--step--1);line-height:var(--lh-small);}
+  .photo-meta .cap span{display:block;font-weight:400;color:var(--muted);font-size:var(--step--2);margin-top:2px;}
+  .photo-meta a{font-family:"Archivo";font-weight:600;font-size:var(--step--1);color:var(--red-deep);white-space:nowrap;}
+  .photo-meta a:hover{text-decoration:underline;}
+  .photos-note{color:var(--muted);font-size:var(--step--1);margin-top:22px;line-height:var(--lh-small);}
+  .photos-note a{color:var(--red-deep);text-decoration:underline;text-underline-offset:3px;}
+
+  /* ---------- VIDEO (click-to-play, same recipe as the main site) ---------- */
+  .media.video{
+    border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper-2);
+    padding:0;position:relative;aspect-ratio:16/9;display:block;
+    transition:border-color .25s,transform .25s;
+  }
+  .media.video:hover{border-color:var(--line-strong);transform:translateY(-3px);}
+  .media.video img{width:100%;height:100%;object-fit:cover;}
+  .media.video .play{
+    position:absolute;inset:0;display:grid;place-items:center;
+    background:rgba(23,19,15,.18);transition:background .25s;
+  }
+  .media.video:hover .play{background:rgba(23,19,15,.08);}
+  .media.video .play i{
+    width:74px;height:74px;border-radius:50%;background:var(--red-deep);
+    display:grid;place-items:center;transition:transform .25s;
+  }
+  .media.video:hover .play i{transform:scale(1.08);}
+  .media.video .play i::after{
+    content:"";border-left:22px solid #fff;
+    border-top:14px solid transparent;border-bottom:14px solid transparent;
+    margin-left:6px;
+  }
+  .media.video .cap{
+    position:absolute;left:0;right:0;bottom:0;padding:14px 16px;
+    background:rgba(23,19,15,.62);color:#F3ECE2;
+    font-family:"Archivo";font-weight:600;font-size:var(--step--1);text-align:left;line-height:var(--lh-small);}
+  .media.video.playing{background:#17130F;}
+  .media.video.playing:hover{transform:none;}
+  .media.video iframe{width:100%;height:100%;border:0;display:block;}
+
+  /* ---------- PRESS ---------- */
+  .quotes{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+  .quote{
+    margin:0;border:1px solid var(--line);border-radius:14px;
+    padding:26px 26px 28px;background:var(--paper-2);
+  }
+  .quote::before{
+    content:"\201C";display:block;font-family:"Fraunces",serif;font-style:italic;
+    color:var(--red);font-size:var(--step-8);line-height:.6em;margin-bottom:16px;
+  }
+  .quote blockquote{
+    margin:0 0 0.75lh;font-family:"Source Serif 4",serif;font-style:italic;
+    font-size:var(--step-0);line-height:var(--lh-tight);color:var(--ink);
+  }
+  .quote figcaption{
+    font-family:"Archivo",sans-serif;font-weight:600;font-size:var(--step--1);
+    letter-spacing:.02em;color:var(--ink-soft);line-height:var(--lh-small);}
+  .quote figcaption span{
+    display:block;font-weight:400;color:var(--muted);font-size:var(--step--2);
+    letter-spacing:.01em;margin-top:3px;line-height:var(--lh-small);}
+  .press-more{color:var(--muted);font-size:var(--step--1);margin-top:22px;line-height:var(--lh-small);}
+  .press-more a{color:var(--red-deep);text-decoration:underline;text-underline-offset:3px;}
+
+  /* ---------- LOGISTICS ---------- */
+  .logistics{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+
+  /* ---------- CONTACT (dark panel, like Shut Up & Play) ---------- */
+  .contact{background:var(--ink);color:#F3ECE2;text-align:center;}
+  .contact .label{color:#9C8B76;}
+  .contact h2{font-size:var(--display-1);color:#F3ECE2;max-width:22ch;margin:14px auto 10px;}
+  .contact p{color:#CFC3B4;max-width:44ch;margin:20px auto 34px;line-height:var(--lh-body);}
+  .contact-email{
+    font-family:"Archivo";font-weight:700;font-size:var(--step-6);letter-spacing:-.01em;
+    color:#F3ECE2;border-bottom:2px solid var(--red);padding-bottom:4px;transition:color .2s;line-height:var(--lh-display);}
+  .contact-email:hover{color:#fff;}
+  /* Socials carry the platform's colored mark plus the handle in text, so a
+     presenter can copy "@bonetflynn" straight off the page (or off a printout). */
+  .contact-socials{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:18px 34px;margin-top:38px;}
+  .contact-socials a{display:flex;align-items:center;gap:12px;opacity:.92;transition:transform .2s,opacity .2s;}
+  .contact-socials a:hover{transform:translateY(-2px);opacity:1;}
+  .contact-socials img{height:34px;width:auto;display:block;}
+  .contact-socials .handle{text-align:left;font-family:"Archivo";font-weight:600;font-size:var(--step--1);color:#F3ECE2;line-height:var(--lh-small);}
+  .contact-socials .handle span{display:block;font-weight:400;font-size:var(--step--2);color:#9C8B76;}
+  .contact-links{display:flex;align-items:center;justify-content:center;gap:16px 28px;flex-wrap:wrap;margin-top:26px;}
+  .contact-links a{
+    font-family:"Archivo";font-weight:600;font-size:var(--step--1);
+    color:#CFC3B4;letter-spacing:.02em;line-height:var(--lh-small);
+  }
+  .contact-links a:hover{color:#fff;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:36px 0;background:var(--ink);color:#9C8B76;border-top:1px solid rgba(243,236,226,.12);}
+  .foot-inner{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;}
+  footer small{font-size:var(--step--2);line-height:var(--lh-small);}
+  footer a{color:#CFC3B4;}
+  footer a:hover{color:#fff;}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:980px){
+    .glance{grid-template-columns:repeat(2,1fr);}
+    .logistics{grid-template-columns:1fr;}
+  }
+  @media(max-width:860px){
+    .nav-links{
+      position:fixed;inset:var(--nav-h) 0 auto 0;background:rgba(23,19,15,.98);backdrop-filter:blur(10px);
+      flex-direction:column;gap:0;padding:10px 0 20px;
+      transform:translateY(-120%);transition:transform .3s ease;
+    }
+    .nav-links.open{transform:translateY(0);}
+    .nav-links > a{padding:15px 28px;width:100%;font-size:var(--step-1);}
+    .nav-links > a::after{display:none;}
+    .menu-btn{display:block;}
+    .players{grid-template-columns:1fr;}
+    .photo-grid{grid-template-columns:1fr;}
+    .quotes{grid-template-columns:1fr;}
+    .epk-hero .hero-name2{margin-left:0;}
+  }
+  @media(max-width:560px){
+    .glance{grid-template-columns:1fr;}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;}
+  }
+
+  /* ---------- PRINT ----------
+     Presenters print these. Flatten the chrome, keep the content. */
+  @media print{
+    header.nav,.menu-btn,.epk-cta,.copy-btn,.media.video .play,footer{display:none!important;}
+    body{background:#fff;}
+    section{padding:18px 0;page-break-inside:avoid;}
+    .contact{background:#fff;color:#000;}
+    .contact h2,.contact-email{color:#000;}
+    .contact p,.contact-links a{color:#333;}
+    .reveal{opacity:1;transform:none;}
+    .fact,.bio-block,.player,.quote,.photo-card{border-color:#ccc;background:#fff;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand" aria-label="Bonet and Flynn, back to main site">
+        <img class="brand-mark" src="images/mark.webp" alt="" width="422" height="400">
+        <span class="brand-text">Bonet <span class="amp">&amp;</span> Flynn</span>
+      </a>
+      <nav class="nav-links" id="navlinks">
+        <a href="#bio">Bio</a>
+        <a href="#photos">Photos</a>
+        <a href="#video">Video</a>
+        <a href="#press">Press</a>
+        <a href="#contact">Contact</a>
+        <a href="index.html">← Main site</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="epk-hero">
+    <div class="wrap">
+      <p class="eyebrow">Electronic press kit</p>
+      <div class="hero-names">
+        <h1>Deni Bonet</h1>
+        <div class="hero-name2"><span class="amp">&amp;</span><h1>Chris Flynn</h1></div>
+      </div>
+      <p class="epk-tag">Electric violin, guitar <span class="amp amp-small">&amp;</span> two voices. Living rooms to Carnegie Hall. A show you'll be talking about tomorrow.</p>
+      <div class="epk-cta">
+        <a class="btn solid" href="mailto:booking@bonetflynn.com">booking@bonetflynn.com</a>
+        <a class="btn" href="#photos">Photos &amp; downloads</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- AT A GLANCE -->
+  <section>
+    <div class="wrap">
+      <div class="reveal sec-head">
+        <p class="label">The short version</p>
+        <h2>At a glance</h2>
+      </div>
+      <div class="reveal glance">
+        <div class="fact">
+          <p class="label">Lineup</p>
+          <p>Duo<span>Electric violin, guitar &amp; two voices, fully self-contained</span></p>
+        </div>
+        <div class="fact">
+          <p class="label">Home base</p>
+          <p>New York City<span>Touring the Northeast and beyond</span></p>
+        </div>
+        <div class="fact">
+          <p class="label">Notable stages</p>
+          <p>Carnegie Hall<span>Mountain Stage · Lincoln Center · The White House</span></p>
+        </div>
+        <div class="fact">
+          <p class="label">Showcase</p>
+          <p>NERFA 2026<span>Formal Showcase Artist, Northeast Regional Folk Alliance</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BIO -->
+  <section>
+    <div class="wrap">
+      <div class="reveal sec-head" id="bio">
+        <p class="label">For your program &amp; press release</p>
+        <h2>Bio</h2>
+      </div>
+
+      <div class="reveal bio-block">
+        <div class="bio-head">
+          <h3>One-liner</h3>
+          <button class="copy-btn" type="button" data-copy="oneliner">Copy text</button>
+        </div>
+        <div class="bio-text" id="oneliner">
+          <p class="bio-oneliner">Two players with a sound so big, you'll look for the band.</p>
+        </div>
+      </div>
+
+      <div class="reveal bio-block">
+        <div class="bio-head">
+          <h3>Short bio <span class="hint">~90 words</span></h3>
+          <button class="copy-btn" type="button" data-copy="shortbio">Copy text</button>
+        </div>
+        <div class="bio-text" id="shortbio">
+          <p>Deni Bonet and Chris Flynn make a sound so rich and expansive you'd swear a full band was hiding in the wings. Deni's virtuosic electric violin, honed on NPR's Mountain Stage and alongside Cyndi Lauper, R.E.M. and Sarah McLachlan, soars over Chris's deep, driving guitar, and both trade lead vocals and tight, interlocking harmonies. Having graced stages from living rooms to Carnegie Hall, the duo delivers a warm, playful show that leaves every audience smiling, energized, and completely connected.</p>
+        </div>
+      </div>
+
+      <div class="reveal bio-block">
+        <div class="bio-head">
+          <h3>Full bio</h3>
+          <button class="copy-btn" type="button" data-copy="fullbio">Copy text</button>
+        </div>
+        <div class="bio-text" id="fullbio">
+          <p>There is a rare magic in hearing two musicians create a sound so rich and expansive that you'd swear a full band was hiding in the wings. That is the signature experience of Deni Bonet and Chris Flynn.</p>
+          <p>Having graced legendary stages from Carnegie Hall to Mountain Stage, this dynamic duo brings an unforgettable and diverse energy to every performance. At the heart of their sound is a captivating balance of melody and motion. Deni's virtuosic violin playing is a force of nature, soaring, expressive, and technically brilliant. Underpinning that melodic flight is Chris's guitar work, which drives the sound with a deep, physical pulse. He effortlessly anchors the groove and holds down the harmony, giving the music a steady heartbeat you can actually feel. On top of this foundation, both swap effortlessly between commanding lead vocals and tight, interlocking harmonies.</p>
+          <p>A live show with Deni and Chris is defined by warm, playful interaction with the audience. They treat every gig like a shared experience, with the simple goal of giving the crowd a joyful escape for an hour or two. Whether they are trading off vocal duties or letting the instruments tell the story, Deni and Chris leave every audience smiling, energized, and completely connected.</p>
+        </div>
+      </div>
+
+      <div class="reveal players">
+        <div class="player">
+          <h3>Deni Bonet</h3>
+          <p class="role">electric violin <span class="amp amp-small">&amp;</span> vocals</p>
+          <p>With a dynamic career spanning stages around the world, Deni Bonet has built a reputation as a virtuoso electric violinist, singer-songwriter, and captivating performer. Early on, Deni honed her craft as an original member of the house band for NPR's Mountain Stage before launching a standout solo career and becoming an in-demand collaborator for legends like Cyndi Lauper, R.E.M., Warren Zevon, Richard Thompson, and Sarah McLachlan to name a few.</p>
+          <p>From performing at Carnegie Hall and the White House for President Obama, to touring internationally, she has continually redefined what it means to rock a violin. A fixture of New York's vibrant live scene, Deni has brought her fiery string work and electric energy to countless stages, festivals, and recordings across the globe.</p>
+          <a class="site" href="https://denibonet.com" target="_blank" rel="noopener">denibonet.com</a>
+        </div>
+        <div class="player">
+          <h3>Chris Flynn</h3>
+          <p class="role">guitar <span class="amp amp-small">&amp;</span> vocals</p>
+          <p>With a career deeply rooted in the heart of the East Coast music scene, Chris Flynn has built a reputation as a dynamic guitarist, vocalist, and musical director. Early on, Chris helped pioneer a communal approach to the indie music business as a founder of Cropduster Records, an artist-owned label and cooperative collective that served as a hub for the NY/NJ roots and pop scenes.</p>
+          <p>He also served as the Musical Director for New York's famed All-Star Irish Rock Revue, an annual St. Patrick's Day celebration whose roster over the years included members of Fountains of Wayne, Flogging Molly, The Pogues, the Alice Cooper Group, and Bad Company. Under his direction, the ensemble played everywhere from the Bowery to Lincoln Center.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTOS -->
+  <section>
+    <div class="wrap">
+      <div class="reveal sec-head" id="photos">
+        <p class="label">Downloads</p>
+        <h2>Photos</h2>
+      </div>
+      <div class="reveal photo-grid">
+        <div class="photo-card">
+          <div class="ph"><img src="images/hero-poster.jpg" alt="Deni Bonet and Chris Flynn performing together on stage" loading="lazy"></div>
+          <div class="photo-meta">
+            <p class="cap">The duo, live<span>Landscape · 1600 × 900</span></p>
+            <a href="images/hero-poster.jpg" download="bonet-flynn-duo-live.jpg">Download →</a>
+          </div>
+        </div>
+        <div class="photo-card">
+          <div class="ph"><img src="images/duo-studio.jpg" alt="Deni Bonet and Chris Flynn posing together in the studio" loading="lazy"></div>
+          <div class="photo-meta">
+            <p class="cap">The duo, studio<span>820 × 745</span></p>
+            <a href="images/duo-studio.jpg" download="bonet-flynn-duo-studio.jpg">Download →</a>
+          </div>
+        </div>
+        <div class="photo-card">
+          <div class="ph"><img src="images/deni-bonet.jpg" alt="Deni Bonet playing violin on stage, eyes down, mid-phrase" loading="lazy"></div>
+          <div class="photo-meta">
+            <p class="cap">Deni Bonet<span>Portrait · 560 × 700</span></p>
+            <a href="images/deni-bonet.jpg" download="deni-bonet.jpg">Download →</a>
+          </div>
+        </div>
+        <div class="photo-card">
+          <div class="ph"><img src="images/chris-flynn.jpg" alt="Chris Flynn singing into a microphone while playing guitar" loading="lazy"></div>
+          <div class="photo-meta">
+            <p class="cap">Chris Flynn<span>Portrait · 560 × 700</span></p>
+            <a href="images/chris-flynn.jpg" download="chris-flynn.jpg">Download →</a>
+          </div>
+        </div>
+      </div>
+      <p class="photos-note">These are web-resolution files. Print-quality hi-res photos are available on request. Email <a href="mailto:booking@bonetflynn.com">booking@bonetflynn.com</a>.</p>
+    </div>
+  </section>
+
+  <!-- VIDEO -->
+  <section>
+    <div class="wrap">
+      <div class="reveal sec-head" id="video">
+        <p class="label">See the show</p>
+        <h2>Video</h2>
+      </div>
+      <div class="reveal">
+        <a class="media video" id="videoCard"
+           href="https://www.youtube.com/watch?v=hnOLOfrQwO4"
+           data-yt="hnOLOfrQwO4"
+           target="_blank" rel="noopener"
+           aria-label="Play video: Bonet &amp; Flynn live">
+          <img src="https://i.ytimg.com/vi/hnOLOfrQwO4/maxresdefault.jpg"
+               onerror="this.src='https://i.ytimg.com/vi/hnOLOfrQwO4/mqdefault.jpg'"
+               alt="Deni Bonet and Chris Flynn performing" loading="lazy">
+          <span class="play" aria-hidden="true"><i></i></span>
+          <span class="cap">Watch on YouTube</span>
+        </a>
+      </div>
+      <p class="photos-note">More performance video on <a href="https://www.youtube.com/@bonetflynn" target="_blank" rel="noopener">YouTube (@bonetflynn)</a>.</p>
+    </div>
+  </section>
+
+  <!-- PRESS -->
+  <section>
+    <div class="wrap">
+      <div class="reveal sec-head" id="press">
+        <p class="label">What people are saying</p>
+        <h2>Press <span class="amp">&amp;</span> praise</h2>
+      </div>
+      <div class="reveal quotes">
+        <figure class="quote">
+          <blockquote>Deni Bonet and Chris Flynn's performances are irresistible for their charisma and musicality.</blockquote>
+          <figcaption>John Platt<span>WFUV 90.7 FM, Public Radio from Fordham University</span></figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>Acclaimed violinist Deni Bonet and guitarist Chris Flynn wowed an enthusiastic audience with an outstanding performance at our library. The exceptional performance, fun stories, and upbeat energy created a fantastic evening for all that were lucky to see the show.</blockquote>
+          <figcaption>Lillie Muscente<span>PR Coordinator, Patterson Library</span></figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>Great to have hosted you at Wexford Arts Centre. Wonderful evening of stunning music, stories and songs!</blockquote>
+          <figcaption>Elizabeth Whyte<span>Executive Director, Wexford Arts Centre</span></figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>We will all be talking about this concert for a long time to come — Deni and Chris are blessed with such talent!</blockquote>
+          <figcaption>Amina Chaudhri<span>Goshen Public Library &amp; Historical Society, Goshen, New York</span></figcaption>
+        </figure>
+      </div>
+      <p class="press-more">More testimonials on the <a href="index.html#about">main site</a>.</p>
+    </div>
+  </section>
+
+  <!-- LOGISTICS -->
+  <section>
+    <div class="wrap">
+      <div class="reveal sec-head">
+        <p class="label">For presenters</p>
+        <h2>Logistics</h2>
+      </div>
+      <div class="reveal glance logistics">
+        <div class="fact">
+          <p class="label">The room</p>
+          <p>Any size<span>Listening rooms and house concerts to theaters and festivals</span></p>
+        </div>
+        <div class="fact">
+          <p class="label">Tech</p>
+          <p>Simple setup<span>Stage plot and tech rider available on request</span></p>
+        </div>
+        <div class="fact">
+          <p class="label">Dates</p>
+          <p>Booking now<span>Current calendar on <a href="https://www.bandsintown.com/a/176225" target="_blank" rel="noopener" style="color:var(--red-deep)">Bandsintown</a></span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="label">Booking &amp; press</p>
+        <h2>Let's talk.</h2>
+        <p>Bookings, interviews, hi-res photos, riders: one address for all of it.</p>
+        <a class="contact-email" href="mailto:booking@bonetflynn.com">booking@bonetflynn.com</a>
+        <div class="contact-socials">
+          <a href="https://www.facebook.com/bonetflynn" target="_blank" rel="noopener">
+            <img src="images/social/fb.png" alt="" width="34" height="34">
+            <span class="handle">Facebook<span>@bonetflynn</span></span>
+          </a>
+          <a href="https://www.instagram.com/bonetflynn" target="_blank" rel="noopener">
+            <img src="images/social/ig.png" alt="" width="34" height="34">
+            <span class="handle">Instagram<span>@bonetflynn</span></span>
+          </a>
+          <a href="https://www.youtube.com/@bonetflynn?sub_confirmation=1" target="_blank" rel="noopener">
+            <img src="images/social/yt.png" alt="" width="49" height="34">
+            <span class="handle">YouTube<span>@bonetflynn</span></span>
+          </a>
+        </div>
+        <div class="contact-links">
+          <a href="https://bonetflynn.com" rel="noopener">bonetflynn.com</a>
+          <a href="https://www.bandsintown.com/a/176225" target="_blank" rel="noopener">Bandsintown</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap foot-inner">
+      <small>© <span id="yr"></span> Deni Bonet &amp; Chris Flynn · <a href="index.html">bonetflynn.com</a></small>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    const btn = document.getElementById('menuBtn');
+    const links = document.getElementById('navlinks');
+    btn.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+      btn.textContent = open ? '✕' : '☰';
+    });
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      links.classList.remove('open'); btn.textContent = '☰'; btn.setAttribute('aria-expanded','false');
+    }));
+
+    // Copy buttons for the bio blocks — presenters paste these into programs
+    // and press releases, so this copies plain text, not markup.
+    document.querySelectorAll('.copy-btn').forEach(b => {
+      b.addEventListener('click', () => {
+        const src = document.getElementById(b.dataset.copy);
+        if (!src) return;
+        const text = [...src.querySelectorAll('p')].map(p => p.textContent.trim()).join('\n\n');
+        navigator.clipboard.writeText(text).then(() => {
+          b.classList.add('copied');
+          b.textContent = 'Copied ✓';
+          setTimeout(() => { b.classList.remove('copied'); b.textContent = 'Copy text'; }, 2000);
+        });
+      });
+    });
+
+    // Swap the thumbnail for the real player on click; without JS the link just
+    // opens YouTube as normal.
+    (() => {
+      const card = document.getElementById('videoCard');
+      if (!card) return;
+      card.addEventListener('click', e => {
+        e.preventDefault();
+        const f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + card.dataset.yt +
+                '?autoplay=1&rel=0&modestbranding=1';
+        f.title = 'Bonet & Flynn live video';
+        f.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture';
+        f.allowFullscreen = true;
+        card.innerHTML = '';
+        card.classList.add('playing');
+        card.appendChild(f);
+      });
+    })();
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.14});
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
