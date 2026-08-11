@@ -35,6 +35,7 @@ jobs:
           cp robots.txt _site/
           cp -r images _site/
           cp -r videos _site/
+          cp -r epk _site/
           echo "bonetflynn.com" > _site/CNAME
 
       - name: Upload artifact
