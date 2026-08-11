@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Bonet &amp; Flynn Electronic Press Kit</title>
 <meta name="description" content="Electronic press kit for Deni Bonet and Chris Flynn: bios, photos, video, press quotes and booking contact." />
+<!-- Page is in progress: keep it out of search. Remove this tag AND the
+     /epk.html line in robots.txt when the EPK goes public. -->
+<meta name="robots" content="noindex" />
 <meta name="theme-color" content="#FAF6EE" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -130,6 +133,9 @@
   [id]{scroll-margin-top:calc(var(--nav-h) + 18px);}
   .sec-head{margin-bottom:38px;max-width:60ch;}
   .sec-head h2{font-size:var(--step-9);margin-top:14px;}
+  /* Fraunces' italic ampersand rides lower than Anton's caps — lift it so its
+     optical center sits on the heading's midline ("Press & praise"). */
+  .sec-head h2 .amp{display:inline-block;transform:translateY(-.07em);}
 
   /* ---------- EPK HERO ---------- */
   .epk-hero{
@@ -154,6 +160,15 @@
   .fact .label{font-size:var(--step--2);margin:0 0 10px;}
   .fact p{margin:0;font-weight:600;font-size:var(--step-0);line-height:var(--lh-tight);text-wrap:pretty;}
   .fact p span{display:block;font-weight:400;color:var(--muted);font-size:var(--step--1);margin-top:6px;line-height:var(--lh-small);}
+
+  /* ---------- SOCIALS ---------- */
+  /* Fact cards with the platform's colored mark, the handle big enough to
+     copy off a printout, and the page URL written out as the link. */
+  .socials-grid{grid-template-columns:repeat(3,1fr);}
+  .social-card img{height:38px;width:auto;margin-bottom:16px;}
+  .social-card .handle{font-weight:700;font-size:var(--step-1);letter-spacing:-.005em;margin:0;line-height:var(--lh-tight);}
+  .social-card .url{display:inline-block;margin-top:8px;font-family:"Archivo";font-weight:600;font-size:var(--step--1);color:var(--red-deep);line-height:var(--lh-small);}
+  .social-card .url:hover{text-decoration:underline;}
 
   /* ---------- BIOS ---------- */
   .bio-block{border:1px solid var(--line);border-radius:14px;background:var(--paper-2);padding:26px 28px 28px;margin-bottom:24px;}
@@ -266,14 +281,14 @@
     font-family:"Archivo";font-weight:700;font-size:var(--step-6);letter-spacing:-.01em;
     color:#F3ECE2;border-bottom:2px solid var(--red);padding-bottom:4px;transition:color .2s;line-height:var(--lh-display);}
   .contact-email:hover{color:#fff;}
-  /* Socials carry the platform's colored mark plus the handle in text, so a
-     presenter can copy "@bonetflynn" straight off the page (or off a printout). */
-  .contact-socials{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:18px 34px;margin-top:38px;}
-  .contact-socials a{display:flex;align-items:center;gap:12px;opacity:.92;transition:transform .2s,opacity .2s;}
-  .contact-socials a:hover{transform:translateY(-2px);opacity:1;}
-  .contact-socials img{height:34px;width:auto;display:block;}
-  .contact-socials .handle{text-align:left;font-family:"Archivo";font-weight:600;font-size:var(--step--1);color:#F3ECE2;line-height:var(--lh-small);}
-  .contact-socials .handle span{display:block;font-weight:400;font-size:var(--step--2);color:#9C8B76;}
+  /* Same social treatment as the main site's footer: colored mark, platform
+     name, @handle stacked beneath. */
+  .contact-social{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:16px 30px;margin-top:38px;}
+  .contact-social a{display:flex;align-items:center;gap:11px;transition:transform .2s,opacity .2s;opacity:.92;}
+  .contact-social a:hover{transform:translateY(-2px);opacity:1;}
+  .contact-social img{height:34px;width:auto;display:block;}
+  .contact-social .follow{font-weight:600;font-size:var(--step--2);letter-spacing:.02em;line-height:var(--lh-small);white-space:nowrap;text-align:left;color:#F3ECE2;}
+  .contact-social .fhandle{display:block;font-weight:400;font-size:var(--step--3);color:#9C8B76;letter-spacing:.02em;margin-top:2px;}
   .contact-links{display:flex;align-items:center;justify-content:center;gap:16px 28px;flex-wrap:wrap;margin-top:26px;}
   .contact-links a{
     font-family:"Archivo";font-weight:600;font-size:var(--step--1);
@@ -345,6 +360,7 @@
       </a>
       <nav class="nav-links" id="navlinks">
         <a href="#bio">Bio</a>
+        <a href="#socials">Socials</a>
         <a href="#photos">Photos</a>
         <a href="#video">Video</a>
         <a href="#press">Press</a>
@@ -419,11 +435,11 @@
 
       <div class="reveal bio-block">
         <div class="bio-head">
-          <h3>Short bio <span class="hint">~90 words</span></h3>
+          <h3>Short bio <span class="hint">79 words</span></h3>
           <button class="copy-btn" type="button" data-copy="shortbio">Copy text</button>
         </div>
         <div class="bio-text" id="shortbio">
-          <p>Deni Bonet and Chris Flynn make a sound so rich and expansive you'd swear a full band was hiding in the wings. Deni's virtuosic electric violin, honed on NPR's Mountain Stage and alongside Cyndi Lauper, R.E.M. and Sarah McLachlan, soars over Chris's deep, driving guitar, and both trade lead vocals and tight, interlocking harmonies. Having graced stages from living rooms to Carnegie Hall, the duo delivers a warm, playful show that leaves every audience smiling, energized, and completely connected.</p>
+          <p>Deni Bonet and Chris Flynn make a sound so rich and expansive you'd swear a full band was hiding in the wings. Deni's virtuosic electric violin soars over Chris's driving guitar, and the two trade lead vocals and interlocking harmonies. Her credits run from NPR's Mountain Stage to Cyndi Lauper, R.E.M. and Sarah McLachlan. Having graced stages from living rooms to Carnegie Hall, the duo delivers a warm, spirited show that leaves every audience smiling, energized, and completely connected.</p>
         </div>
       </div>
 
@@ -439,19 +455,34 @@
         </div>
       </div>
 
-      <div class="reveal players">
-        <div class="player">
-          <h3>Deni Bonet</h3>
-          <p class="role">electric violin <span class="amp amp-small">&amp;</span> vocals</p>
-          <p>With a dynamic career spanning stages around the world, Deni Bonet has built a reputation as a virtuoso electric violinist, singer-songwriter, and captivating performer. Early on, Deni honed her craft as an original member of the house band for NPR's Mountain Stage before launching a standout solo career and becoming an in-demand collaborator for legends like Cyndi Lauper, R.E.M., Warren Zevon, Richard Thompson, and Sarah McLachlan to name a few.</p>
-          <p>From performing at Carnegie Hall and the White House for President Obama, to touring internationally, she has continually redefined what it means to rock a violin. A fixture of New York's vibrant live scene, Deni has brought her fiery string work and electric energy to countless stages, festivals, and recordings across the globe.</p>
-          <a class="site" href="https://denibonet.com" target="_blank" rel="noopener">denibonet.com</a>
+    </div>
+  </section>
+
+  <!-- SOCIALS -->
+  <section>
+    <div class="wrap">
+      <div class="reveal sec-head" id="socials">
+        <p class="label">Find us online</p>
+        <h2>Socials</h2>
+      </div>
+      <div class="reveal glance socials-grid">
+        <div class="fact social-card">
+          <img src="images/social/fb.png" alt="" width="34" height="34" loading="lazy">
+          <p class="label">Facebook</p>
+          <p class="handle">@bonetflynn</p>
+          <a class="url" href="https://www.facebook.com/bonetflynn" target="_blank" rel="noopener">facebook.com/bonetflynn</a>
         </div>
-        <div class="player">
-          <h3>Chris Flynn</h3>
-          <p class="role">guitar <span class="amp amp-small">&amp;</span> vocals</p>
-          <p>With a career deeply rooted in the heart of the East Coast music scene, Chris Flynn has built a reputation as a dynamic guitarist, vocalist, and musical director. Early on, Chris helped pioneer a communal approach to the indie music business as a founder of Cropduster Records, an artist-owned label and cooperative collective that served as a hub for the NY/NJ roots and pop scenes.</p>
-          <p>He also served as the Musical Director for New York's famed All-Star Irish Rock Revue, an annual St. Patrick's Day celebration whose roster over the years included members of Fountains of Wayne, Flogging Molly, The Pogues, the Alice Cooper Group, and Bad Company. Under his direction, the ensemble played everywhere from the Bowery to Lincoln Center.</p>
+        <div class="fact social-card">
+          <img src="images/social/ig.png" alt="" width="34" height="34" loading="lazy">
+          <p class="label">Instagram</p>
+          <p class="handle">@bonetflynn</p>
+          <a class="url" href="https://www.instagram.com/bonetflynn" target="_blank" rel="noopener">instagram.com/bonetflynn</a>
+        </div>
+        <div class="fact social-card">
+          <img src="images/social/yt.png" alt="" width="49" height="34" loading="lazy">
+          <p class="label">YouTube</p>
+          <p class="handle">@bonetflynn</p>
+          <a class="url" href="https://www.youtube.com/@bonetflynn?sub_confirmation=1" target="_blank" rel="noopener">youtube.com/@bonetflynn</a>
         </div>
       </div>
     </div>
@@ -466,35 +497,14 @@
       </div>
       <div class="reveal photo-grid">
         <div class="photo-card">
-          <div class="ph"><img src="images/hero-poster.jpg" alt="Deni Bonet and Chris Flynn performing together on stage" loading="lazy"></div>
-          <div class="photo-meta">
-            <p class="cap">The duo, live<span>Landscape · 1600 × 900</span></p>
-            <a href="images/hero-poster.jpg" download="bonet-flynn-duo-live.jpg">Download →</a>
-          </div>
-        </div>
-        <div class="photo-card">
           <div class="ph"><img src="images/duo-studio.jpg" alt="Deni Bonet and Chris Flynn posing together in the studio" loading="lazy"></div>
           <div class="photo-meta">
-            <p class="cap">The duo, studio<span>820 × 745</span></p>
-            <a href="images/duo-studio.jpg" download="bonet-flynn-duo-studio.jpg">Download →</a>
-          </div>
-        </div>
-        <div class="photo-card">
-          <div class="ph"><img src="images/deni-bonet.jpg" alt="Deni Bonet playing violin on stage, eyes down, mid-phrase" loading="lazy"></div>
-          <div class="photo-meta">
-            <p class="cap">Deni Bonet<span>Portrait · 560 × 700</span></p>
-            <a href="images/deni-bonet.jpg" download="deni-bonet.jpg">Download →</a>
-          </div>
-        </div>
-        <div class="photo-card">
-          <div class="ph"><img src="images/chris-flynn.jpg" alt="Chris Flynn singing into a microphone while playing guitar" loading="lazy"></div>
-          <div class="photo-meta">
-            <p class="cap">Chris Flynn<span>Portrait · 560 × 700</span></p>
-            <a href="images/chris-flynn.jpg" download="chris-flynn.jpg">Download →</a>
+            <p class="cap">The duo, studio<span>4000 × 2704 · 300 DPI · 3.2 MB</span></p>
+            <a href="images/press/bonet-flynn-duo-studio.jpg" download="bonet-flynn-duo-studio.jpg">Download →</a>
           </div>
         </div>
       </div>
-      <p class="photos-note">These are web-resolution files. Print-quality hi-res photos are available on request. Email <a href="mailto:booking@bonetflynn.com">booking@bonetflynn.com</a>.</p>
+      <p class="photos-note">Downloads are print quality. Need a different crop or format? Email <a href="mailto:booking@bonetflynn.com">booking@bonetflynn.com</a>.</p>
     </div>
   </section>
 
@@ -535,16 +545,16 @@
           <figcaption>John Platt<span>WFUV 90.7 FM, Public Radio from Fordham University</span></figcaption>
         </figure>
         <figure class="quote">
-          <blockquote>Acclaimed violinist Deni Bonet and guitarist Chris Flynn wowed an enthusiastic audience with an outstanding performance at our library. The exceptional performance, fun stories, and upbeat energy created a fantastic evening for all that were lucky to see the show.</blockquote>
-          <figcaption>Lillie Muscente<span>PR Coordinator, Patterson Library</span></figcaption>
+          <blockquote>Together they remind me George Burns and Gracie Allen, or Lucy and Ricky; their banter, charisma and musicality combine to create a playful, lively, sometimes surprising performance.</blockquote>
+          <figcaption>Linda Bolton<span>Cozy Cabin Concerts</span></figcaption>
         </figure>
         <figure class="quote">
           <blockquote>Great to have hosted you at Wexford Arts Centre. Wonderful evening of stunning music, stories and songs!</blockquote>
           <figcaption>Elizabeth Whyte<span>Executive Director, Wexford Arts Centre</span></figcaption>
         </figure>
         <figure class="quote">
-          <blockquote>We will all be talking about this concert for a long time to come — Deni and Chris are blessed with such talent!</blockquote>
-          <figcaption>Amina Chaudhri<span>Goshen Public Library &amp; Historical Society, Goshen, New York</span></figcaption>
+          <blockquote>Thank you so much for a fabulous night! You are so full of LIGHT and LOVE! (plus talent, joy, and the list goes on…) You and Chris are wonderful together. We all had a terrific night. Thank you so much!</blockquote>
+          <figcaption>Anne-Marie Cannata<span>Director, The Buttonwood Tree Performing Arts Center</span></figcaption>
         </figure>
       </div>
       <p class="press-more">More testimonials on the <a href="index.html#about">main site</a>.</p>
@@ -583,18 +593,18 @@
         <h2>Let's talk.</h2>
         <p>Bookings, interviews, hi-res photos, riders: one address for all of it.</p>
         <a class="contact-email" href="mailto:booking@bonetflynn.com">booking@bonetflynn.com</a>
-        <div class="contact-socials">
+        <div class="contact-social">
           <a href="https://www.facebook.com/bonetflynn" target="_blank" rel="noopener">
             <img src="images/social/fb.png" alt="" width="34" height="34">
-            <span class="handle">Facebook<span>@bonetflynn</span></span>
+            <span class="follow">Facebook<span class="fhandle">@bonetflynn</span></span>
           </a>
           <a href="https://www.instagram.com/bonetflynn" target="_blank" rel="noopener">
             <img src="images/social/ig.png" alt="" width="34" height="34">
-            <span class="handle">Instagram<span>@bonetflynn</span></span>
+            <span class="follow">Instagram<span class="fhandle">@bonetflynn</span></span>
           </a>
           <a href="https://www.youtube.com/@bonetflynn?sub_confirmation=1" target="_blank" rel="noopener">
             <img src="images/social/yt.png" alt="" width="49" height="34">
-            <span class="handle">YouTube<span>@bonetflynn</span></span>
+            <span class="follow">YouTube<span class="fhandle">@bonetflynn</span></span>
           </a>
         </div>
         <div class="contact-links">

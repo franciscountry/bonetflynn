@@ -5,3 +5,4 @@ Disallow: /bonet-flynn-video-hero-checkpoint-pre-mobilevideo.html
 Disallow: /campaign-template.html
 Disallow: /confirmed.html
 Disallow: /doi-email.html
+Disallow: /epk.html
