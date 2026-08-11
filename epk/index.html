@@ -155,11 +155,17 @@
   .epk-cta{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
 
   /* ---------- AT A GLANCE ---------- */
-  .glance{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+  /* auto-fit rather than a fixed count: five facts sit five-across on desktop
+     instead of orphaning the last card on its own row. The socials/logistics
+     grids and the 980/560px breakpoints all override this with explicit
+     column counts. */
+  .glance{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:22px;}
   .fact{border:1px solid var(--line);border-radius:14px;padding:22px;background:var(--paper-2);}
   .fact .label{font-size:var(--step--2);margin:0 0 10px;}
   .fact p{margin:0;font-weight:600;font-size:var(--step-0);line-height:var(--lh-tight);text-wrap:pretty;}
-  .fact p span{display:block;font-weight:400;color:var(--muted);font-size:var(--step--1);margin-top:6px;line-height:var(--lh-small);}
+  /* :not(.amp) — the Festivals headline carries an inline ampersand span that
+     must not be knocked onto its own line by the detail-text rule. */
+  .fact p span:not(.amp){display:block;font-weight:400;color:var(--muted);font-size:var(--step--1);margin-top:6px;line-height:var(--lh-small);}
 
   /* ---------- SOCIALS ---------- */
   /* Fact cards with the platform's colored mark, the handle big enough to
@@ -311,6 +317,11 @@
   .reveal.in{opacity:1;transform:none;}
 
   /* ---------- RESPONSIVE ---------- */
+  /* Between the 980px phone-ish break and full desktop, auto-fit would set
+     the five glance cards 4-across with a lone orphan — force 3+2 instead. */
+  @media(min-width:981px) and (max-width:1200px){
+    .glance{grid-template-columns:repeat(3,1fr);}
+  }
   @media(max-width:980px){
     .glance{grid-template-columns:repeat(2,1fr);}
     .logistics{grid-template-columns:1fr;}
@@ -383,7 +394,7 @@
         <h1>Deni Bonet</h1>
         <div class="hero-name2"><span class="amp">&amp;</span><h1>Chris Flynn</h1></div>
       </div>
-      <p class="epk-tag">Electric violin, guitar <span class="amp amp-small">&amp;</span> two voices. Living rooms to Carnegie Hall. A show you'll be talking about tomorrow.</p>
+      <p class="epk-tag">Electric violin, guitar <span class="amp amp-small">&amp;</span> two voices. From living rooms to Carnegie Hall. A show you'll be talking about tomorrow.</p>
       <div class="epk-cta">
         <a class="btn solid" href="mailto:booking@bonetflynn.com">booking@bonetflynn.com</a>
         <a class="btn" href="#photos">Photos &amp; downloads</a>
@@ -410,6 +421,10 @@
         <div class="fact">
           <p class="label">Notable stages</p>
           <p>Carnegie Hall<span>Mountain Stage · Lincoln Center · The White House</span></p>
+        </div>
+        <div class="fact">
+          <p class="label">Festivals</p>
+          <p>Stendhal <span class="amp amp-small">&amp;</span> Light of Day<span>Stendhal Festival, Northern Ireland · Light of Day Winterfest, NJ, three straight years</span></p>
         </div>
         <div class="fact">
           <p class="label">Showcase</p>
@@ -449,13 +464,13 @@
 
       <div class="reveal bio-block">
         <div class="bio-head">
-          <h3>Full bio <span class="hint">206 words</span></h3>
+          <h3>Full bio <span class="hint">234 words</span></h3>
           <button class="copy-btn" type="button" data-copy="fullbio">Copy</button>
         </div>
         <div class="bio-text" id="fullbio">
           <p>There is a rare magic in hearing two musicians create a sound so rich and expansive that you'd swear a full band was hiding in the wings. That is the signature experience of Deni Bonet and Chris Flynn.</p>
           <p>Having graced legendary stages from Carnegie Hall to Mountain Stage, this dynamic duo brings an unforgettable and diverse energy to every performance. At the heart of their sound is a captivating balance of melody and motion. Deni's virtuosic violin playing is a force of nature, soaring, expressive, and technically brilliant. Underpinning that melodic flight is Chris's guitar work, which drives the sound with a deep, physical pulse. He effortlessly anchors the groove and holds down the harmony, giving the music a steady heartbeat you can actually feel. On top of this foundation, both swap effortlessly between commanding lead vocals and tight, interlocking harmonies.</p>
-          <p>A live show with Deni and Chris is defined by warm, playful interaction with the audience. They treat every gig like a shared experience, with the simple goal of giving the crowd a joyful escape for an hour or two. Whether they are trading off vocal duties or letting the instruments tell the story, Deni and Chris leave every audience smiling, energized, and completely connected.</p>
+          <p>Recent seasons have taken the duo from Northern Ireland's Stendhal Festival to three straight years at New Jersey's Light of Day Winterfest, the storied benefit for Parkinson's research. A live show with Deni and Chris is defined by warm, playful interaction with the audience. They treat every gig like a shared experience, with the simple goal of giving the crowd a joyful escape for an hour or two. Whether they are trading off vocal duties or letting the instruments tell the story, Deni and Chris leave every audience smiling, energized, and completely connected.</p>
         </div>
       </div>
 
