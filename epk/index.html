@@ -251,7 +251,11 @@
   .quote{
     margin:0;border:1px solid var(--line);border-radius:14px;
     padding:26px 26px 28px;background:var(--paper-2);
+    /* Anchor for the copy button, which rides the top-right corner on the
+       otherwise-empty row the big quote glyph opens. */
+    position:relative;
   }
+  .quote .copy-btn{position:absolute;top:20px;right:20px;}
   .quote::before{
     content:"\201C";display:block;font-family:"Fraunces",serif;font-style:italic;
     color:var(--red);font-size:var(--step-8);line-height:.6em;margin-bottom:16px;
@@ -543,18 +547,22 @@
         <figure class="quote">
           <blockquote>Deni Bonet and Chris Flynn's performances are irresistible for their charisma and musicality.</blockquote>
           <figcaption>John Platt<span>WFUV 90.7 FM, Public Radio from Fordham University</span></figcaption>
+          <button class="copy-btn" type="button" aria-label="Copy John Platt quote">Copy</button>
         </figure>
         <figure class="quote">
           <blockquote>Together they remind me George Burns and Gracie Allen, or Lucy and Ricky; their banter, charisma and musicality combine to create a playful, lively, sometimes surprising performance.</blockquote>
           <figcaption>Linda Bolton<span>Cozy Cabin Concerts</span></figcaption>
+          <button class="copy-btn" type="button" aria-label="Copy Linda Bolton quote">Copy</button>
         </figure>
         <figure class="quote">
           <blockquote>Great to have hosted you at Wexford Arts Centre. Wonderful evening of stunning music, stories and songs!</blockquote>
           <figcaption>Elizabeth Whyte<span>Executive Director, Wexford Arts Centre</span></figcaption>
+          <button class="copy-btn" type="button" aria-label="Copy Elizabeth Whyte quote">Copy</button>
         </figure>
         <figure class="quote">
           <blockquote>Thank you so much for a fabulous night! You are so full of LIGHT and LOVE! (plus talent, joy, and the list goes on…) You and Chris are wonderful together. We all had a terrific night. Thank you so much!</blockquote>
           <figcaption>Anne-Marie Cannata<span>Director, The Buttonwood Tree Performing Arts Center</span></figcaption>
+          <button class="copy-btn" type="button" aria-label="Copy Anne-Marie Cannata quote">Copy</button>
         </figure>
       </div>
     </div>
@@ -635,17 +643,30 @@
       links.classList.remove('open'); btn.textContent = '☰'; btn.setAttribute('aria-expanded','false');
     }));
 
-    // Copy buttons for the bio blocks — presenters paste these into programs
-    // and press releases, so this copies plain text, not markup.
+    // Copy buttons — presenters paste these into programs and press releases,
+    // so they copy plain text, not markup. Bio buttons name a block via
+    // data-copy; a button inside a quote card copies the quote plus its
+    // attribution on a second line.
     document.querySelectorAll('.copy-btn').forEach(b => {
+      const label = b.textContent;
       b.addEventListener('click', () => {
-        const src = document.getElementById(b.dataset.copy);
-        if (!src) return;
-        const text = [...src.querySelectorAll('p')].map(p => p.textContent.trim()).join('\n\n');
+        let text;
+        const fig = b.closest('.quote');
+        if (fig) {
+          const q = fig.querySelector('blockquote').textContent.trim().replace(/\s+/g, ' ');
+          const cap = fig.querySelector('figcaption');
+          const name = cap.firstChild.textContent.trim();
+          const org = cap.querySelector('span');
+          text = '“' + q + '”\n' + name + (org ? ', ' + org.textContent.trim() : '');
+        } else {
+          const src = document.getElementById(b.dataset.copy);
+          if (!src) return;
+          text = [...src.querySelectorAll('p')].map(p => p.textContent.trim()).join('\n\n');
+        }
         navigator.clipboard.writeText(text).then(() => {
           b.classList.add('copied');
           b.textContent = 'Copied ✓';
-          setTimeout(() => { b.classList.remove('copied'); b.textContent = 'Copy text'; }, 2000);
+          setTimeout(() => { b.classList.remove('copied'); b.textContent = label; }, 2000);
         });
       });
     });
