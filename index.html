@@ -780,6 +780,7 @@
           <input type="hidden" name="email_address_check" value="">
           <input type="hidden" name="locale" value="en">
           <input type="hidden" name="html_type" value="simple">
+          <input type="hidden" name="SOURCE" id="SOURCE" value="direct">
           <button class="btn solid" type="submit">Sign up</button>
           <p class="signup-done" id="signupDone" hidden><span>Almost done! Check your email and click the link to confirm.<span class="line2 signup-done-note">Don't see it? Check your spam or junk folder.</span></span></p>
         </form>
@@ -1209,6 +1210,19 @@
     (() => {
       const form = document.getElementById('signupForm');
       if (!form) return;
+
+      /* Stamp each signup with where it came from, so a tagged link (the
+         Facebook page button, say) is distinguishable from someone typing the
+         URL. Brevo only stores this if a SOURCE contact attribute exists on
+         the account; without one the field is ignored, harmlessly. The value
+         is off the URL and so visitor-controlled — keep it short and boring. */
+      const src = document.getElementById('SOURCE');
+      const utm = new URLSearchParams(location.search).get('utm_source');
+      if (src && utm) {
+        const clean = utm.toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 40);
+        if (clean) src.value = clean;
+      }
+
       form.addEventListener('submit', () => {
         setTimeout(() => {
           document.getElementById('signupDone').hidden = false;
