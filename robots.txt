@@ -7,3 +7,5 @@ Disallow: /confirmed.html
 Disallow: /doi-email.html
 Disallow: /epk/
 Disallow: /nerfa/
+Disallow: /pc
+Disallow: /tag
