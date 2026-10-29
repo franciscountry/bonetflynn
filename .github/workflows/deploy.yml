@@ -36,6 +36,7 @@ jobs:
           cp -r images _site/
           cp -r videos _site/
           cp -r epk _site/
+          cp -r nerfa _site/
           echo "bonetflynn.com" > _site/CNAME
 
       - name: Upload artifact

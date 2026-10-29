@@ -6,3 +6,4 @@ Disallow: /campaign-template.html
 Disallow: /confirmed.html
 Disallow: /doi-email.html
 Disallow: /epk/
+Disallow: /nerfa/
