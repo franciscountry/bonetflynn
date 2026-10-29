@@ -406,8 +406,9 @@
         <input type="hidden" name="email_address_check" value="">
         <input type="hidden" name="locale" value="en">
         <input type="hidden" name="html_type" value="simple">
-        <!-- Every signup from this page is tagged nerfa; a utm_source on the
-             link (nerfa-nfc, nerfa-postcard) overrides it — see the script. -->
+        <!-- Every signup from this page is tagged nerfa; a utm_source (plus
+             utm_medium, if any) on the link overrides it, so the postcard and
+             tag links arrive as nerfa-qr and nerfa-nfc — see the script. -->
         <input type="hidden" name="SOURCE" id="SOURCE" value="nerfa">
         <button class="btn solid" type="submit">Sign up</button>
         <p class="signup-done" id="signupDone" hidden><span>Almost done! Check your email and click the link to confirm.<span class="note">Don't see it? Check your spam or junk folder.</span></span></p>
@@ -531,16 +532,26 @@
     })();
 
     // Same Brevo form and SOURCE stamping as the main site's hero signup;
-    // the default here is "nerfa" rather than "direct".
+    // the default here is "nerfa" rather than "direct". Source and medium
+    // are joined so the postcard and tag links (both utm_source=nerfa)
+    // arrive as nerfa-qr and nerfa-nfc.
     (() => {
       const form = document.getElementById('signupForm');
       if (!form) return;
       const src = document.getElementById('SOURCE');
-      const utm = new URLSearchParams(location.search).get('utm_source');
+      const q = new URLSearchParams(location.search);
+      const utm = [q.get('utm_source'), q.get('utm_medium')].filter(Boolean).join('-');
       if (src && utm) {
         const clean = utm.toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 40);
         if (clean) src.value = clean;
       }
+      /* Remember the tag for 30 days so a signup on the main site still
+         credits the postcard or tag. Read by index.html's signup script
+         under the same key. Storage can be blocked (private mode); the
+         page works the same without it. */
+      try {
+        localStorage.setItem('bf_source', JSON.stringify({ v: src.value, t: Date.now() }));
+      } catch (e) {}
       form.addEventListener('submit', () => {
         setTimeout(() => {
           document.getElementById('signupDone').hidden = false;

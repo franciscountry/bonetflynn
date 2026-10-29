@@ -1229,6 +1229,17 @@
       if (src && utm) {
         const clean = utm.toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 40);
         if (clean) src.value = clean;
+      } else if (src) {
+        /* No tag on this link: fall back to one the /nerfa/ page saved in
+           the last 30 days (key bf_source), so a postcard or NFC visitor who
+           signs up here is still credited. Same cleanup as above. */
+        try {
+          const saved = JSON.parse(localStorage.getItem('bf_source'));
+          if (saved && Date.now() - saved.t < 30 * 864e5) {
+            const clean = String(saved.v).toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 40);
+            if (clean) src.value = clean;
+          }
+        } catch (e) {}
       }
 
       form.addEventListener('submit', () => {
