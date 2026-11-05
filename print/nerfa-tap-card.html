@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<!-- NERFA 2026 tap card: 4x6in portrait insert for an acrylic sign holder.
+     An NTAG215 sticker (25–30mm) goes on the BACK of the card, centred
+     behind the dashed tap circle. Tag and QR both hold bonetflynn.com/tag.
+     Print source: render with headless Chrome (see print/README or the
+     commit message). ?sheet=1 lays out two cards on US Letter with crop
+     marks for home or FedEx printing. -->
+<title>NERFA tap card</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500;1,9..144,600&display=block" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#FAF6EE; --paper-2:#F1EADC; --sand:#E7DCC9;
+    --ink:#17130F; --ink-soft:#3B322A; --muted:#6F6157;
+    --red:#E23A2E; --red-deep:#B12318;
+    --bleed:0.125in;
+  }
+  @page{ size:4.25in 6.25in; margin:0; }
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:"Archivo",system-ui,sans-serif;color:var(--ink);
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* One card = 4x6 trim plus 1/8in bleed on every side. */
+  .card{
+    width:4.25in;height:6.25in;position:relative;overflow:hidden;
+    background:var(--paper);
+  }
+  /* Everything important stays 0.3in inside the trim line. */
+  .safe{
+    position:absolute;
+    inset:calc(var(--bleed) + 0.28in);
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+  }
+
+  /* Red band across the top, bleeding off three edges. */
+  .band{
+    position:absolute;left:0;right:0;top:0;height:calc(var(--bleed) + 0.16in);
+    background:var(--red);
+  }
+
+  .head{display:flex;align-items:center;gap:0.16in;width:100%;justify-content:center;margin-top:0.06in;}
+  .mark{
+    width:0.78in;height:0.78in;border-radius:50%;flex:none;
+    background:var(--paper);box-shadow:inset 0 0 0 1.6pt var(--ink);
+    display:grid;place-items:center;
+  }
+  .mark img{height:0.5in;width:auto;margin-top:1pt;}
+  .names{text-align:left;}
+  .eyebrow{
+    font-family:"Fraunces",serif;font-style:italic;font-weight:500;
+    color:var(--red-deep);font-size:11pt;line-height:1.1;margin:0 0 3pt;
+  }
+  .names h1{
+    margin:0;font-family:"Anton",sans-serif;font-weight:400;text-transform:uppercase;
+    font-size:21pt;line-height:0.98;letter-spacing:.01em;
+  }
+  .amp{font-family:"Fraunces",serif;font-style:italic;font-weight:500;color:var(--red);text-transform:none;font-size:22pt;margin-right:2pt;}
+
+  .tag{font-size:8.6pt;line-height:1.35;color:var(--ink-soft);margin:0.12in 0 0;max-width:3.2in;}
+
+  /* Tap target. The sticker sits behind this circle. */
+  .tap{margin-top:0.2in;display:flex;flex-direction:column;align-items:center;}
+  .ring{
+    width:1.55in;height:1.55in;border-radius:50%;
+    border:1.6pt dashed var(--red);
+    display:grid;place-items:center;
+    background:#fff;
+  }
+  .ring svg{width:0.72in;height:0.72in;}
+  .tap-label{
+    font-family:"Anton",sans-serif;text-transform:uppercase;letter-spacing:.03em;
+    font-size:19pt;line-height:1;margin:0.12in 0 0;
+  }
+  .tap-hint{font-size:7.4pt;color:var(--muted);margin:4pt 0 0;}
+
+  .or{
+    display:flex;align-items:center;gap:8pt;width:2.4in;margin:0.14in 0 0.1in;
+    font-family:"Fraunces",serif;font-style:italic;font-size:10pt;color:var(--muted);
+  }
+  .or::before,.or::after{content:"";flex:1;height:0.6pt;background:var(--sand);}
+
+  .scan{display:flex;align-items:center;gap:0.16in;}
+  .qr{width:0.95in;height:0.95in;padding:0.06in;background:#fff;}
+  .qr img{width:100%;height:100%;display:block;}
+  .gets{text-align:left;margin:0;padding:0;list-style:none;font-size:8.4pt;line-height:1.55;font-weight:600;}
+  .gets li::before{content:"→ ";color:var(--red);}
+
+  .foot{
+    margin-top:auto;font-size:8pt;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);
+  }
+
+  /* ---- Letter sheet: two cards side by side, with crop marks ---- */
+  body.sheet .card{position:absolute;}
+  @media print{ body.sheet{ } }
+  .sheet-page{width:11in;height:8.5in;position:relative;}
+  .crop{position:absolute;background:#000;}
+</style>
+</head>
+<body>
+<template id="cardTpl">
+  <div class="card">
+    <div class="band"></div>
+    <div class="safe">
+      <div class="head">
+        <div class="mark"><img src="../images/mark.webp" alt="" /></div>
+        <div class="names">
+          <p class="eyebrow">Great to meet you at NERFA!</p>
+          <h1>Deni Bonet</h1>
+          <h1><span class="amp">&amp;</span>Chris Flynn</h1>
+        </div>
+      </div>
+      <p class="tag">Electric violin, guitar and two voices.<br>Now booking 2027 concerts and house concerts.</p>
+
+      <div class="tap">
+        <div class="ring">
+          <!-- Contactless / NFC symbol -->
+          <svg viewBox="0 0 48 48" fill="none" stroke="#17130F" stroke-width="3.4" stroke-linecap="round" aria-hidden="true">
+            <path d="M14 17.5c2.6 4.1 2.6 8.9 0 13"/>
+            <path d="M21 13c4.4 6.8 4.4 15.2 0 22"/>
+            <path d="M28 8.5c6.2 9.6 6.2 21.4 0 31"/>
+            <path d="M35 4.5c8 12.2 8 26.8 0 39" stroke="#E23A2E"/>
+          </svg>
+        </div>
+        <p class="tap-label">Tap your phone here</p>
+        <p class="tap-hint">iPhone: touch the top edge of your phone to the circle</p>
+      </div>
+
+      <div class="or">or scan</div>
+
+      <div class="scan">
+        <div class="qr"><img src="nerfa-tap-card-qr.svg" alt="QR code for bonetflynn.com/tag" /></div>
+        <ul class="gets">
+          <li>Save us to your phone</li>
+          <li>Join the mailing list</li>
+          <li>Watch us live</li>
+          <li>Booking &amp; EPK</li>
+        </ul>
+      </div>
+
+      <p class="foot">bonetflynn.com/nerfa</p>
+    </div>
+  </div>
+</template>
+<script>
+  const tpl = document.getElementById('cardTpl');
+  const sheet = new URLSearchParams(location.search).has('sheet');
+  if (!sheet) {
+    document.body.appendChild(tpl.content.cloneNode(true));
+  } else {
+    // Two 4.25x6.25 (bleed) cards centred on landscape Letter with a 0.5in
+    // gutter, so each keeps its own bleed and crop marks.
+    const st = document.createElement('style');
+    st.textContent = '@page{size:11in 8.5in;margin:0}';
+    document.head.appendChild(st);
+    document.body.classList.add('sheet');
+    const page = document.createElement('div');
+    page.className = 'sheet-page';
+    const W = 4.25, H = 6.25, gap = 0.5;
+    const x0 = (11 - (2 * W + gap)) / 2, y0 = (8.5 - H) / 2;
+    const marks = [];
+    [0, 1].forEach(i => {
+      const c = tpl.content.firstElementChild.cloneNode(true);
+      const x = x0 + i * (W + gap);
+      c.style.left = x + 'in'; c.style.top = y0 + 'in';
+      page.appendChild(c);
+      // Trim box is inset 0.125 from the card's bleed box.
+      const L = x + 0.125, R = x + W - 0.125, T = y0 + 0.125, B = y0 + H - 0.125;
+      const len = 0.22, off = 0.16, t = 0.008;
+      [L, R].forEach(xx => [T, B].forEach(yy => {
+        const up = yy === T;
+        // vertical mark above/below the corner
+        marks.push([xx - t / 2, up ? yy - off - len : yy + off, t, len]);
+      }));
+      [T, B].forEach(yy => [L, R].forEach(xx => {
+        const left = xx === L;
+        marks.push([left ? xx - off - len : xx + off, yy - t / 2, len, t]);
+      }));
+    });
+    marks.forEach(([x, y, w, h]) => {
+      const m = document.createElement('div');
+      m.className = 'crop';
+      Object.assign(m.style, { left: x + 'in', top: y + 'in', width: w + 'in', height: h + 'in' });
+      page.appendChild(m);
+    });
+    document.body.appendChild(page);
+  }
+</script>
+</body>
+</html>
