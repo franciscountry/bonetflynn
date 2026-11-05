@@ -20,6 +20,8 @@
   document,'script','https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '298624226571664');
   fbq('track', 'PageView');
+  // Marks EPK readers (presenters, bookers) for a booking-ad audience.
+  fbq('track', 'ViewContent', { content_name: 'epk' });
 </script>
 <noscript><img height="1" width="1" style="display:none" alt=""
   src="https://www.facebook.com/tr?id=298624226571664&ev=PageView&noscript=1" /></noscript>

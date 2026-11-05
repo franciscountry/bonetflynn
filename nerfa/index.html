@@ -522,6 +522,8 @@
     // Which vCard got saved, so GA4 can show it next to tap/scan traffic.
     document.querySelectorAll('.vcard').forEach(a => a.addEventListener('click', () => {
       gtag('event', 'vcard_download', { person: a.dataset.person });
+      // Same moment for Meta, so ads can retarget people who saved a contact.
+      if (window.fbq) fbq('track', 'Contact', { content_name: 'vcard_' + a.dataset.person });
     }));
 
     // Swap the thumbnail for the real player on click; without JS the link just
