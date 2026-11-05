@@ -11,6 +11,18 @@
   gtag('js', new Date());
   gtag('config', 'G-E0Z2THFSSG');
 </script>
+<!-- Meta Pixel (dataset "Bonet Flynn Pixel" in the Deni Bonet & Chris Flynn portfolio) -->
+<script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '298624226571664');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt=""
+  src="https://www.facebook.com/tr?id=298624226571664&ev=PageView&noscript=1" /></noscript>
 <title>Bonet &amp; Flynn at NERFA 2026</title>
 <meta name="description" content="Great to meet you at NERFA. Save Deni Bonet and Chris Flynn to your contacts, join the mailing list, and watch the duo live." />
 <!-- Reached by postcard QR and NFC tag only: keep it out of search. Pairs
@@ -553,6 +565,10 @@
         localStorage.setItem('bf_source', JSON.stringify({ v: src.value, t: Date.now() }));
       } catch (e) {}
       form.addEventListener('submit', () => {
+        /* Meta Pixel conversion: what ad campaigns optimize toward. The
+           form posts to Brevo in a hidden iframe, so this is the only
+           moment the page knows a signup happened. */
+        if (window.fbq) fbq('track', 'Lead', { content_name: 'mailing_list' });
         setTimeout(() => {
           document.getElementById('signupDone').hidden = false;
           document.getElementById('EMAIL').value = '';
