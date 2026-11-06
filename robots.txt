@@ -9,3 +9,4 @@ Disallow: /epk/
 Disallow: /nerfa/
 Disallow: /pc
 Disallow: /tag
+Disallow: /room
